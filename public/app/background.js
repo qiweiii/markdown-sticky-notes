@@ -8,7 +8,7 @@ chrome.runtime.onInstalled.addListener(function() {
       chrome.tabs.query({active: true, currentWindow:true},function(tabs) {
          let activeTab = tabs[0];
          console.log("qiwei");
-         chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_browser_action"});
+         chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_extension_action"});
       });
    });
 });
