@@ -78,7 +78,7 @@ export default class Note extends React.Component {
               <Editor 
                 value={this.state.markdownSrc} 
                 theme='monokai'                         // let user choose
-                fontSize={10}                           // let user choose
+                fontSize={20}                           // let user choose
                 fontFamily="Consolas,monaco,monospace"  // let user choose
                 onChange={this.handleMarkdownChange} 
               />

@@ -1,12 +1,14 @@
 import React from 'react';
 import { createRef, createElement } from 'react';
 import { bool, string, func } from 'prop-types';
-const CodeMirror = window.CodeMirror
+import CodeMirror from 'codemirror';
+/* import all mode here */
+require('codemirror/mode/markdown/markdown');
+/* import all themes & css in index.html (import here has conflicts) */
+
 
 // adapted from:
-// https://github.com/facebook/react/blob/master/docs/_js/live_editor.js#L16
-// also used as an example:
-// https://github.com/facebook/react/blob/master/src/browser/ui/dom/components/ReactDOMInput.js
+// https://github.com/rexxars/react-markdown/blob/master/demo/src/codemirror.js
 
 const IS_MOBILE = typeof navigator === 'undefined' || (
   navigator.userAgent.match(/Android/i)
@@ -42,7 +44,6 @@ class CodeMirrorEditor extends React.Component {
         elt.style.textIndent = "-" + off + "px";
         elt.style.paddingLeft = (basePadding + off) + "px";
       });
-
       this.editor.getWrapperElement().style["font-size"] = this.props.fontSize+'px';
       this.editor.getWrapperElement().style["font-family"] = this.props.fontFamily;
       this.editor.refresh();
