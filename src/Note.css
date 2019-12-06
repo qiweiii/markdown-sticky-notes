@@ -1,12 +1,20 @@
-textarea {
-  border: none;
-  overflow: auto;
-  outline: none;
-
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  box-sizing: border-box;
-  font-family: "Consolas";  
-  font-size: 12px;   
+.CodeMirror {
+  position:absolute;
+  top: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
 }
+
+.handle {
+  height: 20;
+}
+
+.editor textarea {
+  padding: 20px;
+}
+
+/* .CodeMirror-wrap pre {
+  word-break: break-word;
+} */

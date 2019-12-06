@@ -5,9 +5,8 @@ chrome.runtime.onInstalled.addListener(function() {
    });
    chrome.browserAction.onClicked.addListener(function(tab) {
       // Send a message to the active tab
-      chrome.tabs.query({active: true, currentWindow:true},function(tabs) {
+      chrome.tabs.query({active: true, currentWindow: true},function(tabs) {
          let activeTab = tabs[0];
-         console.log("qiwei");
          chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_extension_action"});
       });
    });
