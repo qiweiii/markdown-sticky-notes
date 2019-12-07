@@ -6,9 +6,8 @@ import "./content.css";
 import Note from './Note';
  
 const app = document.createElement('div');
-app.id = "my-extension-root"
+app.className = "markdown-sticky-note";
 document.body.appendChild(app);
-app.style.display = "block";
 
 chrome.runtime.onMessage.addListener(
    function(request, sender, sendResponse) {

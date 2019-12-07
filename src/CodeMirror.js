@@ -1,25 +1,85 @@
 import React from 'react';
 import { createRef, createElement } from 'react';
 import { bool, string, func } from 'prop-types';
-import CodeMirror from 'codemirror';
-/* import all mode here */
-require('codemirror/mode/markdown/markdown');
-/* import all themes & css in index.html (import here has conflicts) */
-
+import 'codemirror/mode/markdown/markdown'; // only need markdown mode
+import 'codemirror/theme/monokai.css';
+// import CodeMirror from 'codemirror';
+// const CodeMirror = window.CodeMirror;
+import CodeMirror from 'codemirror/lib/codemirror.js'
+import 'codemirror/lib/codemirror.css'; // import these css here prevents some compatibility bugs
+import 'codemirror/theme/3024-day.css';
+import 'codemirror/theme/3024-night.css';
+import 'codemirror/theme/abcdef.css';
+import 'codemirror/theme/ambiance.css';
+import 'codemirror/theme/base16-dark.css';
+import 'codemirror/theme/bespin.css';
+import 'codemirror/theme/base16-light.css';
+import 'codemirror/theme/blackboard.css';
+import 'codemirror/theme/cobalt.css';
+import 'codemirror/theme/colorforth.css';
+import 'codemirror/theme/dracula.css';
+import 'codemirror/theme/duotone-dark.css';
+import 'codemirror/theme/duotone-light.css';
+import 'codemirror/theme/eclipse.css';
+import 'codemirror/theme/elegant.css';
+import 'codemirror/theme/erlang-dark.css';
+import 'codemirror/theme/gruvbox-dark.css';
+import 'codemirror/theme/hopscotch.css';
+import 'codemirror/theme/icecoder.css';
+import 'codemirror/theme/isotope.css';
+import 'codemirror/theme/lesser-dark.css';
+import 'codemirror/theme/liquibyte.css';
+import 'codemirror/theme/lucario.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/theme/material-darker.css';
+import 'codemirror/theme/material-palenight.css';
+import 'codemirror/theme/material-ocean.css';
+import 'codemirror/theme/mbo.css';
+import 'codemirror/theme/mdn-like.css';
+import 'codemirror/theme/midnight.css';
+import 'codemirror/theme/monokai.css';
+import 'codemirror/theme/moxer.css';
+import 'codemirror/theme/neat.css';
+import 'codemirror/theme/neo.css';
+import 'codemirror/theme/night.css';
+import 'codemirror/theme/nord.css';
+import 'codemirror/theme/oceanic-next.css';
+import 'codemirror/theme/panda-syntax.css';
+import 'codemirror/theme/paraiso-dark.css';
+import 'codemirror/theme/paraiso-light.css';
+import 'codemirror/theme/pastel-on-dark.css';
+import 'codemirror/theme/railscasts.css';
+import 'codemirror/theme/rubyblue.css';
+import 'codemirror/theme/seti.css';
+import 'codemirror/theme/shadowfox.css';
+import 'codemirror/theme/solarized.css';
+import 'codemirror/theme/the-matrix.css';
+import 'codemirror/theme/tomorrow-night-bright.css';
+import 'codemirror/theme/tomorrow-night-eighties.css';
+import 'codemirror/theme/ttcn.css';
+import 'codemirror/theme/twilight.css';
+import 'codemirror/theme/vibrant-ink.css';
+import 'codemirror/theme/xq-dark.css';
+import 'codemirror/theme/xq-light.css';
+import 'codemirror/theme/yeti.css';
+import 'codemirror/theme/idea.css';
+import 'codemirror/theme/darcula.css';
+import 'codemirror/theme/yonce.css';
+import 'codemirror/theme/zenburn.css';
 
 // adapted from:
 // https://github.com/rexxars/react-markdown/blob/master/demo/src/codemirror.js
 
 const IS_MOBILE = typeof navigator === 'undefined' || (
   navigator.userAgent.match(/Android/i)
-    || navigator.userAgent.match(/webOS/i)
-    || navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-    || navigator.userAgent.match(/BlackBerry/i)
-    || navigator.userAgent.match(/Windows Phone/i)
-)
-
+  || navigator.userAgent.match(/webOS/i)
+  || navigator.userAgent.match(/iPhone/i)
+  || navigator.userAgent.match(/iPad/i)
+  || navigator.userAgent.match(/iPod/i)
+  || navigator.userAgent.match(/BlackBerry/i)
+  || navigator.userAgent.match(/Windows Phone/i)
+  )
+  
 class CodeMirrorEditor extends React.Component {
   constructor(props) {
     super(props)
@@ -27,7 +87,7 @@ class CodeMirrorEditor extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.editorRef = createRef()
   }
-
+    
   componentDidMount() {
     const isTextArea = this.props.forceTextArea || IS_MOBILE;
     if (!isTextArea) {

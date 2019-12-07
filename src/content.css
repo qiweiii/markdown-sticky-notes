@@ -1,9 +1,100 @@
 /* src/content.css */
 
-.my-extension{
-    padding: 20px;
+.markdown-sticky-note {
+    /* padding: 20px; */
+    z-index: 2147483600;
+    width: auto;
+    height: auto;
+    text-align: left;
 }
 
-.my-extension h1{
-    color: #000;
+.markdown-sticky-note .react-draggable{
+    z-index: 2147483600;
 }
+
+.markdown-sticky-note .CodeMirror {
+    position: absolute;
+    top: 24px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+}
+
+.markdown-sticky-note .handle {
+    height: 24px;
+}
+
+.markdown-sticky-note-paper {
+    z-index: 2147483600;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.markdown-sticky-note .note-root {
+    width: 0px;
+    height: 0px;
+    /* overflow: hidden; */
+}
+
+.markdown-sticky-note .note-pane {
+    height: 100%;
+    width: 100%;
+}
+
+.markdown-sticky-note .editor-pane {
+    height: 100%;
+    width: 100%;
+    /* word-break: break-all; */
+    overflow: auto;
+}
+
+.markdown-sticky-note .result {
+    margin-left: 4px;
+    height: 100%;
+    overflow: auto;
+    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.2em;
+}
+
+/* .markdown-sticky-note .result > div {
+    height: 100%;
+} */
+
+.markdown-sticky-note pre {
+    border: 1px solid #ccc;
+}
+
+.markdown-sticky-note blockquote {
+    color: #666;
+    margin: 0;
+    padding-left: 3em;
+    border-left: 0.5em #eee solid;
+}
+
+.markdown-sticky-note tr {
+    border-top: 1px solid #c6cbd1;
+    background: #fff;
+}
+
+.markdown-sticky-note th,
+.markdown-sticky-note td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+}
+
+.markdown-sticky-note table tr:nth-child(2n) {
+    background: #f6f8fa;
+}
+
+/* .markdown-sticky-note pre {
+    outline: none;
+    white-space: pre !important;
+}
+
+.markdown-sticky-note textarea {
+    outline: none;
+    white-space: pre !important;
+} */

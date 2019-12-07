@@ -27,7 +27,10 @@ Editor.propTypes = {
 }
 
 Editor.defaultProps = {
-  value: ''
+  value: '',
+  theme: '',
+  fontSize: 16,
+  fontFamily: "Consolas,monaco,monospace"
 }
 
 export default Editor
