@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener(
             callback={deleteNote} 
             defaultTheme='monokai' // maybe allow customizing after i have options_page and DB
             editorFontSize={14} // maybe allow customizing after i have options_page and DB
-            editorFontFamily="Consolas,monaco,monospace"
+            editorFontFamily="Consolas,monaco,monospace" // maybe allow customizing after i have options_page and DB
           />, 
         div);
       }
@@ -69,5 +69,7 @@ const initXY = () => {
   const maxY = Math.floor(height*0.5);
   const startX = Math.floor(Math.random() * (maxX - minX)) + minX;
   const startY = Math.floor(Math.random() * (maxY - minY)) + minY;
-  return {x:startX, y:startY};
+  const top  = window.pageYOffset || document.documentElement.scrollTop; // if scrolled
+  const left = window.pageXOffset || document.documentElement.scrollLeft; // if scrolled
+  return {x:startX+left, y:startY+top};
 }

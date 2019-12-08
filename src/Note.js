@@ -87,15 +87,11 @@ const fonts = {
   "Courier New": `"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace`,
   "Anonymous Pro": "markdown-stick-notes-family-anonymous-pro",
   "B612 Mono": "markdown-stick-notes-family-b612-mono",
-  "Fira Code": "markdown-stick-notes-family-fira-code",
   "Inconsolata": "markdown-stick-notes-family-inconsolata",
-  "Nanum Gothic Coding": "markdown-stick-notes-family-nanum-gothic_coding",
   "PT Mono": "markdown-stick-notes-family-pt-mono",
   "Roboto Mono": "markdown-stick-notes-family-roboto-mono",
-  "Share Tech Mono": "markdown-stick-notes-family-share-tech-mono",
   "Source Code Pro": "markdown-stick-notes-family-source-code-pro",
   "Space Mono": "markdown-stick-notes-family-space-mono",
-  "Ubuntu Mono": "markdown-stick-notes-family-ubuntu-mono"
 };
 const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 5;
@@ -298,7 +294,7 @@ Pretty neat, eh?
                       input={<Input />}
                       MenuProps={MenuProps}
                     >
-                      {Array.from(new Array(40), (x,i) => i + 8).map(size => (
+                      {Array.from(new Array(40), (x,i) => i + 9).map(size => (
                         <MenuItem key={size} value={size} >
                           {size}
                         </MenuItem>

@@ -64,11 +64,23 @@
     /* margin-left: 4px; */
     height: 100%;
     overflow: auto;
-    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
+    /* font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif; */
+    /* font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif; */
     font-size: 16px;
     line-height: 1.2em;
     background-color: #e0e0e0;
 }
+
+.markdown-sticky-note h6 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note h5 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note h4 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note h3 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note h2 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 20px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note h1 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 23px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; }
+.markdown-sticky-note p { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
+.markdown-sticky-note li { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
+.markdown-sticky-note blockquote { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
+.markdown-sticky-note pre { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; }
 
 /* .markdown-sticky-note .result > div {
     height: 100%;
@@ -81,7 +93,7 @@
     pointer-events: none;
 }
 
-.markdown-sticky-note pre {
+/* .markdown-sticky-note pre {
     border: 1px solid #ccc;
 }
 
@@ -90,7 +102,7 @@
     margin: 0;
     padding-left: 3em;
     border-left: 0.5em #eee solid;
-}
+} */
 
 .markdown-sticky-note tr {
     border-top: 1px solid #c6cbd1;
@@ -99,12 +111,13 @@
 
 .markdown-sticky-note th,
 .markdown-sticky-note td {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
     padding: 6px 13px;
     border: 1px solid #dfe2e5;
 }
 
 .markdown-sticky-note table tr:nth-child(2n) {
-    background: #f6f8fa;
+    background: #8a939c;
 }
 
 /* .markdown-sticky-note pre {
