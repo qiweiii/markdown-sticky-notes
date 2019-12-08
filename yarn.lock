@@ -1125,6 +1125,17 @@
   dependencies:
     "@babel/runtime" "^7.4.4"
 
+"@material-ui/lab@^4.0.0-alpha.35":
+  version "4.0.0-alpha.35"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.35.tgz#51cfc82ac220d9407ab4c4f34374984723ae2cbc"
+  integrity sha512-GYVQjsaSAZ55kThjkIZ9FW8o/psmKv60bciTG/3fG+4DBqsfz8o6Nk6Wd8K/azcgko4A4+w7RmZSOTZOW6qlDA==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.7.1"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0"
+
 "@material-ui/styles@^4.7.1":
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.7.1.tgz#48fa70f06441c35e301a9c4b6c825526a97b7a29"
@@ -2679,7 +2690,7 @@ cliui@^5.0.0:
     strip-ansi "^5.2.0"
     wrap-ansi "^5.1.0"
 
-clsx@^1.0.2:
+clsx@^1.0.2, clsx@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
   integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
@@ -2694,10 +2705,10 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
-codemirror@^5.49.2:
+codemirror-minified@^5.49.2:
   version "5.49.2"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.49.2.tgz#c84fdaf11b19803f828b0c67060c7bc6d154ccad"
-  integrity sha512-dwJ2HRPHm8w51WB5YTF9J7m6Z5dtkqbU9ntMZ1dqXyFB9IpjoUFDj80ahRVEoVanfIp6pfASJbOlbWdEf8FOzQ==
+  resolved "https://registry.yarnpkg.com/codemirror-minified/-/codemirror-minified-5.49.2.tgz#8d455076ce439aa7c2d38c4e5a0dc02af73c3690"
+  integrity sha512-lupv41S3poZy76M+MQHkr1hG3bSkpbdzKOn2rD7eO9VzJfDF0pY7R0lUcU3gJz1mqXiGPGu3qthkAfBgQLFckw==
 
 collapse-white-space@^1.0.2:
   version "1.0.5"
