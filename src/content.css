@@ -1,14 +1,18 @@
 /* src/content.css */
 
+
+
 .markdown-sticky-note {
     /* padding: 20px; */
     z-index: 1000;
     text-align: left;
+    position: absolute;
+    top: 0px;
 }
 
-.markdown-sticky-note .react-draggable{
+/* .markdown-sticky-note .react-draggable{
     z-index: 1000;
-}
+} */
 
 .markdown-sticky-note .CodeMirror {
     position: absolute;
@@ -57,13 +61,13 @@
 }
 
 .markdown-sticky-note .result {
-    margin-left: 4px;
+    /* margin-left: 4px; */
     height: 100%;
     overflow: auto;
     font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
     font-size: 16px;
     line-height: 1.2em;
-    /* background-color: #e0e0e0; */
+    background-color: #e0e0e0;
 }
 
 /* .markdown-sticky-note .result > div {

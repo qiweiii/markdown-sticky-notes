@@ -7,14 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import ReactMarkdown from 'react-markdown';
 import Editor from './Editor';
 import CodeBlock from './CodeBlock';
-// import Editor from 'react-simple-code-editor';
-// import hljs from 'highlight.js/lib/highlight';
-// import markdown from 'highlight.js/lib/languages/markdown';
-// import java from 'highlight.js/lib/languages/java';
-// import python from 'highlight.js/lib/languages/python';
-// hljs.registerLanguage('markdown', markdown);
-// hljs.registerLanguage('java', java);
-// hljs.registerLanguage('python', python);
 import CloseIcon from '@material-ui/icons/Close';
 // import MinimizeIcon from '@material-ui/icons/Minimize';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -89,13 +81,29 @@ const themes = [
   'yonce',
   'zenburn',
 ];
+// from: https://www.cssfontstack.com/
+const fonts = {
+  "Consolas": "Consolas, monaco, monospace",
+  "Courier New": `"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace`,
+  "Anonymous Pro": "markdown-stick-notes-family-anonymous-pro",
+  "B612 Mono": "markdown-stick-notes-family-b612-mono",
+  "Fira Code": "markdown-stick-notes-family-fira-code",
+  "Inconsolata": "markdown-stick-notes-family-inconsolata",
+  "Nanum Gothic Coding": "markdown-stick-notes-family-nanum-gothic_coding",
+  "PT Mono": "markdown-stick-notes-family-pt-mono",
+  "Roboto Mono": "markdown-stick-notes-family-roboto-mono",
+  "Share Tech Mono": "markdown-stick-notes-family-share-tech-mono",
+  "Source Code Pro": "markdown-stick-notes-family-source-code-pro",
+  "Space Mono": "markdown-stick-notes-family-space-mono",
+  "Ubuntu Mono": "markdown-stick-notes-family-ubuntu-mono"
+};
 const ITEM_HEIGHT = 20;
-const ITEM_PADDING_TOP = 8;
+const ITEM_PADDING_TOP = 5;
 const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 10 + ITEM_PADDING_TOP,
-      width:150,
+      width:200,
     },
   },
 };
@@ -109,12 +117,14 @@ export default class Note extends React.Component {
       // noteDim: {
       //   x: 250, y: 250
       // },
-      id: props.id,
       // selected: true,
+      id: props.id,
       openSetting: false,
       anchorEl: null,
       anchorElHelp: null,
-      theme: 'monokai',
+      theme: props.defaultTheme,
+      editorFontSize: props.editorFontSize,
+      editorFontFamily: props.editorFontFamily,
       mode: 0, // 0 for editting, 1 for display
       markdownSrc: `# Live demo
 
@@ -214,17 +224,25 @@ Pretty neat, eh?
   render() {
     return (
       <div className="note-root">
-        <Draggable bounds="body" handle=".handle">
+        <Draggable 
+          bounds="body"
+          handle=".handle" 
+          defaultClassName={"markdown-react-draggable"+this.props.id} 
+          defaultPosition={{x:this.props.x, y:this.props.y}}
+          // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
+        >
           <Resizable 
             defaultSize={{
               width: 200,
               height: 250,
             }}
-            // minWidth={200}
-            // minHeight={200}
+            minWidth={150}
+            minHeight={150}
             // onResize={this.onResize}
           >
             <Paper elevation={10} className="markdown-sticky-note-paper">
+
+              {/* Note tool bar */}
               <div className="handle">
                 <IconButton onClick={this.handleDelete} size="small">
                   <CloseIcon fontSize="small"/>
@@ -253,11 +271,11 @@ Pretty neat, eh?
                     horizontal: 'left',
                   }}
                 >
-                  <FormControl style={{zIndex:1, margin:2}}>
-                    <InputLabel id="mutiple-name-label">Editor Theme</InputLabel>
+                  <FormControl style={{zIndex:1, margin:1, width:100}}>
+                    <InputLabel id="theme-label">Editor Theme</InputLabel>
                     <Select
-                      labelId="mutiple-name-label"
-                      id="mutiple-name"
+                      labelId="theme-label"
+                      id="mutiple-theme"
                       value={this.state.theme}
                       onChange={(e) => {this.setState({theme:e.target.value})}}
                       input={<Input />}
@@ -266,6 +284,40 @@ Pretty neat, eh?
                       {themes.map(name => (
                         <MenuItem key={name} value={name} >
                           {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl style={{zIndex:1, margin:1, width:100}}>
+                    <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
+                    <Select
+                      labelId="fontsize-label"
+                      id="mutiple-fontsize"
+                      value={this.state.editorFontSize}
+                      onChange={(e) => {this.setState({editorFontSize:e.target.value})}}
+                      input={<Input />}
+                      MenuProps={MenuProps}
+                    >
+                      {Array.from(new Array(40), (x,i) => i + 8).map(size => (
+                        <MenuItem key={size} value={size} >
+                          {size}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl style={{zIndex:1, margin:1, width:100}}>
+                    <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
+                    <Select
+                      labelId="fontsize-label"
+                      id="mutiple-fontsize"
+                      value={this.state.editorFontFamily}
+                      onChange={(e) => {this.setState({editorFontFamily:e.target.value})}}
+                      input={<Input />}
+                      MenuProps={MenuProps}
+                    >
+                      {Object.entries(fonts).map(([font, family]) => (
+                        <MenuItem key={font} value={family} >
+                          {font}
                         </MenuItem>
                       ))}
                     </Select>
@@ -302,41 +354,27 @@ Pretty neat, eh?
                   </div>
                 </Popover>
               </div>
-              
-              {/* <Collapse in={this.state.selected} className="collapse"> */}
-                {/* <Paper> */}
-              {/* <InputBase 
-                style={{fontFamily: this.state.fontFamily, fontSize: this.state.fontSize, ...styleText}}
-                id="textfield" 
-                variant="outlined"
-                autoFocus={true}
-                multiline={true}
-                fullWidth={true}
-                rows={((this.state.noteDim.y-18)/(this.state.fontSize*1.18))}
-                inputProps={{ 'aria-label': 'naked' }}
-              /> */}
+
+              {/* Note editor & dissplay area */}
               <div ref={node => this.node = node} className="note-pane">
+                {/* <InputBase 
+                  style={{fontFamily: this.state.fontFamily, fontSize: this.state.fontSize, ...styleText}}
+                  id="textfield" 
+                  variant="outlined"
+                  autoFocus={true}
+                  multiline={true}
+                  fullWidth={true}
+                  rows={((this.state.noteDim.y-18)/(this.state.fontSize*1.18))}
+                  inputProps={{ 'aria-label': 'naked' }}
+                /> */}
                 { this.state.mode === 0 ?
                   <Editor 
                     value={this.state.markdownSrc} 
                     theme={this.state.theme}
-                    fontSize={14}                           // later, let user choose
-                    fontFamily="Consolas, monaco, monospace"// later, let user choose
+                    fontSize={this.state.editorFontSize}
+                    fontFamily={this.state.editorFontFamily}
                     onChange={this.handleMarkdownChange} 
                   />
-                  // <div className="editor-pane">
-                  //   <Editor 
-                  //     value={this.state.markdownSrc}
-                  //     onValueChange={this.handleMarkdownChange}
-                  //     highlight={code => hljs.highlight('markdown', code).value}
-                  //     padding={3}
-                  //     style={{
-                  //       fontFamily: '"Fira code", "Fira Mono", monospace',
-                  //       fontSize: 14,
-                  //     }}
-                  //   />
-                  // </div>
-                  // <div></div>
                   :
                   <ReactMarkdown
                     className="result"
@@ -345,13 +383,10 @@ Pretty neat, eh?
                   />
                 }
               </div>
-              {/* </Paper> */}
-            {/* </Collapse> */}
             </Paper>
           </Resizable>
         </Draggable>
       </div>
-      // </div>
     )
   }
 }

@@ -3,10 +3,8 @@ import { createRef, createElement } from 'react';
 import { bool, string, func } from 'prop-types';
 import 'codemirror-minified/mode/markdown/markdown'; // only need markdown mode
 import 'codemirror-minified/theme/monokai.css';
-// import CodeMirror from 'codemirror';
-// const CodeMirror = window.CodeMirror;
 import CodeMirror from 'codemirror-minified/lib/codemirror.js'
-import 'codemirror-minified/lib/codemirror.css'; // import these css here prevents some compatibility bugs
+import 'codemirror-minified/lib/codemirror.css';
 import 'codemirror-minified/theme/3024-day.css';
 import 'codemirror-minified/theme/3024-night.css';
 import 'codemirror-minified/theme/abcdef.css';
@@ -69,7 +67,6 @@ import 'codemirror-minified/theme/zenburn.css';
 
 // adapted from:
 // https://github.com/rexxars/react-markdown/blob/master/demo/src/codemirror.js
-
 const IS_MOBILE = typeof navigator === 'undefined' || (
   navigator.userAgent.match(/Android/i)
   || navigator.userAgent.match(/webOS/i)

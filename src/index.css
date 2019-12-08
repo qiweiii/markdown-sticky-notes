@@ -21,3 +21,48 @@ body {
   height: 100%;
   border: none;
 } */
+
+@font-face {
+  font-family: 'markdown-stick-notes-family-anonymous-pro';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-b612-mono';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/B612_Mono/B612Mono-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-fira-code';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Fira_Code/static/FiraCode-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-inconsolata';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Inconsolata/Inconsolata-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-nanum-gothic_coding';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Nanum_Gothic_Coding/NanumGothicCoding-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-pt-mono';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/PT_Mono/PTMono-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-roboto-mono';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto_Mono/RobotoMono-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-share-tech-mono';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-source-code-pro';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-space-mono';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Space_Mono/SpaceMono-Regular.ttf'); 
+}
+@font-face {
+  font-family: 'markdown-stick-notes-family-ubuntu-mono';
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf'); 
+}
