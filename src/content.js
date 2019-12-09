@@ -13,7 +13,6 @@ app.className = "markdown-sticky-note";
 // approot.appendChild(app);
 // let shadowDOM = approot.attachShadow({mode: 'open'}); // Create a shadow root
 // shadowDOM.appendChild(app);
-
 document.body.appendChild(app);
 // document.body.appendChild(approot);
 window.localStorage.setItem('md-curMaxIndex', 1000);
@@ -57,7 +56,7 @@ chrome.runtime.onMessage.addListener(
             callback={deleteNote} 
             defaultTheme='monokai' // allow customizing after i have options_page and DB
             editorFontSize={14} // allow customizing after i have options_page and DB
-            editorFontFamily="Consolas,monaco,monospace" // allow customizing after i have options_page and DB
+            editorFontFamily='"Consolas","monaco",monospace' // allow customizing after i have options_page and DB
             // initialWidth // allow customizing after i have DB
             // initialHeight // allow customizing after i have DB
             // initialContent // allow customizing after i have DB

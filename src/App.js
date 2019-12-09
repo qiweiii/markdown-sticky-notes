@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-// import Note from './Note';
+import Note from './Note';
 
 class App extends Component {
   render() {
@@ -14,14 +14,14 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        {/* <Note 
+        <Note 
           id={10101} 
           optionsPage={""} 
           x={30} y={30} 
           defaultTheme='monokai' // maybe allow customizing after i have options_page and DB
           editorFontSize={14} // maybe allow customizing after i have options_page and DB
           editorFontFamily="Consolas, monaco, monospace"
-        />  */}
+        /> 
       </div>
     );
   }

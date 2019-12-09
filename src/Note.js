@@ -23,22 +23,16 @@ const themes = [
   '3024-day',
   '3024-night',
   'abcdef',
-  'ambiance',
   'base16-dark',
   'bespin',
   'base16-light',
   'blackboard',
   'cobalt',
-  'colorforth',
-  'dracula',
   'duotone-dark',
   'duotone-light',
   'eclipse',
   'elegant',
   'erlang-dark',
-  'gruvbox-dark',
-  'hopscotch',
-  'icecoder',
   'isotope',
   'lesser-dark',
   'liquibyte',
@@ -51,7 +45,6 @@ const themes = [
   'mdn-like',
   'midnight',
   'monokai',
-  'moxer',
   'neat',
   'neo',
   'night',
@@ -60,7 +53,6 @@ const themes = [
   'panda-syntax',
   'paraiso-dark',
   'paraiso-light',
-  'pastel-on-dark',
   'railscasts',
   'rubyblue',
   'seti',
@@ -72,16 +64,10 @@ const themes = [
   'ttcn',
   'twilight',
   'vibrant-ink',
-  'xq-dark',
-  'xq-light',
-  'yeti',
-  'idea',
-  'darcula',
   'yonce',
-  'zenburn',
 ];
 const fonts = {
-  "Consolas": "Consolas, monaco, monospace",
+  "Consolas": `"Consolas", "monaco", monospace`,
   "Courier New": `"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace`,
   "Anonymous Pro": "markdown-stick-notes-family-anonymous-pro",
   "B612 Mono": "markdown-stick-notes-family-b612-mono",
@@ -289,7 +275,7 @@ Pretty neat, eh?
                     horizontal: 'left',
                   }}
                 >
-                  <FormControl style={{zIndex:1, margin:1, width:100}}>
+                  <FormControl style={{zIndex:1, margin:5, width:100}}>
                     <InputLabel id="theme-label">Editor Theme</InputLabel>
                     <Select
                       labelId="theme-label"
@@ -306,7 +292,7 @@ Pretty neat, eh?
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl style={{zIndex:1, margin:1, width:100}}>
+                  <FormControl style={{zIndex:1, margin:5, width:110}}>
                     <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
                     <Select
                       labelId="fontsize-label"
@@ -323,8 +309,8 @@ Pretty neat, eh?
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl style={{zIndex:1, margin:1, width:100}}>
-                    <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
+                  <FormControl style={{zIndex:1, margin:5, width:100}}>
+                    <InputLabel id="fontsize-label">Editor Font</InputLabel>
                     <Select
                       labelId="fontsize-label"
                       id="mutiple-fontsize"
@@ -387,8 +373,8 @@ Pretty neat, eh?
                 /> */}
                 { this.state.dragging ?(
                   <div>
-                    {Array.from(new Array(Math.floor(0.8*(this.state.noteDim.y-44)/26))).map(() => (
-                      <Skeleton height={20} disableAnimate={true} style={{ margin: 6 }} />
+                    {Array.from(new Array(Math.floor(0.8*(this.state.noteDim.y-44)/26))).map((v, i) => (
+                      <Skeleton key={i} height={20} disableAnimate={true} style={{ margin: 6 }} />
                     ))}
                     <Skeleton height={20} disableAnimate={true} style={{ margin: 6 }} width="80%" />
                   </div>
