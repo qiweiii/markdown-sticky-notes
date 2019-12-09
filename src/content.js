@@ -4,13 +4,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import "./content.css";
 import Note from './Note';
- 
+
 
 /** Initialise parent div */
+// const approot = document.createElement('div');
 const app = document.createElement('div');
 app.className = "markdown-sticky-note";
+// approot.appendChild(app);
+// let shadowDOM = approot.attachShadow({mode: 'open'}); // Create a shadow root
+// shadowDOM.appendChild(app);
+
 document.body.appendChild(app);
+// document.body.appendChild(approot);
 window.localStorage.setItem('md-curMaxIndex', 1000);
+// Apply external styles to the shadow dom
+// const linkElem = document.createElement('link');
+// linkElem.setAttribute('rel', 'stylesheet');
+// linkElem.setAttribute('href', chrome.runtime.getURL("/static/css/content.css"));
+// // Attach the created element to the shadow dom
+// shadowDOM.appendChild(linkElem);
 
 
 /** Used to generate unique IDs. */
@@ -22,6 +34,8 @@ const uniqueId= () => {
 
 
 /** Generate new note when click on extension icon */
+// let ShadowDomRoot = app.shadowRoot;
+
 const optionsUrl = chrome.extension.getURL('options.html')
 chrome.runtime.onMessage.addListener(
    function(request, sender, sendResponse) {
@@ -31,22 +45,26 @@ chrome.runtime.onMessage.addListener(
         div.addEventListener('click', (e) => {
           let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
           let el = document.getElementsByClassName('markdown-react-draggable'+div.id)[0];
-          el.style.zIndex = curMaxZIndex++;
+          if (el) el.style.zIndex = curMaxZIndex++;
           window.localStorage.setItem('md-curMaxIndex', curMaxZIndex);
         });
         const {x, y} = initXY();
-        app.appendChild(div);
         ReactDOM.render(
           <Note 
             id={div.id} 
             optionsPage={optionsUrl} 
-            x={x} y={y} 
+            x={x} y={y}            // allow customizing after i have DB
             callback={deleteNote} 
-            defaultTheme='monokai' // maybe allow customizing after i have options_page and DB
-            editorFontSize={14} // maybe allow customizing after i have options_page and DB
-            editorFontFamily="Consolas,monaco,monospace" // maybe allow customizing after i have options_page and DB
+            defaultTheme='monokai' // allow customizing after i have options_page and DB
+            editorFontSize={14} // allow customizing after i have options_page and DB
+            editorFontFamily="Consolas,monaco,monospace" // allow customizing after i have options_page and DB
+            // initialWidth // allow customizing after i have DB
+            // initialHeight // allow customizing after i have DB
+            // initialContent // allow customizing after i have DB
           />, 
-        div);
+          div
+        );        
+        app.appendChild(div);
       }
    }
 );

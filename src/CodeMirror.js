@@ -5,6 +5,7 @@ import 'codemirror-minified/mode/markdown/markdown'; // only need markdown mode
 import 'codemirror-minified/theme/monokai.css';
 import CodeMirror from 'codemirror-minified/lib/codemirror.js'
 import 'codemirror-minified/lib/codemirror.css';
+import 'codemirror-minified/theme/monokai.css';
 import 'codemirror-minified/theme/3024-day.css';
 import 'codemirror-minified/theme/3024-night.css';
 import 'codemirror-minified/theme/abcdef.css';
@@ -35,7 +36,6 @@ import 'codemirror-minified/theme/material-ocean.css';
 import 'codemirror-minified/theme/mbo.css';
 import 'codemirror-minified/theme/mdn-like.css';
 import 'codemirror-minified/theme/midnight.css';
-import 'codemirror-minified/theme/monokai.css';
 import 'codemirror-minified/theme/moxer.css';
 import 'codemirror-minified/theme/neat.css';
 import 'codemirror-minified/theme/neo.css';

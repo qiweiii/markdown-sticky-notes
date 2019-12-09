@@ -1,7 +1,5 @@
 /* src/content.css */
 
-
-
 .markdown-sticky-note {
     /* padding: 20px; */
     z-index: 1000;
@@ -86,10 +84,10 @@
     height: 100%;
 } */
 
-#settingButton > * {
+.markdown-sticky-note #settingButton > * {
     pointer-events: none;
 }
-#helpButton > * {
+.markdown-sticky-note #helpButton > * {
     pointer-events: none;
 }
 

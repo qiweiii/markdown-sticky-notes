@@ -3,12 +3,10 @@ import "./content.css";
 import Draggable from 'react-draggable';
 import { Resizable } from 're-resizable';
 import Paper from '@material-ui/core/Paper';
-// import InputBase from '@material-ui/core/InputBase';
 import ReactMarkdown from 'react-markdown';
 import Editor from './Editor';
 import CodeBlock from './CodeBlock';
 import CloseIcon from '@material-ui/icons/Close';
-// import MinimizeIcon from '@material-ui/icons/Minimize';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,6 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const themes = [
   '3024-day',
@@ -81,7 +80,6 @@ const themes = [
   'yonce',
   'zenburn',
 ];
-// from: https://www.cssfontstack.com/
 const fonts = {
   "Consolas": "Consolas, monaco, monospace",
   "Courier New": `"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace`,
@@ -108,16 +106,17 @@ export default class Note extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // fontSize: 16,
-      // fontFamily: "Consolas,monaco,monospace",
-      // noteDim: {
-      //   x: 250, y: 250
-      // },
-      // selected: true,
+      noteDim: {
+        x: 200, y: 250 // width and height from resizable
+      },
+      position: {
+        x: props.x, y: props.y // x,y position from draggable
+      },
       id: props.id,
       openSetting: false,
       anchorEl: null,
       anchorElHelp: null,
+      dragging: false,
       theme: props.defaultTheme,
       editorFontSize: props.editorFontSize,
       editorFontFamily: props.editorFontFamily,
@@ -128,7 +127,6 @@ Changes are automatically rendered as you type.
 
 ## Table of Contents
 
-* Implements [GitHub Flavored Markdown](https://github.github.com/gfm/)
 * Renders actual, "native" React DOM elements
 * Allows you to escape or skip HTML (try toggling the checkboxes above)
 * If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
@@ -167,7 +165,8 @@ Pretty neat, eh?
 
   handleClick(e) {
     // console.log(e.target)
-    if (e.target.className==="handle"||e.target.id==="settingButton"||e.target.id==="helpButton") return;
+    if (e.target.id==="settingButton"||e.target.id==="helpButton") return;
+    // if (e.target.className==="handle"||e.target.id==="settingButton"||e.target.id==="helpButton") return;
     if (this.node.contains(e.target)) {
       // clicked inside of the component
       if (window.getSelection().toString()!=="") return;
@@ -180,13 +179,13 @@ Pretty neat, eh?
     this.setState({mode: 1});
   }
   componentDidMount() {
-    document.addEventListener('click', this.handleClick, false);
+    document.addEventListener('mousedown', this.handleClick, false);
     this.setState({
       id: this.props.id
     })
   }
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleClick, false);
+    document.removeEventListener('mousedown', this.handleClick, false);
   }
   handleMarkdownChange(evt) {
     this.setState({markdownSrc: evt.target.value})
@@ -216,6 +215,27 @@ Pretty neat, eh?
       anchorElHelp: e.currentTarget
     });
   };
+  handleStart = (e) => { // draggable
+    // this.node.style.display = "none"; 
+    this.setState({dragging: true}); // a dump way to map dragging smoother
+  }
+  handleStop = (e, d) => { // draggable
+    this.setState({dragging: false});
+    this.setState({
+      position: {
+        x: this.state.position.x + d.x,
+        y: this.state.position.y+ d.y,
+      }
+    });
+  }
+  onResizeStop = (e, direction, ref, d) => {
+    this.setState({
+      noteDim: {
+        x: this.state.noteDim.x + d.width,
+        y: this.state.noteDim.y+ d.height,
+      }
+    });
+  }
 
   render() {
     return (
@@ -223,6 +243,8 @@ Pretty neat, eh?
         <Draggable 
           bounds="body"
           handle=".handle" 
+          onStart={this.handleStart}
+          onStop={this.handleStop}
           defaultClassName={"markdown-react-draggable"+this.props.id} 
           defaultPosition={{x:this.props.x, y:this.props.y}}
           // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
@@ -234,9 +256,9 @@ Pretty neat, eh?
             }}
             minWidth={150}
             minHeight={150}
-            // onResize={this.onResize}
+            onResizeStop={this.onResizeStop}
           >
-            <Paper elevation={10} className="markdown-sticky-note-paper">
+            <Paper elevation={12} className="markdown-sticky-note-paper">
 
               {/* Note tool bar */}
               <div className="handle">
@@ -363,7 +385,15 @@ Pretty neat, eh?
                   rows={((this.state.noteDim.y-18)/(this.state.fontSize*1.18))}
                   inputProps={{ 'aria-label': 'naked' }}
                 /> */}
-                { this.state.mode === 0 ?
+                { this.state.dragging ?(
+                  <div>
+                    {Array.from(new Array(Math.floor(0.8*(this.state.noteDim.y-44)/26))).map(() => (
+                      <Skeleton height={20} disableAnimate={true} style={{ margin: 6 }} />
+                    ))}
+                    <Skeleton height={20} disableAnimate={true} style={{ margin: 6 }} width="80%" />
+                  </div>
+                ) : (
+                 this.state.mode === 0 ?
                   <Editor 
                     value={this.state.markdownSrc} 
                     theme={this.state.theme}
@@ -377,7 +407,7 @@ Pretty neat, eh?
                     source={this.state.markdownSrc}
                     renderers={{code: CodeBlock}}
                   />
-                }
+                )}
               </div>
             </Paper>
           </Resizable>
