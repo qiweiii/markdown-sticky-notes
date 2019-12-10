@@ -78,7 +78,7 @@ chrome.runtime.onMessage.addListener(
 /** remove note frrom DOM */
 const deleteNote = (id) => {
   ReactDOM.unmountComponentAtNode(document.getElementById(id));
-  document.getElementsByClassName('markdown-sticky-note')[0].querySelector("div[id='1']").remove();
+  document.getElementsByClassName('markdown-sticky-note')[0].querySelector(`div[id="${id}"]`).remove();
   // window.localStorage.removeItem('md-curMaxIndex');
 }
 

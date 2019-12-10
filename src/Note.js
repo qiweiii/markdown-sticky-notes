@@ -214,17 +214,6 @@ Changes are automatically rendered as you type.
       }
     });
   }
-  // handleVisible1Change = visible => { // setting popover
-  //   this.setState({ visible1: visible });
-  // };
-  // handleVisible2Change = visible => { // help popover
-  //   this.setState({ visible2: visible });
-  // };
-  // renderSettingPopOver = () => {
-  //   // return (
- 
-  //   // )
-  // }
 
   render() {
     return (
@@ -361,7 +350,6 @@ Changes are automatically rendered as you type.
                   visible={this.state.visible2}
                   onVisibleChange={this.handleVisible2Change}
                   >
-                
                 </Popover> */}
                 <Popover
                   id="help-popover"
@@ -390,16 +378,6 @@ Changes are automatically rendered as you type.
 
               {/* Note editor & dissplay area */}
               <div ref={node => this.node = node} className="note-pane">
-                {/* <InputBase 
-                  style={{fontFamily: this.state.fontFamily, fontSize: this.state.fontSize, ...styleText}}
-                  id="textfield" 
-                  variant="outlined"
-                  autoFocus={true}
-                  multiline={true}
-                  fullWidth={true}
-                  rows={((this.state.noteDim.y-18)/(this.state.fontSize*1.18))}
-                  inputProps={{ 'aria-label': 'naked' }}
-                /> */}
                 { this.state.dragging ?(
                   <div>
                     {Array.from(new Array(Math.floor(0.8*(this.state.noteDim.y-44)/26))).map((v, i) => (
