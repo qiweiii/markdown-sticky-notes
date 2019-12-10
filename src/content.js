@@ -2,20 +2,25 @@
 /* src/content.js */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import "./content.css";
 import Note from './Note';
+import { StylesProvider, jssPreset } from '@material-ui/styles';
+import { create } from 'jss';
 
 
 /** Initialise parent div */
-// const approot = document.createElement('div');
+const approot = document.createElement('div');
 const app = document.createElement('div');
+const jss = create({
+  ...jssPreset(),
+  insertionPoint: app
+});
 app.className = "markdown-sticky-note";
-// approot.appendChild(app);
+approot.appendChild(app);
+document.body.appendChild(approot);
+window.localStorage.setItem('md-curMaxIndex', 1000);
 // let shadowDOM = approot.attachShadow({mode: 'open'}); // Create a shadow root
 // shadowDOM.appendChild(app);
-document.body.appendChild(app);
 // document.body.appendChild(approot);
-window.localStorage.setItem('md-curMaxIndex', 1000);
 // Apply external styles to the shadow dom
 // const linkElem = document.createElement('link');
 // linkElem.setAttribute('rel', 'stylesheet');
@@ -33,8 +38,6 @@ const uniqueId= () => {
 
 
 /** Generate new note when click on extension icon */
-// let ShadowDomRoot = app.shadowRoot;
-
 const optionsUrl = chrome.extension.getURL('options.html')
 chrome.runtime.onMessage.addListener(
    function(request, sender, sendResponse) {
@@ -49,18 +52,20 @@ chrome.runtime.onMessage.addListener(
         });
         const {x, y} = initXY();
         ReactDOM.render(
-          <Note 
-            id={div.id} 
-            optionsPage={optionsUrl} 
-            x={x} y={y}            // allow customizing after i have DB
-            callback={deleteNote} 
-            defaultTheme='monokai' // allow customizing after i have options_page and DB
-            editorFontSize={14} // allow customizing after i have options_page and DB
-            editorFontFamily='"Consolas","monaco",monospace' // allow customizing after i have options_page and DB
-            // initialWidth // allow customizing after i have DB
-            // initialHeight // allow customizing after i have DB
-            // initialContent // allow customizing after i have DB
-          />, 
+          <StylesProvider jss={jss}>
+            <Note 
+              id={div.id} 
+              optionsPage={optionsUrl} 
+              x={x} y={y}            // allow customizing after i have DB
+              callback={deleteNote} 
+              defaultTheme='monokai' // allow customizing after i have options_page and DB
+              editorFontSize={14} // allow customizing after i have options_page and DB
+              editorFontFamily='"Consolas","monaco",monospace' // allow customizing after i have options_page and DB
+              // initialWidth // allow customizing after i have DB
+              // initialHeight // allow customizing after i have DB
+              // initialContent // allow customizing after i have DB
+            />
+          </StylesProvider>, 
           div
         );        
         app.appendChild(div);

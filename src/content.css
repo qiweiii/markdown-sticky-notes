@@ -19,12 +19,16 @@
     left: 0;
     right: 0;
     height: auto;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .markdown-sticky-note .handle {
     height: 24px;
+}
+
+.markdown-sticky-note .markdown-sticky-note-button svg {
+    margin: 2px 0px;
 }
 
 .markdown-sticky-note-paper {
@@ -32,7 +36,71 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
 }
+
+
+.markdown-sticky-note .markdown-sticky-note-button {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    padding: 0 0px;
+    width: 24px !important;
+    min-width: 24px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+    vertical-align: middle;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    color: rgb(var(--pure-material-onprimary-rgb, 80,80,80));
+    background-color: transparent;
+    box-shadow: none !important;
+    font-family: var(--pure-material-font, "Roboto", "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system);
+    overflow: hidden;
+    outline: none;
+    cursor: pointer;
+}
+.markdown-sticky-note .markdown-sticky-note-button::-moz-focus-inner {
+    border: none;
+}
+/* Overlay */
+.markdown-sticky-note .markdown-sticky-note-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+/* Ripple */
+.markdown-sticky-note .markdown-sticky-note-button::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    padding: 50%;
+    width: 24px ; /* Safari */
+    height: 24px; /* Safari */
+    background-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+    transition: opacity 1s, transform 0.5s;
+}
+/* Hover, Focus */
+.markdown-sticky-note .markdown-sticky-note-button:hover {
+    background: #c4c4c4 radial-gradient(circle, transparent 1%, #c4c4c4 1%) center/15000%;
+}
+/* end of button */
+
 
 .markdown-sticky-note .note-root {
     width: 0px;

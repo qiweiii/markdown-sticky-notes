@@ -2,14 +2,14 @@ import React from 'react';
 import "./content.css";
 import Draggable from 'react-draggable';
 import { Resizable } from 're-resizable';
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
 import ReactMarkdown from 'react-markdown';
 import Editor from './Editor';
 import CodeBlock from './CodeBlock';
 import CloseIcon from '@material-ui/icons/Close';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import IconButton from '@material-ui/core/IconButton';
+// import button from '@material-ui/core/button';
 import Popover from '@material-ui/core/Popover';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -244,23 +244,24 @@ Pretty neat, eh?
             minHeight={150}
             onResizeStop={this.onResizeStop}
           >
-            <Paper elevation={12} className="markdown-sticky-note-paper">
+            <div className="markdown-sticky-note-paper">
 
               {/* Note tool bar */}
               <div className="handle">
-                <IconButton onClick={this.handleDelete} size="small">
+                <button className="markdown-sticky-note-button" onClick={this.handleDelete} size="small">
                   <CloseIcon fontSize="small"/>
-                </IconButton>
-                {/* <IconButton size="small" onClick={this.handleMinimize}>
+                </button>
+                {/* <button size="small" onClick={this.handleMinimize}>
                   <MinimizeIcon fontSize="small"/>
-                </IconButton> */}
-                <IconButton 
+                </button> */}
+                <button 
+                  className="markdown-sticky-note-button"
                   aria-describedby={Boolean(this.state.anchorEl) ? 'setting-popover' : undefined} 
                   size="small"
                   onClick={this.handleSettingClick}
                 >
                   <SettingsIcon id="settingButton" fontSize="small"/>
-                </IconButton>
+                </button>
                 <Popover
                   id="setting-popover"
                   open={Boolean(this.state.anchorEl)}
@@ -292,7 +293,7 @@ Pretty neat, eh?
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl style={{zIndex:1, margin:5, width:110}}>
+                  <FormControl style={{zIndex:1, margin:5, width:100}}>
                     <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
                     <Select
                       labelId="fontsize-label"
@@ -327,13 +328,14 @@ Pretty neat, eh?
                     </Select>
                   </FormControl>
                 </Popover>
-                <IconButton 
+                <button 
+                  className="markdown-sticky-note-button"
                   aria-describedby={Boolean(this.state.anchorElHelp) ? 'help-popover' : undefined} 
                   size="small"
                   onClick={this.handleHelpClick}
                 >
                   <HelpOutlineIcon id="helpButton" fontSize="small"/>
-                </IconButton>
+                </button>
                 <Popover
                   id="help-popover"
                   open={Boolean(this.state.anchorElHelp)}
@@ -395,7 +397,7 @@ Pretty neat, eh?
                   />
                 )}
               </div>
-            </Paper>
+            </div>
           </Resizable>
         </Draggable>
       </div>
