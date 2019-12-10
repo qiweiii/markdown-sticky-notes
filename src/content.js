@@ -14,10 +14,11 @@ const jss = create({
   ...jssPreset(),
   insertionPoint: app
 });
+approot.className = "markdown-sticky-note-approot";
 app.className = "markdown-sticky-note";
 approot.appendChild(app);
 document.body.appendChild(approot);
-window.localStorage.setItem('md-curMaxIndex', 1000);
+window.localStorage.setItem('md-curMaxIndex', 1200);
 // let shadowDOM = approot.attachShadow({mode: 'open'}); // Create a shadow root
 // shadowDOM.appendChild(app);
 // document.body.appendChild(approot);
@@ -44,7 +45,7 @@ chrome.runtime.onMessage.addListener(
       if( request.message === "clicked_extension_action" ) {
         let div = document.createElement('div');
         div.id = uniqueId();
-        div.addEventListener('click', (e) => {
+        div.addEventListener('mousedown', (e) => {
           let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
           let el = document.getElementsByClassName('markdown-react-draggable'+div.id)[0];
           if (el) el.style.zIndex = curMaxZIndex++;
@@ -77,7 +78,8 @@ chrome.runtime.onMessage.addListener(
 /** remove note frrom DOM */
 const deleteNote = (id) => {
   ReactDOM.unmountComponentAtNode(document.getElementById(id));
-  window.localStorage.removeItem('md-curMaxIndex');
+  document.getElementsByClassName('markdown-sticky-note')[0].querySelector("div[id='1']").remove();
+  // window.localStorage.removeItem('md-curMaxIndex');
 }
 
 

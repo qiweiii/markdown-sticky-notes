@@ -1,8 +1,11 @@
 /* src/content.css */
+.hdtb-mitem {
+    height: auto;
+}
 
 .markdown-sticky-note {
     /* padding: 20px; */
-    z-index: 1000;
+    z-index: 1200;
     text-align: left;
     position: absolute;
     top: 0px;
@@ -28,11 +31,11 @@
 }
 
 .markdown-sticky-note .markdown-sticky-note-button svg {
-    margin: 2px 0px;
+    margin: 2px 0px !important;
 }
 
 .markdown-sticky-note-paper {
-    z-index: 1000;
+    z-index: 1200;
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -128,7 +131,7 @@
 
 .markdown-sticky-note .result {
     /* margin-left: 4px; */
-    height: 100%;
+    height: calc(100% - 24px);
     overflow: auto;
     /* font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif; */
     /* font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif; */
@@ -137,17 +140,17 @@
     background-color: #e0e0e0;
 }
 
-.markdown-sticky-note h6 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
-.markdown-sticky-note h5 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
-.markdown-sticky-note h4 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
-.markdown-sticky-note h3 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
-.markdown-sticky-note h2 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 20px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
-.markdown-sticky-note h1 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 23px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; }
-.markdown-sticky-note p { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
-.markdown-sticky-note li { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
-.markdown-sticky-note blockquote { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
-.markdown-sticky-note pre { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; }
-.markdown-sticky-note code { font-family: "markdown-stick-notes-family-source-code-pro"; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; }
+.markdown-sticky-note .note-pane .result h6 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result h5 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result h4 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result h3 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result h2 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 20px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result h1 { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 23px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 21px; }
+.markdown-sticky-note .note-pane .result p { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result li { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result blockquote { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; } 
+.markdown-sticky-note .note-pane .result pre { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; }
+.markdown-sticky-note .note-pane .result code { font-family: "markdown-stick-notes-family-source-code-pro"; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 21px; }
 
 /* .markdown-sticky-note .result > div {
     height: 100%;

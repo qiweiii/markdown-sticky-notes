@@ -22,7 +22,12 @@
       "css": [
         "/static/css/content.css"
       ],
-      "js": ["/static/js/content.js"]
+      "js": [
+        "/static/js/content.js"
+      ],
+      "exclude_matches": [
+        "*://material-ui.com/*"
+      ]
     }
   ],
   "web_accessible_resources":[

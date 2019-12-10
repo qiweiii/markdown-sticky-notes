@@ -2,22 +2,31 @@ import React from 'react';
 import "./content.css";
 import Draggable from 'react-draggable';
 import { Resizable } from 're-resizable';
-// import Paper from '@material-ui/core/Paper';
 import ReactMarkdown from 'react-markdown';
 import Editor from './Editor';
 import CodeBlock from './CodeBlock';
 import CloseIcon from '@material-ui/icons/Close';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-// import button from '@material-ui/core/button';
+import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import Popover from '@material-ui/core/Popover';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import Skeleton from '@material-ui/lab/Skeleton';
+
+// rn will have conflict when open Popover and ButtonBasse in pages that use material-ui
+// but still using material coz it's small and faster, also other library produce more conflicts...
+// maybe completely move setting&option button to options page in future...
+// OR implement in shadow DOM when i know how to use it
+
+// import { Popover } from 'antd';
+// import Popover from 'antd/es/popover';
+// import 'antd/es/popover/style/css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const themes = [
   '3024-day',
@@ -103,6 +112,8 @@ export default class Note extends React.Component {
       anchorEl: null,
       anchorElHelp: null,
       dragging: false,
+      // visible1: false,
+      // visible2: false,
       theme: props.defaultTheme,
       editorFontSize: props.editorFontSize,
       editorFontFamily: props.editorFontFamily,
@@ -123,26 +134,6 @@ Changes are automatically rendered as you type.
 </blockquote>
 
 ## How about some code?
-
-\`\`\`js
-var React = require('react');
-var Markdown = require('react-markdown');
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-);
-\`\`\`
-
-Pretty neat, eh?
-
-## Tables?
-
-| Feature   | Support |
-| --------- | ------- |
-| tables    | ✔ |
-| alignment | ✔ |
-| wewt      | ✔ |
-## More info?
 `
     };
     this.handleMarkdownChange = this.handleMarkdownChange.bind(this)
@@ -178,7 +169,7 @@ Pretty neat, eh?
     // this.setState({markdownSrc: evt});
   }
   handleDelete = () => {
-    console.log("delete" + this.state.id)
+    console.log("delete " + this.state.id)
     this.props.callback(this.state.id);
   }
   handleSettingClose = () => {
@@ -203,6 +194,7 @@ Pretty neat, eh?
   };
   handleStart = (e) => { // draggable
     // this.node.style.display = "none"; 
+    if (e.target.id==="settingButton"||e.target.id==="helpButton") return;
     this.setState({dragging: true}); // a dump way to map dragging smoother
   }
   handleStop = (e, d) => { // draggable
@@ -222,6 +214,17 @@ Pretty neat, eh?
       }
     });
   }
+  // handleVisible1Change = visible => { // setting popover
+  //   this.setState({ visible1: visible });
+  // };
+  // handleVisible2Change = visible => { // help popover
+  //   this.setState({ visible2: visible });
+  // };
+  // renderSettingPopOver = () => {
+  //   // return (
+ 
+  //   // )
+  // }
 
   render() {
     return (
@@ -263,7 +266,11 @@ Pretty neat, eh?
                   <SettingsIcon id="settingButton" fontSize="small"/>
                 </button>
                 <Popover
-                  id="setting-popover"
+                  // id="setting-popover"
+                  // content={this.renderSettingPopOver}
+                  // trigger="click"
+                  // visible={this.state.visible1}
+                  // onVisibleChange={this.handleVisible1Change}
                   open={Boolean(this.state.anchorEl)}
                   anchorEl={this.state.anchorEl}
                   onClose={this.handleSettingClose}
@@ -336,6 +343,26 @@ Pretty neat, eh?
                 >
                   <HelpOutlineIcon id="helpButton" fontSize="small"/>
                 </button>
+                {/* <Popover
+                  id="help-popover"
+                  style={{zIndex: 1500}}
+                  content={
+                    <div>
+                    <a href="https://github.github.com/gfm/" rel="noopener noreferrer" target="_blank">
+                      How to use markdown?<OpenInNewIcon fontSize='small'/>
+                    </a>
+                    <br/>
+                    <a href={this.props.optionsPage} rel="noopener noreferrer" target="_blank">
+                      Options Page<OpenInNewIcon fontSize='small'/>
+                    </a>
+                    </div>
+                  }
+                  trigger="click"
+                  visible={this.state.visible2}
+                  onVisibleChange={this.handleVisible2Change}
+                  >
+                
+                </Popover> */}
                 <Popover
                   id="help-popover"
                   open={Boolean(this.state.anchorElHelp)}
