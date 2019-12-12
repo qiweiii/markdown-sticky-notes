@@ -75,6 +75,7 @@ class CodeMirrorEditor extends React.Component {
     const isTextArea = this.props.forceTextArea || IS_MOBILE;
     if (!isTextArea) {
       this.editor = CodeMirror.fromTextArea(this.editorRef.current, {
+        value: this.props.value,
         lineWrapping: true,
         autofocus: true,
         mode: this.props.mode,

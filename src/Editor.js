@@ -4,7 +4,7 @@ import CodeMirror from './CodeMirror'
 
 function Editor(props) {
   return (
-    <form className="editor pure-form">
+    <div>
       <CodeMirror 
         mode="markdown" 
         theme={props.theme} 
@@ -13,7 +13,7 @@ function Editor(props) {
         fontSize={props.fontSize}
         fontFamily={props.fontFamily}
       />
-    </form>
+    </div>
   )
 }
 

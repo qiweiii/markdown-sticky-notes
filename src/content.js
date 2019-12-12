@@ -5,9 +5,16 @@ import ReactDOM from 'react-dom';
 import Note from './Note';
 import { StylesProvider, jssPreset } from '@material-ui/styles';
 import { create } from 'jss';
+import {
+  constructAndInitData,
+  updateData,
+  removeNoteFromStorage,
+  saveItem,
+} from './storage.js';
 
 
 /** Initialise parent div */
+// let shadowDOM = approot.attachShadow({mode: 'open'}); // Create a shadow root
 const approot = document.createElement('div');
 const app = document.createElement('div');
 const jss = create({
@@ -18,70 +25,85 @@ approot.className = "markdown-sticky-note-approot";
 app.className = "markdown-sticky-note";
 approot.appendChild(app);
 document.body.appendChild(approot);
-window.localStorage.setItem('md-curMaxIndex', 1200);
-// let shadowDOM = approot.attachShadow({mode: 'open'}); // Create a shadow root
-// shadowDOM.appendChild(app);
-// document.body.appendChild(approot);
-// Apply external styles to the shadow dom
-// const linkElem = document.createElement('link');
-// linkElem.setAttribute('rel', 'stylesheet');
-// linkElem.setAttribute('href', chrome.runtime.getURL("/static/css/content.css"));
-// // Attach the created element to the shadow dom
-// shadowDOM.appendChild(linkElem);
+window.localStorage.setItem('md-curMaxIndex', 1300); // if set very high will cause modal to fall behind..
+// chrome.storage.local.clear(); // for testing & dev
 
 
-/** Used to generate unique IDs. */
-let idCounter = 0; // later will need to record this var in storage or DB...
-const uniqueId= () => {
-  let id = ++idCounter;
-  return id.toString();
-}
-
+// render saved notes for current url
+const url = window.location.href;
+chrome.storage.local.get([url], function(result) {
+  // console.log("existing notes: ", result[url])
+  if (typeof result[url] === 'undefined') return; // if empty
+  for (let note of result[url]) {
+    renderNote(note.id, note.x, note.y, note.width, note.height, note.content, note.theme, note.font, note.fontSize);
+  }
+});
 
 /** Generate new note when click on extension icon */
 const optionsUrl = chrome.extension.getURL('options.html')
 chrome.runtime.onMessage.addListener(
-   function(request, sender, sendResponse) {
+  function(request, sender, sendResponse) {
       if( request.message === "clicked_extension_action" ) {
-        let div = document.createElement('div');
-        div.id = uniqueId();
-        div.addEventListener('mousedown', (e) => {
-          let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
-          let el = document.getElementsByClassName('markdown-react-draggable'+div.id)[0];
-          if (el) el.style.zIndex = curMaxZIndex++;
-          window.localStorage.setItem('md-curMaxIndex', curMaxZIndex);
-        });
-        const {x, y} = initXY();
-        ReactDOM.render(
-          <StylesProvider jss={jss}>
-            <Note 
-              id={div.id} 
-              optionsPage={optionsUrl} 
-              x={x} y={y}            // allow customizing after i have DB
-              callback={deleteNote} 
-              defaultTheme='monokai' // allow customizing after i have options_page and DB
-              editorFontSize={14} // allow customizing after i have options_page and DB
-              editorFontFamily='"Consolas","monaco",monospace' // allow customizing after i have options_page and DB
-              // initialWidth // allow customizing after i have DB
-              // initialHeight // allow customizing after i have DB
-              // initialContent // allow customizing after i have DB
-            />
-          </StylesProvider>, 
-          div
-        );        
-        app.appendChild(div);
+        // brand new note here
+        chrome.storage.local.get('id', function(result) {
+          // console.log("id: ", result["id"])
+          let id = ++result['id'];  // ID will be unique across all notes (simpler to implement)
+          let {x, y} = initXY();
+          // get styling default values from storage later when have options page...
+          renderNote(id.toString(), x, y, 200, 250, "", 'monokai', '"Consolas","monaco",monospace', 14);
+          constructAndInitData(x,y,id.toString()); // save initial empty note data to storage
+          saveItem({id: id});
+        })
       }
+      // send message to background.js for google analytics
+      chrome.runtime.sendMessage({action: "generated_new_note", url: url});
    }
 );
 
+/** render a note */
+const renderNote = (id, x, y, width, height, content, theme, font, fontSize) => {
+  let div = document.createElement('div');
+  app.appendChild(div);
+  div.id = id
+  div.addEventListener('mousedown', (e) => {
+    let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
+    let el = document.getElementsByClassName('markdown-react-draggable'+id)[0];
+    if (el) el.style.zIndex = curMaxZIndex++;
+    // console.log(curMaxZIndex);
+    window.localStorage.setItem('md-curMaxIndex', curMaxZIndex);
+  });
+  ReactDOM.render(
+    <StylesProvider jss={jss}>
+      <Note 
+        id={id} 
+        optionsPage={optionsUrl} 
+        x={x} y={y}
+        width={width}
+        height={height}
+        content={content}
+        deleteNoteFn={deleteNote}
+        updateNoteFn={updateNote}
+        defaultTheme={theme}
+        editorFontSize={fontSize}
+        editorFontFamily={font}
+      />
+    </StylesProvider>, 
+    div
+  );
+}
 
-/** remove note frrom DOM */
+/** update note in storage */
+const updateNote = (updatedData, id) => {
+  updateData(updatedData, id);
+}
+
+/** remove note from DOM & storage */
 const deleteNote = (id) => {
   ReactDOM.unmountComponentAtNode(document.getElementById(id));
   document.getElementsByClassName('markdown-sticky-note')[0].querySelector(`div[id="${id}"]`).remove();
-  // window.localStorage.removeItem('md-curMaxIndex');
+  // remove from storage
+  removeNoteFromStorage(id);
 }
-
 
 /** Generate initial position */
 const initXY = () => {

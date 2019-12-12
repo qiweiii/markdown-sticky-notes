@@ -26,7 +26,10 @@
         "/static/js/content.js"
       ],
       "exclude_matches": [
-        "*://material-ui.com/*"
+        "*://material-ui.com/*",
+        "*://developers.google.com/*",
+        "https://firebase.google.com/*",
+        "https://cloud.google.com/*"
       ]
     }
   ],
@@ -45,5 +48,5 @@
     "fonts/Space_Mono/SpaceMono-Regular.ttf",
     "fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf"
   ],
-  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }

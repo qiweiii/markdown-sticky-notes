@@ -17,9 +17,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import Skeleton from '@material-ui/lab/Skeleton';
 
-// rn will have conflict when open Popover and ButtonBasse in pages that use material-ui
-// but still using material coz it's small and faster, also other library produce more conflicts...
-// maybe completely move setting&option button to options page in future...
+// right now popover will have conflict with Paper, Modal and ButtonBasse in pages that use material-ui
+// this is beecause these are appended outside of my approot div, i have no way to control them
+// But still using them coz it's small and faster, also other libraries produce more conflicts than material...
+// maybe completely move setting & option button in tool bar to options_page in future...
 // OR implement in shadow DOM when i know how to use it
 
 // import { Popover } from 'antd';
@@ -102,39 +103,22 @@ export default class Note extends React.Component {
     super(props)
     this.state = {
       noteDim: {
-        x: 200, y: 250 // width and height from resizable
+        x: props.width, y: props.height // width and height from resizable
       },
       position: {
-        x: props.x, y: props.y // x,y position from draggable
+        x: props.x, y: props.y // x,y position for draggable
       },
       id: props.id,
       openSetting: false,
       anchorEl: null,
       anchorElHelp: null,
       dragging: false,
-      // visible1: false,
-      // visible2: false,
+
       theme: props.defaultTheme,
       editorFontSize: props.editorFontSize,
       editorFontFamily: props.editorFontFamily,
       mode: 0, // 0 for editting, 1 for display
-      markdownSrc: `# Live demo
-
-Changes are automatically rendered as you type.
-
-## Table of Contents
-
-* Renders actual, "native" React DOM elements
-* Allows you to escape or skip HTML (try toggling the checkboxes above)
-* If you escape or skip the HTML, no \`dangerouslySetInnerHTML\` is used! Yay!
-
-## HTML block below
-<blockquote>
-  This blockquote will change based on the HTML settings above.
-</blockquote>
-
-## How about some code?
-`
+      markdownSrc: props.content
     };
     this.handleMarkdownChange = this.handleMarkdownChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -167,10 +151,26 @@ Changes are automatically rendered as you type.
   handleMarkdownChange(evt) {
     this.setState({markdownSrc: evt.target.value})
     // this.setState({markdownSrc: evt});
+    // save immediately when change, maybe set a small interval?
+    this.updateStorage();
   }
-  handleDelete = () => {
-    console.log("delete " + this.state.id)
-    this.props.callback(this.state.id);
+  handleDelete = () => { // arrow function to define your method so it is lexically bound
+    // console.log("delete " + this.state.id)
+    this.props.deleteNoteFn(this.state.id);
+  }
+  updateStorage = () => {
+    let updatedData = {
+      id: this.state.id,
+      x: this.state.position.x,
+      y: this.state.position.y,
+      width: this.state.noteDim.x,
+      height: this.state.noteDim.y,
+      content: this.state.markdownSrc,
+      theme: this.state.theme,
+      font: this.state.editorFontFamily,
+      fontSize: this.state.editorFontSize
+    }
+    this.props.updateNoteFn(updatedData, this.state.id);
   }
   handleSettingClose = () => {
     this.setState({
@@ -193,18 +193,18 @@ Changes are automatically rendered as you type.
     });
   };
   handleStart = (e) => { // draggable
-    // this.node.style.display = "none"; 
     if (e.target.id==="settingButton"||e.target.id==="helpButton") return;
-    this.setState({dragging: true}); // a dump way to map dragging smoother
+    this.setState({dragging: true}); // a dump way to make dragging smoother
   }
   handleStop = (e, d) => { // draggable
     this.setState({dragging: false});
     this.setState({
       position: {
-        x: this.state.position.x + d.x,
-        y: this.state.position.y+ d.y,
+        x: d.x,
+        y: d.y,
       }
     });
+    this.updateStorage();
   }
   onResizeStop = (e, direction, ref, d) => {
     this.setState({
@@ -213,13 +213,29 @@ Changes are automatically rendered as you type.
         y: this.state.noteDim.y+ d.height,
       }
     });
+    this.updateStorage();
+  }
+  handleChangeTheme = (e) => {
+    this.setState({
+      theme:e.target.value
+    }, () => this.updateStorage())
+  }
+  handleChangeFont = (e) => {
+    this.setState({
+      editorFontFamily:e.target.value
+    }, () => this.updateStorage())
+  }
+  handleChangeFontSize = (e) => {
+    this.setState({
+      editorFontSize:e.target.value
+    }, () => this.updateStorage())
   }
 
   render() {
     return (
       <div className="note-root">
         <Draggable 
-          bounds="body"
+          // bounds="body"
           handle=".handle" 
           onStart={this.handleStart}
           onStop={this.handleStop}
@@ -229,8 +245,8 @@ Changes are automatically rendered as you type.
         >
           <Resizable 
             defaultSize={{
-              width: 200,
-              height: 250,
+              width: this.state.noteDim.x,
+              height: this.state.noteDim.y,
             }}
             minWidth={150}
             minHeight={150}
@@ -255,11 +271,12 @@ Changes are automatically rendered as you type.
                   <SettingsIcon id="settingButton" fontSize="small"/>
                 </button>
                 <Popover
-                  // id="setting-popover"
+                  id="setting-popover"
                   // content={this.renderSettingPopOver}
                   // trigger="click"
                   // visible={this.state.visible1}
                   // onVisibleChange={this.handleVisible1Change}
+                  disableScrollLock={true}
                   open={Boolean(this.state.anchorEl)}
                   anchorEl={this.state.anchorEl}
                   onClose={this.handleSettingClose}
@@ -278,7 +295,7 @@ Changes are automatically rendered as you type.
                       labelId="theme-label"
                       id="mutiple-theme"
                       value={this.state.theme}
-                      onChange={(e) => {this.setState({theme:e.target.value})}}
+                      onChange={this.handleChangeTheme}
                       input={<Input />}
                       MenuProps={MenuProps}
                     >
@@ -295,7 +312,7 @@ Changes are automatically rendered as you type.
                       labelId="fontsize-label"
                       id="mutiple-fontsize"
                       value={this.state.editorFontSize}
-                      onChange={(e) => {this.setState({editorFontSize:e.target.value})}}
+                      onChange={this.handleChangeFontSize}
                       input={<Input />}
                       MenuProps={MenuProps}
                     >
@@ -307,12 +324,12 @@ Changes are automatically rendered as you type.
                     </Select>
                   </FormControl>
                   <FormControl style={{zIndex:1, margin:5, width:100}}>
-                    <InputLabel id="fontsize-label">Editor Font</InputLabel>
+                    <InputLabel id="fontfamily-label">Editor Font</InputLabel>
                     <Select
-                      labelId="fontsize-label"
-                      id="mutiple-fontsize"
+                      labelId="fontfamily-label"
+                      id="mutiple-fontfamily"
                       value={this.state.editorFontFamily}
-                      onChange={(e) => {this.setState({editorFontFamily:e.target.value})}}
+                      onChange={this.handleChangeFont}
                       input={<Input />}
                       MenuProps={MenuProps}
                     >
@@ -364,9 +381,10 @@ Changes are automatically rendered as you type.
                     vertical: 'bottom',
                     horizontal: 'left',
                   }}
+                  disableScrollLock={true}
                 >
                   <div>
-                    <MenuItem key={1} component="a" href="https://github.github.com/gfm/" target="_blank">
+                    <MenuItem key={1} component="a" href="https://guides.github.com/features/mastering-markdown/" target="_blank">
                       How to use markdown? <OpenInNewIcon fontSize='small'/>
                     </MenuItem>
                     <MenuItem key={2} component="a" href={this.props.optionsPage} target="_blank" >
