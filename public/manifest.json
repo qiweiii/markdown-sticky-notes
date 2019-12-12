@@ -1,6 +1,6 @@
 {
-  "short_name": "markdown-stick-notes",
-  "name": "Markdown Stick Notes",
+  "short_name": "markdown-sticky-notes",
+  "name": "Markdown Sticky Notes",
   "version": "0.0.1",
   "manifest_version": 2,
   "background": {
