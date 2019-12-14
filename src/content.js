@@ -46,7 +46,7 @@ chrome.runtime.onMessage.addListener(
       if( request.message === "clicked_extension_action" ) {
         // brand new note here
         chrome.storage.local.get('id', function(result) {
-          console.log("id: ", result["id"])
+          // console.log("id: ", result["id"])
           let id = ++result['id'];  // ID will be unique across all notes (simpler to implement)
           let {x, y} = initXY();
           chrome.storage.local.get('defaultTheme', function(themeR) {

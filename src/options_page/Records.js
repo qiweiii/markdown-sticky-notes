@@ -60,7 +60,7 @@ class Preference extends React.Component {
             }
       }
       this.setState({urls: urls});
-      console.log(urls);
+      // console.log(urls);
       // fill in checked array
       let array = new Array(this.state.urls.length).fill(false);
       this.setState({checked: array});
@@ -82,7 +82,7 @@ class Preference extends React.Component {
         items.push(this.state.urls[i]);
       }
     }
-    console.log(items);
+    // console.log(items);
     if (items.length === 0) {
       this.handleOpenMessage("No items selected")
     } else {
