@@ -7,8 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 // import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import themes from './themes.js';
-import fonts from './fonts.js';
+import themes from '../themes.js';
+import fonts from '../fonts.js';
 import { withStyles } from '@material-ui/core/styles';
 
 
