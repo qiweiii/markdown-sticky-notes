@@ -127,7 +127,6 @@
 .markdown-sticky-note .editor-pane {
     height: 100%;
     width: 100%;
-    /* word-break: break-all; */
     overflow: auto;
 }
 
@@ -136,7 +135,6 @@
     padding: 2% 3%;
     height: calc(100% - 24px);
     overflow: auto;
-    /* font-size: 16px; */
     line-height: 1.5em;
     background-color: #e0e0e0;
 }

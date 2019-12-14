@@ -94,7 +94,6 @@ export default class Note extends React.Component {
   }
   handleMarkdownChange(evt) {
     this.setState({markdownSrc: evt.target.value})
-    // this.setState({markdownSrc: evt});
     // save immediately when change, maybe set a small interval?
     this.updateStorage();
   }
@@ -203,9 +202,6 @@ export default class Note extends React.Component {
                 <button className="markdown-sticky-note-button" onClick={this.handleDelete} size="small">
                   <CloseIcon fontSize="small"/>
                 </button>
-                {/* <button size="small" onClick={this.handleMinimize}>
-                  <MinimizeIcon fontSize="small"/>
-                </button> */}
                 <button 
                   className="markdown-sticky-note-button"
                   aria-describedby={Boolean(this.state.anchorEl) ? 'setting-popover' : undefined} 
@@ -216,10 +212,6 @@ export default class Note extends React.Component {
                 </button>
                 <Popover
                   id="setting-popover"
-                  // content={this.renderSettingPopOver}
-                  // trigger="click"
-                  // visible={this.state.visible1}
-                  // onVisibleChange={this.handleVisible1Change}
                   disableScrollLock={true}
                   open={Boolean(this.state.anchorEl)}
                   anchorEl={this.state.anchorEl}
@@ -293,25 +285,6 @@ export default class Note extends React.Component {
                 >
                   <HelpOutlineIcon id="helpButton" fontSize="small"/>
                 </button>
-                {/* <Popover
-                  id="help-popover"
-                  style={{zIndex: 1500}}
-                  content={
-                    <div>
-                    <a href="https://github.github.com/gfm/" rel="noopener noreferrer" target="_blank">
-                      How to use markdown?<OpenInNewIcon fontSize='small'/>
-                    </a>
-                    <br/>
-                    <a href={this.props.optionsPage} rel="noopener noreferrer" target="_blank">
-                      Options Page<OpenInNewIcon fontSize='small'/>
-                    </a>
-                    </div>
-                  }
-                  trigger="click"
-                  visible={this.state.visible2}
-                  onVisibleChange={this.handleVisible2Change}
-                  >
-                </Popover> */}
                 <Popover
                   id="help-popover"
                   open={Boolean(this.state.anchorElHelp)}
