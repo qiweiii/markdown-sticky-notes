@@ -40,19 +40,26 @@ chrome.storage.local.get([url], function(result) {
 });
 
 /** Generate new note when click on extension icon */
-const optionsUrl = chrome.extension.getURL('options.html')
+const optionsUrl = chrome.extension.getURL('index.html');
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
       if( request.message === "clicked_extension_action" ) {
         // brand new note here
         chrome.storage.local.get('id', function(result) {
-          // console.log("id: ", result["id"])
+          console.log("id: ", result["id"])
           let id = ++result['id'];  // ID will be unique across all notes (simpler to implement)
           let {x, y} = initXY();
-          // get styling default values from storage later when have options page...
-          renderNote(id.toString(), x, y, 200, 250, "", 'monokai', '"Consolas","monaco",monospace', 14);
-          constructAndInitData(x,y,id.toString()); // save initial empty note data to storage
-          saveItem({id: id});
+          chrome.storage.local.get('defaultTheme', function(themeR) {
+            let theme = themeR.defaultTheme;
+            chrome.storage.local.get("defaultEditorFontFamily", function(fontR) {
+              let font = fontR.defaultEditorFontFamily;
+              chrome.storage.local.get("defaultEditorFontSize", function(fontSize) {
+                renderNote(id.toString(), x, y, 200, 250, "", theme, font, fontSize.defaultEditorFontSize);
+                constructAndInitData(x,y,id.toString()); // save initial empty note data to storage
+                saveItem({id: id});
+              })
+            })
+          })
         })
       }
       // send message to background.js for google analytics

@@ -14,7 +14,7 @@
     "64": "notes64.png",
     "128": "notes128.png"
   },
-  "options_page": "options.html",
+  "options_page": "index.html",
   "browser_action": {},
   "content_scripts" : [
     {
@@ -35,7 +35,7 @@
   ],
   "web_accessible_resources":[
     "/static/css/content.css",
-    "options.html",
+    "index.html",
     "fonts/Anonymous_Pro/AnonymousPro-Regular.ttf",
     "fonts/B612_Mono/B612Mono-Regular.ttf",
     "fonts/Fira_Code/static/FiraCode-Regular.ttf",

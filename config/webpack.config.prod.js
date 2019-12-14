@@ -58,7 +58,7 @@ module.exports = {
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
   entry: {
-    // app: [require.resolve('./polyfills'), paths.appIndexJs],
+    app: [require.resolve('./polyfills'), paths.appIndexJs],
     content: [require.resolve('./polyfills'), './src/content.js']
   },
   optimization: {
@@ -325,7 +325,7 @@ module.exports = {
       },
       minify: true,
       // For unknown URLs, fallback to the index page
-      navigateFallback: publicUrl + '/index.html',
+      navigateFallback: publicUrl + '/options.html', // qiwei modified this line
       // Ignores URLs starting from /__ (useful for Firebase):
       // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
       navigateFallbackWhitelist: [/^(?!\/__).*/],

@@ -20,6 +20,23 @@
   font-size: large;
 }
 
+html,body {
+  height: 100%;
+}
+
+.footer-div {
+  position: relative;
+  height: 100%;
+}
+
+.footer {
+  position: absolute;
+  margin: 10px;
+  bottom: 10px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
 /* @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

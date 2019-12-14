@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(function( request, sender, sendResponse ) {
 });
 
 chrome.runtime.onInstalled.addListener(function(details) {
-   if (details.OnInstalledReason === "install") {
+   if (details.reason === "install") {
       chrome.storage.local.set({id: 0}, function() {
         console.log("set initial id");
       });

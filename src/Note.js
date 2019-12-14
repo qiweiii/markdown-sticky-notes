@@ -16,7 +16,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import Skeleton from '@material-ui/lab/Skeleton';
-
+import themes from './themes.js';
+import fonts from './fonts.js';
 // right now popover will have conflict with Paper, Modal and ButtonBasse in pages that use material-ui
 // this is beecause these are appended outside of my approot div, i have no way to control them
 // But still using them coz it's small and faster, also other libraries produce more conflicts than material...
@@ -29,64 +30,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const themes = [
-  '3024-day',
-  '3024-night',
-  'abcdef',
-  'base16-dark',
-  'bespin',
-  'base16-light',
-  'blackboard',
-  'cobalt',
-  'duotone-dark',
-  'duotone-light',
-  'eclipse',
-  'elegant',
-  'erlang-dark',
-  'isotope',
-  'lesser-dark',
-  'liquibyte',
-  'lucario',
-  'material',
-  'material-darker',
-  'material-palenight',
-  'material-ocean',
-  'mbo',
-  'mdn-like',
-  'midnight',
-  'monokai',
-  'neat',
-  'neo',
-  'night',
-  'nord',
-  'oceanic-next',
-  'panda-syntax',
-  'paraiso-dark',
-  'paraiso-light',
-  'railscasts',
-  'rubyblue',
-  'seti',
-  'shadowfox',
-  'solarized',
-  'the-matrix',
-  'tomorrow-night-bright',
-  'tomorrow-night-eighties',
-  'ttcn',
-  'twilight',
-  'vibrant-ink',
-  'yonce',
-];
-const fonts = {
-  "Consolas": `"Consolas", "monaco", monospace`,
-  "Courier New": `"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace`,
-  "Anonymous Pro": "markdown-stick-notes-family-anonymous-pro",
-  "B612 Mono": "markdown-stick-notes-family-b612-mono",
-  "Inconsolata": "markdown-stick-notes-family-inconsolata",
-  "PT Mono": "markdown-stick-notes-family-pt-mono",
-  "Roboto Mono": "markdown-stick-notes-family-roboto-mono",
-  "Source Code Pro": "markdown-stick-notes-family-source-code-pro",
-  "Space Mono": "markdown-stick-notes-family-space-mono",
-};
+
 const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 5;
 const MenuProps = {
