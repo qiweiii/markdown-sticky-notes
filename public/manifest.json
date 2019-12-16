@@ -18,7 +18,7 @@
   "browser_action": {},
   "content_scripts" : [
     {
-      "matches": [ "<all_urls>" ],
+      "matches": [ "https://*/*", "http://*/*" ],
       "css": [
         "/static/css/content.css"
       ],
@@ -29,8 +29,7 @@
         "*://material-ui.com/*",
         "*://developers.google.com/*",
         "https://firebase.google.com/*",
-        "https://cloud.google.com/*",
-        "chrome-extension://*"
+        "https://cloud.google.com/*"
       ]
     }
   ],
