@@ -1,2 +1,8 @@
 # markdown-sticky-notes
-Chrome extension - markdwon sticky notes
+
+## Features
+
+- Draggable
+- Resizable
+- Save as you type
+- Multiple editor themes, fonts
