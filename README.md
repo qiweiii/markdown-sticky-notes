@@ -18,5 +18,4 @@ Go to [chrome://extensions/](chrome://extensions/),click on "load unpacked", cho
 
 ## TODO
 
-- Reimplement popups without material-ui, so it won't have conflicts with pages that use material-ui
-- Add styles for rendered result
+- Reimplement popups without material-ui OR move them to options_page, so they won't have conflicts with pages that use material-ui

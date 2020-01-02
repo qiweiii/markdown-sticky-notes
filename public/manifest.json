@@ -1,11 +1,12 @@
 {
   "short_name": "markdown-sticky-notes",
   "name": "Markdown Sticky Notes",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "manifest_version": 2,
+  "description": "A markdown sticky note that can be used in web pages",
   "background": {
     "scripts": ["app/background.js"],
-    "persistent": true
+    "persistent": false
   },
   "permissions": ["storage", "tabs"],
   "icons": {
