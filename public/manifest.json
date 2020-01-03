@@ -3,7 +3,7 @@
   "name": "Markdown Sticky Notes",
   "version": "0.0.5",
   "manifest_version": 2,
-  "description": "A markdown sticky note that can be used in web pages (please refresh the current page when extension does not work (could be caused by updates)",
+  "description": "A markdown sticky note that can be used in web pages",
   "background": {
     "scripts": ["app/background.js"],
     "persistent": false
