@@ -27,7 +27,7 @@
         "/static/js/content.js"
       ],
       "exclude_matches": [
-        "*://developers.google.com/*",
+        "*://developers.google.com/*"
       ]
     }
   ],
