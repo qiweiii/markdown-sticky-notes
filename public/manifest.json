@@ -1,9 +1,9 @@
 {
   "short_name": "markdown-sticky-notes",
   "name": "Markdown Sticky Notes",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "manifest_version": 2,
-  "description": "A markdown sticky note that can be used in web pages",
+  "description": "A markdown sticky note that can be used in web pages (please refresh the current page when extension does not work (could be caused by updates)",
   "background": {
     "scripts": ["app/background.js"],
     "persistent": false
