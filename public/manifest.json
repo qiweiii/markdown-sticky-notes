@@ -27,10 +27,7 @@
         "/static/js/content.js"
       ],
       "exclude_matches": [
-        "*://material-ui.com/*",
         "*://developers.google.com/*",
-        "https://firebase.google.com/*",
-        "https://cloud.google.com/*"
       ]
     }
   ],
