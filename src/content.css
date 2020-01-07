@@ -46,6 +46,28 @@
     border-radius: 6px;
 }
 
+.markdown-setting-popover label {
+    font-size: 14px;
+}
+.markdown-setting-popover div  {
+    font-size: 14px;
+}
+.markdown-setting-popover div svg {
+    font-size: 14px;
+}
+.markdown-help-popover a {
+    font-size: 14px;
+}
+.markdown-help-popover a svg {
+    font-size: 14px;
+}
+ul .markdown-setting-select {
+    font-size: 14px;
+}
+
+.markdown-sticky-note-button svg {
+    font-size: 18px;
+}
 
 .markdown-sticky-note .markdown-sticky-note-button {
     position: relative;

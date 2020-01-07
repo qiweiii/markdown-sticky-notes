@@ -16,7 +16,7 @@ Some fixes.
 
 - fix typos in comments
 
-## [0.0.5] - 2020-01-xx
+## [0.0.5] - 2020-01-06
 
 Bug fixes.
 
@@ -27,3 +27,15 @@ Bug fixes.
 #### Fixed
 
 - Extension not working after a while, i mistakenly put `browserAction.onClicked` listener inside `onInstall` block, so it stopped working after i restart the browser.
+
+## [0.0.6] - 2020-01-07
+
+Bug fixes.
+
+#### Added
+
+#### Changed
+
+#### Fixed
+
+- Tool bar font-size break on some pages. (inherited font-size from main page)

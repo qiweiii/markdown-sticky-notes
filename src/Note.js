@@ -211,6 +211,7 @@ export default class Note extends React.Component {
                   <SettingsIcon id="settingButton" fontSize="small"/>
                 </button>
                 <Popover
+                  className="markdown-popover"
                   id="setting-popover"
                   disableScrollLock={true}
                   open={Boolean(this.state.anchorEl)}
@@ -225,7 +226,7 @@ export default class Note extends React.Component {
                     horizontal: 'left',
                   }}
                 >
-                  <FormControl style={{zIndex:1, margin:5, width:100}}>
+                  <FormControl style={{zIndex:1, margin:5, width:100}} className="markdown-setting-popover">
                     <InputLabel id="theme-label">Editor Theme</InputLabel>
                     <Select
                       labelId="theme-label"
@@ -236,13 +237,13 @@ export default class Note extends React.Component {
                       MenuProps={MenuProps}
                     >
                       {themes.map(name => (
-                        <MenuItem key={name} value={name} >
+                        <MenuItem key={name} value={name} className="markdown-setting-select">
                           {name}
                         </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl style={{zIndex:1, margin:5, width:100}}>
+                  <FormControl style={{zIndex:1, margin:5, width:100}} className="markdown-setting-popover">
                     <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
                     <Select
                       labelId="fontsize-label"
@@ -253,13 +254,13 @@ export default class Note extends React.Component {
                       MenuProps={MenuProps}
                     >
                       {Array.from(new Array(40), (x,i) => i + 9).map(size => (
-                        <MenuItem key={size} value={size} >
+                        <MenuItem key={size} value={size} className="markdown-setting-select">
                           {size}
                         </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl style={{zIndex:1, margin:5, width:100}}>
+                  <FormControl style={{zIndex:1, margin:5, width:100}} className="markdown-setting-popover">
                     <InputLabel id="fontfamily-label">Editor Font</InputLabel>
                     <Select
                       labelId="fontfamily-label"
@@ -270,7 +271,7 @@ export default class Note extends React.Component {
                       MenuProps={MenuProps}
                     >
                       {Object.entries(fonts).map(([font, family]) => (
-                        <MenuItem key={font} value={family} >
+                        <MenuItem key={font} value={family} className="markdown-setting-select">
                           {font}
                         </MenuItem>
                       ))}
@@ -300,7 +301,7 @@ export default class Note extends React.Component {
                   }}
                   disableScrollLock={true}
                 >
-                  <div>
+                  <div className="markdown-help-popover">
                     <MenuItem key={1} component="a" href="https://guides.github.com/features/mastering-markdown/" target="_blank">
                       How to use markdown? <OpenInNewIcon fontSize='small'/>
                     </MenuItem>
