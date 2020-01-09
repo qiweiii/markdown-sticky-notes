@@ -32,10 +32,11 @@ Bug fixes.
 
 - Tool bar font-size break on some pages. (inherited font-size from main page)
 
-## [0.0.7] - 2020-01-09
+## [0.0.8] - 2020-01-09
 
 Bug fixes.
 
 #### Fixed
 
 - Fixed CSS for ordered list items displayed as unordered items.
+- Fixed CSS of inline code tag, ul/ol indentation, change all rem to em.
