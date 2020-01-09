@@ -208,7 +208,8 @@ ul .markdown-setting-select {
     margin-inline-end: 0px;
 }
 .markdown-sticky-note .note-pane .result p { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400;} 
-.markdown-sticky-note .note-pane .result li { list-style-type: circle; display: list-item; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400;} 
+.markdown-sticky-note .note-pane .result ul li { list-style-type: circle; display: list-item; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400;} 
+.markdown-sticky-note .note-pane .result ol li { list-style-type: decimal; display: list-item; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400;} 
 .markdown-sticky-note .note-pane .result blockquote { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400;} 
 .markdown-sticky-note .note-pane .result pre { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400;}
 .markdown-sticky-note .note-pane .result code { font-family: "markdown-stick-notes-family-source-code-pro"; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400;}

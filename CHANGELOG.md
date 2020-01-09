@@ -20,10 +20,6 @@ Some fixes.
 
 Bug fixes.
 
-#### Added
-
-#### Changed
-
 #### Fixed
 
 - Extension not working after a while, i mistakenly put `browserAction.onClicked` listener inside `onInstall` block, so it stopped working after i restart the browser.
@@ -32,10 +28,14 @@ Bug fixes.
 
 Bug fixes.
 
-#### Added
-
-#### Changed
-
 #### Fixed
 
 - Tool bar font-size break on some pages. (inherited font-size from main page)
+
+## [0.0.7] - 2020-01-09
+
+Bug fixes.
+
+#### Fixed
+
+- Fixed CSS for ordered list items displayed as unordered items.
