@@ -1,21 +1,19 @@
-# markdown-sticky-notes
+# Markdown-Sticky-Notes
 
 ## Features
 
+- Create new notes by clicking on the extension icon
+- Auto save content and position
 - Draggable
 - Resizable
-- Save as you type
-- Multiple editor themes, fonts
+- Multiple editor theme, font
 
-## Test locally
+## Test/Install locally
 
 ```js
 yarn install
 yarn build
 ```
 
-Go to [chrome://extensions/](chrome://extensions/),click on "load unpacked", choose the `build` folder, then you can see the extension.
 
-## TODO
-
-- Reimplement popups without material-ui OR move them to options_page, so they won't have conflicts with pages that use material-ui
+Go to [chrome://extensions/](chrome://extensions/), click on "load unpacked", choose the `build` folder, then you can see the extension.
