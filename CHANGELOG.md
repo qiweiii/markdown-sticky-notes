@@ -2,8 +2,6 @@
 
 ## [0.0.4] - 2020-01-02
 
-Some fixes.
-
 #### Added
 
 - description for the extension in manifest.json
@@ -40,3 +38,16 @@ Bug fixes.
 
 - Fixed CSS for ordered list items displayed as unordered items.
 - Fixed CSS of inline code tag, ul/ol indentation, change all rem to em.
+
+## [0.0.9] - 2020-02-25
+
+#### Changed
+
+- Remove auto focus when rendering created notes.
+- Minimum height and width.
+
+#### Fixed
+
+- Focusing need triple click for new notes.
+- Break long url.
+- List items consistent indentation.

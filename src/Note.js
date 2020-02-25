@@ -191,8 +191,8 @@ export default class Note extends React.Component {
               width: this.state.noteDim.x,
               height: this.state.noteDim.y,
             }}
-            minWidth={150}
-            minHeight={150}
+            minWidth={100}
+            minHeight={100}
             onResizeStop={this.onResizeStop}
           >
             <div className="markdown-sticky-note-paper">
@@ -312,7 +312,7 @@ export default class Note extends React.Component {
                 </Popover>
               </div>
 
-              {/* Note editor & dissplay area */}
+              {/* Note editor & display area */}
               <div ref={node => this.node = node} className="note-pane">
                 { this.state.dragging ?(
                   <div>
@@ -328,7 +328,8 @@ export default class Note extends React.Component {
                     theme={this.state.theme}
                     fontSize={this.state.editorFontSize}
                     fontFamily={this.state.editorFontFamily}
-                    onChange={this.handleMarkdownChange} 
+                    onChange={this.handleMarkdownChange}
+                    autofocus={this.props.autofocus}
                   />
                   :
                   <ReactMarkdown

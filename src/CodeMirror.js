@@ -77,7 +77,7 @@ class CodeMirrorEditor extends React.Component {
       this.editor = CodeMirror.fromTextArea(this.editorRef.current, {
         value: this.props.value,
         lineWrapping: true,
-        autofocus: true,
+        autofocus: this.props.autofocus,
         mode: this.props.mode,
         theme: this.props.theme
       });

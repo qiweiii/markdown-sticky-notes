@@ -12,6 +12,7 @@ function Editor(props) {
         onChange={props.onChange} 
         fontSize={props.fontSize}
         fontFamily={props.fontFamily}
+        autofocus={props.autofocus}
       />
     </div>
   )

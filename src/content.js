@@ -35,7 +35,7 @@ chrome.storage.local.get([url], function(result) {
   // console.log("existing notes: ", result[url])
   if (typeof result[url] === 'undefined') return; // if empty
   for (let note of result[url]) {
-    renderNote(note.id, note.x, note.y, note.width, note.height, note.content, note.theme, note.font, note.fontSize);
+    renderNote(note.id, note.x, note.y, note.width, note.height, note.content, note.theme, note.font, note.fontSize, false);
   }
 });
 
@@ -68,7 +68,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 /** render a note */
-const renderNote = (id, x, y, width, height, content, theme, font, fontSize) => {
+const renderNote = (id, x, y, width, height, content, theme, font, fontSize, autofocus) => {
   let div = document.createElement('div');
   app.appendChild(div);
   div.id = id
@@ -93,6 +93,7 @@ const renderNote = (id, x, y, width, height, content, theme, font, fontSize) => 
         defaultTheme={theme}
         editorFontSize={fontSize}
         editorFontFamily={font}
+        autofocus={autofocus}
       />
     </StylesProvider>, 
     div

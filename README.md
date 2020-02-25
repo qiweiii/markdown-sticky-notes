@@ -15,5 +15,4 @@ yarn install
 yarn build
 ```
 
-
 Go to `chrome://extensions/` page, click on "load unpacked", choose the `build/` folder, then you can see the extension.
