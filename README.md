@@ -17,12 +17,12 @@ yarn build
 
 Go to `chrome://extensions/` page, click on "load unpacked", choose the `build/` folder, then you can see the extension.
 
-## More features
+## More features in future
 
 options page:
 
-- Export all notes
-- Export notes in a page
-- Allow user to choose whether note is saved based on url or domain
-- Sort urls by name OR date added
+- Export/import all notes
+- Export/import notes in one page
+- Allow user to choose whether note is saved based on full url or domain
+- Sort urls by name or date added
 - Use IndexedDB or external DB to increase storage limit
