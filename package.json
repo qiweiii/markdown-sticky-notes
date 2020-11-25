@@ -14,7 +14,7 @@
     "dotenv-expand": "4.2.0",
     "file-loader": "4.2.0",
     "fs-extra": "3.0.1",
-    "highlight.js": "^9.16.2",
+    "highlight.js": "^10.1.2",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.8",
