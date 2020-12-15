@@ -1,5 +1,4 @@
 import React from 'react';
-import "./content.css";
 import Draggable from 'react-draggable';
 import { Resizable } from 're-resizable';
 import ReactMarkdown from 'react-markdown';
@@ -16,18 +15,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
 import Skeleton from '@material-ui/lab/Skeleton';
-import themes from './themes.js';
-import fonts from './fonts.js';
-// right now popover will have conflict with Paper, Modal and ButtonBasse in pages that use material-ui
-// this is because these are appended outside of my approot div, i have no way to control them
-// But still using them coz it's small and faster, also using other libraries will produce more conflicts than material...
-// maybe completely move setting & option button & popovers in tool bar to options_page in future...
-// OR implement in shadow DOM when i know how to use it
-
-// import { Popover } from 'antd';
-// import Popover from 'antd/es/popover';
-// import 'antd/es/popover/style/css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import themes from '../themes.js';
+import fonts from '../fonts.js';
 
 
 
@@ -62,7 +51,8 @@ export default class Note extends React.Component {
       editorFontSize: props.editorFontSize,
       editorFontFamily: props.editorFontFamily,
       mode: 0, // 0 for editting, 1 for display
-      markdownSrc: props.content
+      markdownSrc: props.content,
+      opacity: props.opacity
     };
     this.handleMarkdownChange = this.handleMarkdownChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -98,7 +88,6 @@ export default class Note extends React.Component {
     this.updateStorage();
   }
   handleDelete = () => { // arrow function to define your method so it is lexically bound
-    // console.log("delete " + this.state.id)
     this.props.deleteNoteFn(this.state.id);
   }
   updateStorage = () => {
@@ -173,6 +162,13 @@ export default class Note extends React.Component {
       editorFontSize:e.target.value
     }, () => this.updateStorage())
   }
+  // handl wmouse down for updating zindex of the focused note
+  handleMouseDown = () => {
+    let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
+    let el = document.getElementsByClassName('markdown-react-draggable'+this.state.id)[0];
+    if (el) el.style.zIndex = curMaxZIndex++;
+    window.localStorage.setItem('md-curMaxIndex', curMaxZIndex);
+  }
 
   render() {
     return (
@@ -183,8 +179,9 @@ export default class Note extends React.Component {
           onStart={this.handleStart}
           onStop={this.handleStop}
           defaultClassName={"markdown-react-draggable"+this.props.id} 
-          defaultPosition={{x:this.props.x, y:this.props.y}}
+          defaultPosition={{x: this.state.position.x, y: this.state.position.y}}
           // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
+          onMouseDown={this.handleMouseDown}
         >
           <Resizable 
             defaultSize={{
@@ -195,8 +192,7 @@ export default class Note extends React.Component {
             minHeight={100}
             onResizeStop={this.onResizeStop}
           >
-            <div className="markdown-sticky-note-paper">
-
+            <div className="markdown-sticky-note-paper" style={{opacity: `${this.state.opacity}`}}>
               {/* Note tool bar */}
               <div className="handle">
                 <button className="markdown-sticky-note-button" onClick={this.handleDelete} size="small">
@@ -243,8 +239,8 @@ export default class Note extends React.Component {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormControl style={{zIndex:1, margin:5, width:100}} className="markdown-setting-popover">
-                    <InputLabel id="fontsize-label">Editor FontSize</InputLabel>
+                  <FormControl style={{zIndex:1, margin:5, width:105}} className="markdown-setting-popover">
+                    <InputLabel id="fontsize-label">Editor Font Size</InputLabel>
                     <Select
                       labelId="fontsize-label"
                       id="mutiple-fontsize"
@@ -301,12 +297,12 @@ export default class Note extends React.Component {
                   }}
                   disableScrollLock={true}
                 >
-                  <div className="markdown-help-popover">
+                  <div id="markdown-help-popover">
                     <MenuItem key={1} component="a" href="https://guides.github.com/features/mastering-markdown/" target="_blank">
                       How to use markdown? <OpenInNewIcon fontSize='small'/>
                     </MenuItem>
                     <MenuItem key={2} component="a" href={this.props.optionsPage} target="_blank" >
-                      Options page <OpenInNewIcon fontSize='small'/>
+                      Setting <OpenInNewIcon fontSize='small'/>
                     </MenuItem>
                   </div>
                 </Popover>

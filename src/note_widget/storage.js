@@ -1,8 +1,9 @@
 /*global chrome*/
 
 // storage stuff: https://developer.chrome.com/extensions/storage
-// using local for now since it has 5MB limit, sync only has 104kb limit.
-// rmb can only get item using top-level keys
+// using storage API provided by chrome extension, indexedDB cannot cross domain, so not suitable for my case
+// using local since it has 5MB limit, but sync only has 104kb.
+// rmb can only get item using its top-level key
 /**
  * @typedef {Object} Data
  * @property {Note[]} url - The key of this object
@@ -51,7 +52,7 @@ export const constructAndInitData = (x,y,id) => {
 */
 export const initData = (noteData, id) => {
   // need to check exisitng ones first
-  let url = window.location.href;
+  let url = window.location.href.split("#")[0];
   let data;
   // console.log("noteData passed to init: ", noteData)
   chrome.storage.local.get(url, function(result) {
@@ -76,14 +77,14 @@ export const initData = (noteData, id) => {
 
 /** Update data for a particular note */
 export const updateData = (updatedData, id) => {
-  const url = window.location.href;
+  const url = window.location.href.split("#")[0];
   chrome.storage.local.get(url, function(result) {
     // console.log("update's get result: ", result);
     let newArray = result[url].filter(note => note.id !== id);
     newArray.push(updatedData);
     // console.log("updated array", newArray);
     const newData = {
-      [window.location.href]: newArray
+      [url]: newArray
     }
     saveItem(newData);
   });
@@ -92,15 +93,15 @@ export const updateData = (updatedData, id) => {
 /** Remove a single note from storage */
 export const removeNoteFromStorage = (id) => {
   // need to get the note and modify and save
-  const url = window.location.href;
+  const url = window.location.href.split("#")[0];
   chrome.storage.local.get(url, function(result) {
     let newArray = result[url].filter(note => note.id !== id);
     const newData = {
-      [window.location.href]: newArray
+      [url]: newArray
     }
     // console.log("data after rm: ", newData)
     if (newArray.length === 0) {
-      removeUrlFromStorage(window.location.href);
+      removeUrlFromStorage(url);
     } else {
       // save the item
       saveItem(newData);

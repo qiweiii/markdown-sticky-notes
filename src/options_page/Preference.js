@@ -3,6 +3,8 @@ import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import Input from '@material-ui/core/Input';
 import themes from '../themes.js';
@@ -41,6 +43,7 @@ class Preference extends React.Component {
       theme: "",
       font: "",
       fontsize: "",
+      opacity: 1
     };
   }
 
@@ -52,6 +55,9 @@ class Preference extends React.Component {
         this.setState({font: fontR.defaultEditorFontFamily});
         chrome.storage.local.get("defaultEditorFontSize", function(fontSize) {
           this.setState({fontsize: fontSize.defaultEditorFontSize});
+          chrome.storage.local.get("defaultOpacity", function(opacity) {
+            this.setState({opacity: opacity.defaultOpacity});
+          }.bind(this));
         }.bind(this));
       }.bind(this));
     }.bind(this));
@@ -72,20 +78,30 @@ class Preference extends React.Component {
       console.log("set default font size");
     });
   }
+  updateDefaultOpacity = (value) => {
+    chrome.storage.local.set({defaultOpacity: value}, function() {
+      console.log("set default opacity to " + value);
+    });
+  }
   handleChangeTheme = (e) => {
     this.setState({
-      theme:e.target.value
+      theme: e.target.value
     }, () => this.updateDefaultTheme(e.target.value))
   }
   handleChangeFont = (e) => {
     this.setState({
-      font:e.target.value
+      font: e.target.value
     }, () => this.updateDefaultFont(e.target.value))
   }
   handleChangeFontSize = (e) => {
     this.setState({
-      fontsize:e.target.value
+      fontsize: e.target.value
     }, () => this.updateDefaultSize(e.target.value))
+  }
+  handleChangeOpacity = (_, v) => {
+    this.setState({
+      opacity: v
+    }, () => this.updateDefaultOpacity(v))
   }
 
   render() {
@@ -110,7 +126,7 @@ class Preference extends React.Component {
           </Select>
         </FormControl>
         <FormControl className={classes.form}>
-          <InputLabel id="fontsize-label">Default Editor FontSize</InputLabel>
+          <InputLabel id="fontsize-label">Default Editor Font Size</InputLabel>
           <Select
             labelId="fontsize-label"
             id="mutiple-fontsize"
@@ -126,6 +142,7 @@ class Preference extends React.Component {
             ))}
           </Select>
         </FormControl>
+        {/* Font fam */}
         <FormControl className={classes.form}>
           <InputLabel id="fontfamily-label">Default Editor Font</InputLabel>
           <Select
@@ -142,6 +159,22 @@ class Preference extends React.Component {
               </MenuItem>
             ))}
           </Select>
+        </FormControl>
+        {/* Opacity */}
+        <FormControl className={classes.form}>
+          <Typography id="opacity-label" gutterBottom>
+            Note opacity
+          </Typography>
+          <Slider 
+            id="opacity" 
+            aria-labelledby="opacity-label"
+            value={this.state.opacity}
+            max={1}
+            min={0}
+            step={0.05}
+            valueLabelDisplay="auto"
+            onChangeCommitted={this.handleChangeOpacity}
+          />
         </FormControl>
       </div>
   )}

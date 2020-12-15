@@ -1,6 +1,6 @@
 // Called when the user clicks on the browser extension icon
 
-// google analytics (i want to know what url user create notes on)
+// google analytics
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener(function(details) {
       chrome.storage.local.set({id: 0}, function() {
         console.log("set initial id");
       });
-      chrome.storage.local.set({defaultTheme: 'monokai'}, function() {
+      chrome.storage.local.set({defaultTheme: "monokai"}, function() {
         console.log("set default theme");
       });
       chrome.storage.local.set({defaultEditorFontFamily: '"Consolas","monaco",monospace'}, function() {
@@ -29,6 +29,9 @@ chrome.runtime.onInstalled.addListener(function(details) {
       });
       chrome.storage.local.set({defaultEditorFontSize: 14}, function() {
         console.log("set default font size");
+      });
+      chrome.storage.local.set({defaultOpacity: 0.9}, function() {
+        console.log("set default opacity");
       });
    }
    // if (details.OnInstalledReason === "update") {

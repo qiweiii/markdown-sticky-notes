@@ -51,3 +51,21 @@ Bug fixes.
 - Focusing need triple click for new notes.
 - Break long url.
 - List items consistent indentation.
+
+## [0.1.0] - 2020-12-20
+
+#### Added
+
+- Note opacity
+
+#### Changed
+
+- Options page url list overflow
+- url list sort by name
+- Save notes by url without hash
+
+#### Fixed
+
+- CSS conflict in some pages
+- Extension size too large (5MB) after install
+- Fixed source map warning

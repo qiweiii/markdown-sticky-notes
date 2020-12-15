@@ -1,17 +1,53 @@
 /* src/content.css */
 
-.markdown-sticky-note {
+#markdown-sticky-note {
+    /* https://stackoverflow.com/questions/15901030/reset-remove-css-styles-for-element-only */
+    all: revert;
     text-align: left;
     position: absolute;
     top: 0px;
+    left: 0px;
     z-index: 1300;
+    font-size: 14px;
 }
 
-/* .markdown-sticky-note .react-draggable{
-    z-index: 1000;
-} */
+/* The following part will be created outside of #markdown-sticky-note */
 
-.markdown-sticky-note .CodeMirror {
+.markdown-setting-popover label {
+    font-size: 14px;
+}
+.markdown-setting-popover div  {
+    font-size: 14px;
+}
+.markdown-setting-popover div svg {
+    font-size: 14px;
+}
+#markdown-help-popover a,
+#markdown-help-popover a:link,
+#markdown-help-popover a:active,
+#markdown-help-popover a:visited
+{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
+    font-size: 14px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: normal;
+    margin: 0;
+    color: black;
+    background: none;
+    text-decoration: none;
+    text-shadow: none;
+}
+#markdown-help-popover a svg {
+    font-size: 14px;
+}
+ul .markdown-setting-select {
+    font-size: 14px;
+}
+
+/* End of outside part */
+
+#markdown-sticky-note .CodeMirror {
     position: absolute;
     padding: 1% 1%;
     top: 24px;
@@ -24,20 +60,30 @@
     border-bottom-right-radius: 5px;
 }
 
-.markdown-sticky-note .note-pane .CodeMirror-scroll {
+#markdown-sticky-note .CodeMirror pre {
+    border: none;
+    box-shadow: none;
+    line-height: initial;
+}
+
+#markdown-sticky-note .CodeMirror pre+pre { /* MDN site has conflict with this */
+    margin: 0px !important;
+}
+
+#markdown-sticky-note .note-pane .CodeMirror-scroll {
     box-sizing: content-box !important;
 }
 
-.markdown-sticky-note .handle {
+#markdown-sticky-note .handle {
     height: 24px;
     line-height: 1;
 }
 
-.markdown-sticky-note .markdown-sticky-note-button svg {
+#markdown-sticky-note .markdown-sticky-note-button svg {
     margin: 2px 0px !important;
 }
 
-.markdown-sticky-note-paper {
+#markdown-sticky-note .markdown-sticky-note-paper {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -46,30 +92,11 @@
     border-radius: 6px;
 }
 
-.markdown-setting-popover label {
-    font-size: 14px;
-}
-.markdown-setting-popover div  {
-    font-size: 14px;
-}
-.markdown-setting-popover div svg {
-    font-size: 14px;
-}
-.markdown-help-popover a {
-    font-size: 14px;
-}
-.markdown-help-popover a svg {
-    font-size: 14px;
-}
-ul .markdown-setting-select {
-    font-size: 14px;
-}
-
-.markdown-sticky-note-button svg {
+#markdown-sticky-note .markdown-sticky-note-button svg {
     font-size: 18px;
 }
 
-.markdown-sticky-note .markdown-sticky-note-button {
+#markdown-sticky-note .markdown-sticky-note-button {
     position: relative;
     display: inline-block;
     box-sizing: border-box;
@@ -92,11 +119,11 @@ ul .markdown-setting-select {
     outline: none;
     cursor: pointer;
 }
-.markdown-sticky-note .markdown-sticky-note-button::-moz-focus-inner {
+#markdown-sticky-note .markdown-sticky-note-button::-moz-focus-inner {
     border: none;
 }
 /* Overlay */
-.markdown-sticky-note .markdown-sticky-note-button::before {
+#markdown-sticky-note .markdown-sticky-note-button::before {
     content: "";
     position: absolute;
     top: 0;
@@ -108,7 +135,7 @@ ul .markdown-setting-select {
     transition: opacity 0.2s;
 }
 /* Ripple */
-.markdown-sticky-note .markdown-sticky-note-button::after {
+#markdown-sticky-note .markdown-sticky-note-button::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -123,42 +150,42 @@ ul .markdown-setting-select {
     transition: opacity 1s, transform 0.5s;
 }
 /* Hover, Focus */
-.markdown-sticky-note .markdown-sticky-note-button:hover {
+#markdown-sticky-note .markdown-sticky-note-button:hover {
     background: #c4c4c4 radial-gradient(circle, transparent 1%, #c4c4c4 1%) center/15000%;
 }
 /* end of button */
 
 
-.markdown-sticky-note .note-root {
+#markdown-sticky-note .note-root {
     width: 0px;
     height: 0px;
 }
 
-.markdown-sticky-note .collapse {
+#markdown-sticky-note .collapse {
     height: 100%;
     width: 100%;
     /* overflow: auto; */
 }
 
-.markdown-sticky-note .note-pane {
+#markdown-sticky-note .note-pane {
     height: 100%;
     width: 100%;
     overflow: hidden;
 }
 
-.markdown-sticky-note .editor-pane {
+#markdown-sticky-note .editor-pane {
     height: 100%;
     width: 100%;
     overflow: auto;
 }
 
-.markdown-sticky-note .result {
+#markdown-sticky-note .result {
     color: black;
     padding: 2% 3%;
     height: calc(100% - 24px);
     overflow: auto;
     line-height: 1.5em;
-    background-color: #e0e0e0;
+    background-color: #eeeded;
 
     /* stuff for breaking long urls */
     /* These are technically the same, but use both */
@@ -178,57 +205,56 @@ ul .markdown-setting-select {
     hyphens: auto;
 }
 
+#markdown-sticky-note .note-pane .result h6,
+#markdown-sticky-note .note-pane .result h5,
+#markdown-sticky-note .note-pane .result h4,
+#markdown-sticky-note .note-pane .result h3,
+#markdown-sticky-note .note-pane .result h2,
+#markdown-sticky-note .note-pane .result h1
+{
+    text-align: left;
+    margin: 1.2em 0 1em;
+    line-height: 1.15;
+}
 
-.markdown-sticky-note .note-pane .result h6 { 
+#markdown-sticky-note .note-pane .result h6 { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 10px; font-style: normal; font-variant: normal; font-weight: 700;
-    margin-block-start: 2.33em;
-    margin-block-end: 2.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 } 
-.markdown-sticky-note .note-pane .result h5 { 
+#markdown-sticky-note .note-pane .result h5 { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 12px; font-style: normal; font-variant: normal; font-weight: 700;
-    margin-block-start: 1.67em;
-    margin-block-end: 1.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 } 
-.markdown-sticky-note .note-pane .result h4 { 
+#markdown-sticky-note .note-pane .result h4 { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 700;
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 } 
-.markdown-sticky-note .note-pane .result h3 { 
+#markdown-sticky-note .note-pane .result h3 { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 700;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 } 
-.markdown-sticky-note .note-pane .result h2 { 
+#markdown-sticky-note .note-pane .result h2 { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 19px; font-style: normal; font-variant: normal; font-weight: 700;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 }
-.markdown-sticky-note .note-pane .result h1 { 
+#markdown-sticky-note .note-pane .result h1 { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 22px; font-style: normal; font-variant: normal; font-weight: 700;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 }
-.markdown-sticky-note .note-pane .result p { 
+#markdown-sticky-note .note-pane .result p { 
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
     font-size: 14px; 
     font-style: normal; 
     font-variant: normal; 
     font-weight: 400;
+    margin: 0;
+    color: inherit;
 } 
-.markdown-sticky-note .note-pane .result li { 
+#markdown-sticky-note .note-pane .result hr { 
+    all: revert;
+} 
+#markdown-sticky-note .note-pane .result a {
+    color: blue;
+    text-decoration: none;
+    font: inherit;
+    text-shadow: none;
+    background: none;
+}
+#markdown-sticky-note .note-pane .result li { 
     /* list-style-position: inside;  */
     list-style-type: circle; 
     display: list-item; 
@@ -238,44 +264,87 @@ ul .markdown-setting-select {
     font-variant: normal; 
     font-weight: 400;
 } 
-.markdown-sticky-note .note-pane .result ul {
+#markdown-sticky-note .note-pane .result ul {
     padding-left: 25px;
     margin: 1em 0;
     list-style-position: outside;
 }
-.markdown-sticky-note .note-pane .result ol {
+#markdown-sticky-note .note-pane .result ol {
     padding-left: 25px;
     margin: 1em 0;
 }
-.markdown-sticky-note .note-pane .result ol li { 
+#markdown-sticky-note .note-pane .result li::before {
+    content: none;
+}
+#markdown-sticky-note .note-pane .result ol li { 
     list-style-type: decimal; 
 }
-.markdown-sticky-note .note-pane .result blockquote { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400;} 
-.markdown-sticky-note .note-pane .result pre { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400;}
-.markdown-sticky-note .note-pane .result code { display: "inline"; font-family: "markdown-stick-notes-family-source-code-pro"; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400;}
+#markdown-sticky-note .note-pane .result ul li { 
+    list-style-type: disc;
+}
+#markdown-sticky-note .note-pane .result blockquote { 
+    background: inherit;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
+    font-size: 17px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400;
+} 
+#markdown-sticky-note .note-pane .result pre { 
+    background: inherit; 
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
+    font-size: 13px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin: 5px 0 10px;
+}
+.hljs-tag, .hljs-name, .hljs-attribute { /* some sites also use hljs */
+    color: inherit
+}
+#markdown-sticky-note .note-pane .result code { 
+    display: "inline"; 
+    font-family: "markdown-stick-notes-family-source-code-pro"; 
+    font-size: 13px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 400;
+    box-shadow: none;
+    border: none;
+    background-color: #cfcccc;
+    color: inherit;
+}
 
 
-.markdown-sticky-note #settingButton > * {
+#markdown-sticky-note #settingButton > * {
     pointer-events: none;
 }
-.markdown-sticky-note #helpButton > * {
+#markdown-sticky-note #helpButton > * {
     pointer-events: none;
 }
 
-.markdown-sticky-note tr {
+#markdown-sticky-note table {
+    width: inherit;
+    margin: inherit;
+    border-collapse: initial;
+}
+
+#markdown-sticky-note tr {
+    color: inherit;
     border-top: 1px solid #c6cbd1;
     background: #fff;
 }
 
-.markdown-sticky-note th,
-.markdown-sticky-note td {
+#markdown-sticky-note th,
+#markdown-sticky-note td {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; 
     padding: 6px 13px;
     border: 1px solid #dfe2e5;
-}
-
-.markdown-sticky-note table tr:nth-child(2n) {
-    background: #8a939c;
+    background: #fff;
+    color: inherit;
 }
 
 @font-face {

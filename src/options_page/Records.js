@@ -18,14 +18,19 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: "100%",
     backgroundColor: theme.palette.background.paper,
     marginTop: "2%",
-    alignItems: 'center',
+    alignItems: "center",
   },
   item: {
-    width: '100%',
+    width: "100%"
+  },
+  text: {
     color: "blue",
+    overflow: "auto",
+    width: "100%",
+    whiteSpace: "nowrap"
   },
   close: {
     padding: theme.spacing(0.5),
@@ -36,7 +41,7 @@ class Preference extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      checked: [0],
+      checked: [],
       urls: [],
       open: false,
       showMessage: false,
@@ -53,17 +58,16 @@ class Preference extends React.Component {
       let urls = [];
       for (const item in content) { // loop object keys
         if (item !== "id" &&
+            item !== "defaultOpacity" &&
             item !== "defaultTheme" &&
             item !== "defaultEditorFontFamily" &&
             item !== "defaultEditorFontSize") {
               urls.push(item);
             }
       }
-      this.setState({urls: urls});
-      // console.log(urls);
       // fill in checked array
-      let array = new Array(this.state.urls.length).fill(false);
-      this.setState({checked: array});
+      let array = new Array(urls.length).fill(false);
+      this.setState({checked: array, urls: urls});
     }.bind(this));
   }
   handleToggle = (value) => () => {
@@ -74,7 +78,6 @@ class Preference extends React.Component {
     });
   };
   handleDelete = () => {
-    this.handleClose(); // close dialog
     // delete selected items
     let items = [];
     for (let i = 0; i < this.state.checked.length; i++) {
@@ -88,10 +91,13 @@ class Preference extends React.Component {
     } else {
       // chrome storage
       chrome.storage.local.remove(items, function() {
+        this.handleOpenMessage("Success!");
+        // update state
         this.getNewDataFromStorage();
-        this.handleOpenMessage("Success!")
       }.bind(this));
     }
+
+    this.handleClose(); // close dialog
   }
   handleClickOpen = () => { // dialog
     this.setState({open: true});
@@ -163,7 +169,7 @@ class Preference extends React.Component {
         ]}
       />
       <List className={classes.root}>
-        {this.state.urls.map((value, i) => {
+        {this.state.urls.sort().map((value, i) => {
           const labelId = `checkbox-list-label-${i}`;
           return (
             <ListItem className={classes.item} key={i} role={undefined} button component="a" href={value} target="_blank">
@@ -177,7 +183,7 @@ class Preference extends React.Component {
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
+              <ListItemText className={classes.text} id={labelId} primary={value} />
             </ListItem>
           );
         })}

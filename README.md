@@ -17,12 +17,13 @@ yarn build
 
 Go to `chrome://extensions/` page, click on "load unpacked", choose the `build/` folder, then you can see the extension.
 
+## Notes
+
+I am using Manifest version 2, because version 3 is new and doc is not complete and not much tutorials exist yet, but i will switch to MV3 later on.
+
 ## More features in future
 
 options page:
 
 - Export/import all notes
 - Export/import notes in one page
-- Allow user to choose whether note is saved based on full url or domain
-- Sort urls by name or date added
-- Use IndexedDB or external DB to increase storage limit
