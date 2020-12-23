@@ -51,7 +51,7 @@ import 'codemirror-minified/theme/twilight.css';
 import 'codemirror-minified/theme/vibrant-ink.css';
 import 'codemirror-minified/theme/yonce.css';
 
-// adapted from:
+// from:
 // https://github.com/rexxars/react-markdown/blob/master/demo/src/codemirror.js
 const IS_MOBILE = typeof navigator === 'undefined' || (
   navigator.userAgent.match(/Android/i)
@@ -79,7 +79,8 @@ class CodeMirrorEditor extends React.Component {
         lineWrapping: true,
         autofocus: this.props.autofocus,
         mode: this.props.mode,
-        theme: this.props.theme
+        theme: this.props.theme,
+        addModeClass: true
       });
       this.editor.on('change', this.handleChange);
       var charWidth = this.editor.defaultCharWidth(), basePadding = 4;

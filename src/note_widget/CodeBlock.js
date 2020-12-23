@@ -19,7 +19,7 @@ hljs.registerLanguage('sql', sql);
 hljs.registerLanguage('cpp', cpp);
 
 
-// Code adopted from https://github.com/rexxars/react-markdown/blob/master/demo/src/code-block.js
+// Code from https://github.com/rexxars/react-markdown/blob/master/demo/src/code-block.js
 class CodeBlock extends React.PureComponent {
   constructor(props) {
     super(props)
