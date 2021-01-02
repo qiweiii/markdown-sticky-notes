@@ -12,10 +12,10 @@
 
 ```js
 yarn install
-yarn build
+yarn build // output to build folder
 ```
 
-Go to `chrome://extensions/` page, click on "load unpacked", choose the `build/` folder, then you can see the extension.
+Go to `chrome://extensions/` page, turn on developer mode, click "load unpacked" button, choose the `build/` folder, then you will be able to see extension icon in Chrome extension bar.
 
 ## Notes
 
@@ -23,7 +23,6 @@ I am using Manifest version 2, because version 3 is new and doc is not complete 
 
 ## More features in future
 
-options page:
-
 - Export/import all notes
 - Export/import notes in one page
+- Pin note button (change note to fixed position)
