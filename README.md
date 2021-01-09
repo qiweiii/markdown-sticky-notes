@@ -26,3 +26,8 @@ I am using Manifest version 2, because version 3 is new and doc is not complete 
 - Export/import all notes
 - Export/import notes in one page
 - Pin note button (change note to fixed position)
+
+- different style for hashtags
+- scroll sync between editor and output
+- shortcut keys for creating note
+- animation on note creation and deleting
