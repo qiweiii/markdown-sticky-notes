@@ -1,5 +1,3 @@
-// Called when the user clicks on the browser extension icon
-
 // google analytics
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -10,6 +8,8 @@ ga('create', 'UA-154429650-1', 'auto');
 ga('set', 'checkProtocolTask', function(){}); // Removes failing protocol check.
 ga('require', 'displayfeatures');
 
+
+// extension listeners
 chrome.runtime.onMessage.addListener(function( request, sender, sendResponse ) {
    if(request.action === "generated_new_note") {
       ga('send', 'pageview', request.url); // Specify the virtual path

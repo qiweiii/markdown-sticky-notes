@@ -13,11 +13,9 @@ import {
 import Note from './Note';
 import './content.css';
 // import root from 'react-shadow/material-ui'
+// Shadow DOM / iframe can solve style encapsulation, but is not easy to use with material-ui, editor and draggable. I will explore more.
 
-
-
-// Note the code is not using promise coz chrome MV2 does not support it.
-// Shadow DOM can solve style encapsulation, but is not easy to use with material-ui, editor and draggable. I will explore more.
+// Lots of callback hells here, coz chrome MV2 does not support promise.
 
 
 /** Initialise root div */
@@ -31,13 +29,13 @@ const jss = create({
   ...jssPreset(),
   insertionPoint: approot
 });
-window.localStorage.setItem('md-curMaxIndex', 1300); // if set very high will cause modal to fall behind
+window.localStorage.setItem('md-curMaxIndex', 1300); // if set very high will cause popover modal to fall behind (which i cannot change)
 // chrome.storage.local.clear(); // for testing & dev
 const optionsUrl = chrome.extension.getURL('index.html');
 
 
 
-class MarkdownStickyNote extends React.Component {
+class MarkdownStickyNoteApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -148,7 +146,7 @@ class MarkdownStickyNote extends React.Component {
     //   notes: this.state.notes.filter(note => note.id !== id)
     // }, removeNoteFromStorage(id));
 
-    // above ways do not work...so try this
+    // the way above does not work...so try this
     ReactDOM.unmountComponentAtNode(document.getElementById('markdown-sticky-note').querySelector(`div[id="${id}"]`));
     document.getElementById('markdown-sticky-note').querySelector(`div[id="${id}"]`).remove();
     removeNoteFromStorage(id);
@@ -207,6 +205,6 @@ class MarkdownStickyNote extends React.Component {
 //   approot
 // );
 ReactDOM.render(
-  <MarkdownStickyNote />,
+  <MarkdownStickyNoteApp />,
   approot
 );

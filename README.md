@@ -12,22 +12,20 @@
 
 ```js
 yarn install
-yarn build // output to build folder
+yarn build // output to build directory
 ```
 
-Go to `chrome://extensions/` page, turn on developer mode, click "load unpacked" button, choose the `build/` folder, then you will be able to see extension icon in Chrome extension bar.
+Go to [chrome://extensions/](chrome://extensions/), turn on developer mode, click "load unpacked" button, choose the `build/` folder, then you will be able to see extension icon in Chrome extension bar.
 
 ## Notes
 
-I am using Manifest version 2, because version 3 is new and doc is not complete and not much tutorials exist yet, but i will switch to MV3 later on.
+- I am using Manifest version 2, because version 3 is new and doc is not complete and not much tutorials exist yet, but i will switch to MV3 later on.
+- User could set shortcuts in [chrome://extensions/shortcuts](chrome://extensions/shortcuts)
 
-## More features in future
+## Feature requests
 
 - Export/import all notes
 - Export/import notes in one page
-- Pin note button (change note to fixed position)
-
-- different style for hashtags
+- different style for hashtags (tag pills)
 - scroll sync between editor and output
-- shortcut keys for creating note
-- animation on note creation and deleting
+- animation when creating/deleting note

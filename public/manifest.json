@@ -1,7 +1,7 @@
 {
   "short_name": "markdown-sticky-notes",
   "name": "Markdown Sticky Notes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "manifest_version": 2,
   "description": "A markdown sticky note that can be used in web pages (except Chrome Web Store)",
   "background": {

@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+// import PinDropIcon from '@material-ui/icons/PinDrop';
 import Popover from '@material-ui/core/Popover';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -46,13 +47,13 @@ export default class Note extends React.Component {
       anchorEl: null,
       anchorElHelp: null,
       dragging: false,
-
       theme: props.defaultTheme,
       editorFontSize: props.editorFontSize,
       editorFontFamily: props.editorFontFamily,
       mode: 0, // 0 for editting, 1 for display
       markdownSrc: props.content,
-      opacity: props.opacity
+      opacity: props.opacity,
+      pinColor: "action"
     };
     this.handleMarkdownChange = this.handleMarkdownChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -162,13 +163,21 @@ export default class Note extends React.Component {
       editorFontSize:e.target.value
     }, () => this.updateStorage())
   }
-  // handl wmouse down for updating zindex of the focused note
+  // Handle mouse down for updating zIndex of the focused note.
+  // The following functions get DOM elem coz Draggable component does not accept style property
   handleMouseDown = () => {
     let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
     let el = document.getElementsByClassName('markdown-react-draggable'+this.state.id)[0];
     if (el) el.style.zIndex = curMaxZIndex++;
     window.localStorage.setItem('md-curMaxIndex', curMaxZIndex);
   }
+  // setPositionCSSProperty = () => {
+  //   let el = document.getElementsByClassName('markdown-react-draggable'+this.state.id)[0];
+  //   if (el) {
+  //     el.style.position = el.style.position === "relative" ? "fixed" : "relative";
+  //     this.state.pinColor === "action" ? this.setState({ pinColor: "primary" }) : this.setState({ pinColor: "action" });;
+  //   }
+  // }
 
   render() {
     return (
@@ -182,6 +191,7 @@ export default class Note extends React.Component {
           defaultPosition={{x: this.state.position.x, y: this.state.position.y}}
           // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
           onMouseDown={this.handleMouseDown}
+          // bounds="parent"
         >
           <Resizable 
             defaultSize={{
@@ -302,10 +312,13 @@ export default class Note extends React.Component {
                       How to use markdown? <OpenInNewIcon fontSize='small'/>
                     </MenuItem>
                     <MenuItem key={2} component="a" href={this.props.optionsPage} target="_blank" >
-                      Setting <OpenInNewIcon fontSize='small'/>
+                      Go to setting page <OpenInNewIcon fontSize='small'/>
                     </MenuItem>
                   </div>
                 </Popover>
+                {/* <button className="markdown-sticky-note-button" onClick={this.setPositionCSSProperty} size="small">
+                  <PinDropIcon color={this.state.pinColor} fontSize="small"/>
+                </button> */}
               </div>
 
               {/* Note editor & display area */}
