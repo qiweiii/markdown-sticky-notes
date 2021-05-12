@@ -70,7 +70,8 @@ Bug fixes.
 - Extension size too large (5MB) after install
 - Fixed source map warning
 
-## [0.1.1] - 2021-01-xx
+## [0.1.1] - 2021-05-12
 
-#### Added
+#### Fixed
 
+- CSS conflicts in some websites

@@ -28,4 +28,5 @@ Go to [chrome://extensions/](chrome://extensions/), turn on developer mode, clic
 - Export/import notes in one page
 - different style for hashtags (tag pills)
 - scroll sync between editor and output
-- animation when creating/deleting note
+- pin a note
+- supports SPA
