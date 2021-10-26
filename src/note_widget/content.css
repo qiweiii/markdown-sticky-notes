@@ -306,7 +306,7 @@ ul .markdown-setting-select {
     background-color: #f5f5f5;
     border-radius: 3px;
 }
-.hljs-tag, .hljs-name, .hljs-attribute { /* some sites also use hljs */
+#markdown-sticky-note .note-pane .result code .hljs-tag, .hljs-name, .hljs-attribute { /* some sites also use hljs */
     color: inherit
 }
 #markdown-sticky-note .note-pane .result code { 
