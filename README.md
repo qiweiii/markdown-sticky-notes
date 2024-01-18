@@ -27,15 +27,7 @@ pnpm run zip:firefox
 
 - refer to `wxt` [docs](https://wxt.dev/guide/introduction.html)
 
-## Install Locally
-
-```sh
-pnpm run build
-```
-
-Go to [chrome://extensions/](chrome://extensions/), turn on developer mode, click "load unpacked" button, choose the `.output/chrome-mv2/` folder, then you will be able to see extension icon in Chrome extension bar.
-
-## Feature Requests (from users)
+## Feature Requests
 
 - [ ] Export/import notes, by website or all notes
 - [ ] Different style for hashtags (e.g. tag pills)
@@ -49,3 +41,15 @@ Go to [chrome://extensions/](chrome://extensions/), turn on developer mode, clic
 ## Manifest version
 
 I am using version 2 since migrating to version 3 requires too much work. I will migrate to version 3 when I have time.
+
+## Install Locally
+
+```sh
+pnpm run build
+```
+
+- Go to [chrome://extensions/](chrome://extensions/)
+- Turn on developer mode
+- Click "load unpacked" button
+- Choose the `.output/chrome-mv2/` folder
+- Then you will be able to see extension icon in Chrome extension bar.
