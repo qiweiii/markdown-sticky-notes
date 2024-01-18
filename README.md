@@ -36,7 +36,9 @@ pnpm run zip:firefox
 - [ ] Supports save in SPA
 - [ ] Hotkeys/Shortcuts for creating notes
 - [ ] Improve styles of markdown result
-- [ ] Publish to firefox extension store
+- [ ] Publish to firefox
+- [ ] Publish to edge
+- [ ] Publish to safari
 
 ## Manifest version
 

@@ -7,10 +7,10 @@
   "scripts": {
     "dev": "wxt --mv2",
     "dev:firefox": "wxt --mv2 -b firefox",
-    "build": "wxt build",
+    "build": "wxt build --mv2",
     "build:firefox": "wxt build --mv2 -b firefox",
-    "zip": "wxt zip --mv3  ",
-    "zip:firefox": "wxt zip --mv3 -b firefox",
+    "zip": "wxt zip --mv2",
+    "zip:firefox": "wxt zip --mv2 -b firefox",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare"
   },
