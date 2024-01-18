@@ -75,3 +75,13 @@ Bug fixes.
 #### Fixed
 
 - CSS conflicts in some websites
+
+## [0.2.0] - 2024-01-20
+
+#### Changed
+
+- Migrated to `wxt` extension template
+- Updated code to use TypeScript
+- Updated dependencies
+- Improved styles
+- Bug fixes

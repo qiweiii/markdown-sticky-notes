@@ -1,0 +1,405 @@
+/* src/content.css */
+
+#markdown-sticky-note {
+  all: revert;
+  text-align: left;
+  position: absolute; /* this div is absolute, note-items inside are relative or fixed */
+  top: 0px;
+  left: 0px;
+  z-index: 1300;
+  font-size: 14px;
+}
+
+/* The following part will be created outside of #markdown-sticky-note */
+.markdown-setting-popover label {
+  font-size: 14px;
+}
+.markdown-setting-popover div {
+  font-size: 14px;
+}
+.markdown-setting-popover div svg {
+  font-size: 14px;
+}
+#markdown-help-popover a,
+#markdown-help-popover a:link,
+#markdown-help-popover a:active,
+#markdown-help-popover a:visited {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  margin: 0;
+  color: black;
+  background: none;
+  text-decoration: none;
+  text-shadow: none;
+}
+#markdown-help-popover a svg {
+  font-size: 14px;
+}
+ul .markdown-setting-select {
+  font-size: 14px;
+}
+
+/* End of outside part */
+
+#markdown-sticky-note .CodeMirror {
+  position: absolute;
+  padding: 1% 1%;
+  top: 24px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  height: auto;
+  width: auto;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#markdown-sticky-note .CodeMirror pre {
+  border: none;
+  box-shadow: none;
+  line-height: initial;
+}
+
+#markdown-sticky-note .CodeMirror pre + pre {
+  /* MDN site has conflict with this */
+  margin: 0px !important;
+}
+
+#markdown-sticky-note .note-pane .CodeMirror-scroll {
+  box-sizing: content-box !important;
+}
+
+#markdown-sticky-note .handle {
+  height: 24px;
+  line-height: 1;
+  display: flex;
+}
+
+#markdown-sticky-note .markdown-sticky-note-paper {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
+  border-radius: 6px;
+}
+
+/* start of button */
+#markdown-sticky-note .markdown-sticky-note-button svg {
+  font-size: 18px;
+  margin: 2px 0px !important;
+}
+
+#markdown-sticky-note .markdown-sticky-note-button {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  padding: 0 0px;
+  width: 24px !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  vertical-align: middle;
+  text-align: center;
+  text-overflow: ellipsis;
+  background-color: transparent;
+  box-shadow: none !important;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  color: black;
+  margin: 0;
+}
+#markdown-sticky-note .markdown-sticky-note-button::-moz-focus-inner {
+  border: none;
+}
+/* Overlay */
+#markdown-sticky-note .markdown-sticky-note-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+/* Ripple */
+#markdown-sticky-note .markdown-sticky-note-button::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  padding: 50%;
+  width: 24px;
+  height: 24px;
+  /* background-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255)); */
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity 1s, transform 0.5s;
+}
+/* Hover, Focus */
+#markdown-sticky-note .markdown-sticky-note-button:hover {
+  background: #c4c4c4 radial-gradient(circle, transparent 1%, #c4c4c4 1%)
+    center/15000%;
+}
+/* end of button */
+
+#markdown-sticky-note .note-root {
+  top: 0px;
+  left: 0px;
+}
+
+#markdown-sticky-note .collapse {
+  height: 100%;
+  width: 100%;
+  /* overflow: auto; */
+}
+
+#markdown-sticky-note .note-pane {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#markdown-sticky-note .editor-pane {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+#markdown-sticky-note .note-pane .result {
+  color: black;
+  padding: 2% 3%;
+  top: 0;
+  left: 0;
+  height: calc(100% - 30px);
+  overflow: auto;
+  line-height: 1.5em;
+  background-color: rgb(250, 250, 250);
+  box-sizing: content-box;
+  position: static;
+
+  /* stuff for breaking long urls */
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported */
+  hyphens: auto;
+}
+
+#markdown-sticky-note .note-pane .result h6,
+#markdown-sticky-note .note-pane .result h5,
+#markdown-sticky-note .note-pane .result h4,
+#markdown-sticky-note .note-pane .result h3,
+#markdown-sticky-note .note-pane .result h2,
+#markdown-sticky-note .note-pane .result h1 {
+  text-align: left;
+  margin: 1.2em 0 1em;
+  line-height: 1.15;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 700;
+}
+
+#markdown-sticky-note .note-pane .result h6 {
+  font-size: 10px;
+}
+#markdown-sticky-note .note-pane .result h5 {
+  font-size: 12px;
+}
+#markdown-sticky-note .note-pane .result h4 {
+  font-size: 14px;
+}
+#markdown-sticky-note .note-pane .result h3 {
+  font-size: 16px;
+}
+#markdown-sticky-note .note-pane .result h2 {
+  font-size: 19px;
+}
+#markdown-sticky-note .note-pane .result h1 {
+  font-size: 22px;
+}
+#markdown-sticky-note .note-pane .result p {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: inherit;
+}
+#markdown-sticky-note .note-pane .result hr {
+  all: revert;
+}
+#markdown-sticky-note .note-pane .result a {
+  color: blue;
+  text-decoration: none;
+  font: inherit;
+  text-shadow: none;
+  background: none;
+}
+#markdown-sticky-note .note-pane .result li {
+  /* list-style-position: inside;  */
+  list-style-type: circle;
+  display: list-item;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+}
+#markdown-sticky-note .note-pane .result ul {
+  padding-left: 25px;
+  margin: 1em 0;
+  list-style-position: outside;
+}
+#markdown-sticky-note .note-pane .result ol {
+  padding-left: 25px;
+  margin: 1em 0;
+}
+#markdown-sticky-note .note-pane .result li::before {
+  content: none;
+}
+#markdown-sticky-note .note-pane .result ol li {
+  list-style-type: decimal;
+}
+#markdown-sticky-note .note-pane .result ul li {
+  list-style-type: disc;
+}
+#markdown-sticky-note .note-pane .result blockquote {
+  background: inherit;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+}
+#markdown-sticky-note .note-pane .result pre {
+  /* font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;  */
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  box-shadow: none;
+  border: none;
+  margin: 5px 0 10px;
+  white-space: pre;
+
+  padding: 10px;
+  overflow: auto;
+  font-size: 90%;
+  line-height: 1.45;
+  background-color: #f5f5f5;
+  border-radius: 3px;
+}
+#markdown-sticky-note .note-pane .result code .hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  /* some sites also use hljs */
+  color: inherit;
+}
+#markdown-sticky-note .note-pane .result code {
+  display: inline;
+  font-family: "markdown-stick-notes-family-source-code-pro";
+  /* font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    box-shadow: none;
+    border: none; */
+  color: black;
+  padding: 0.3em 0.4em;
+  margin: 0;
+  font-size: 90%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+}
+
+#markdown-sticky-note .note-pane .result pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+}
+
+#markdown-sticky-note #settingButton > * {
+  pointer-events: none;
+}
+#markdown-sticky-note #helpButton > * {
+  pointer-events: none;
+}
+
+#markdown-sticky-note table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  margin-top: 0;
+  margin-bottom: 16px;
+  border-spacing: 0;
+}
+
+#markdown-sticky-note table tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+#markdown-sticky-note table tr {
+  color: inherit;
+  border-top: 1px solid #c6cbd1;
+  background: #fff;
+}
+
+#markdown-sticky-note table th,
+#markdown-sticky-note table td {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+  background: #fff;
+  color: inherit;
+}
+
+@font-face {
+  font-family: "markdown-stick-notes-family-anonymous-pro";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf");
+}
+@font-face {
+  font-family: "markdown-stick-notes-family-b612-mono";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/B612_Mono/B612Mono-Regular.ttf");
+}
+@font-face {
+  font-family: "markdown-stick-notes-family-inconsolata";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Inconsolata/Inconsolata-Regular.ttf");
+}
+@font-face {
+  font-family: "markdown-stick-notes-family-pt-mono";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/PT_Mono/PTMono-Regular.ttf");
+}
+@font-face {
+  font-family: "markdown-stick-notes-family-roboto-mono";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto_Mono/RobotoMono-Regular.ttf");
+}
+@font-face {
+  font-family: "markdown-stick-notes-family-source-code-pro";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf");
+}
+@font-face {
+  font-family: "markdown-stick-notes-family-space-mono";
+  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Space_Mono/SpaceMono-Regular.ttf");
+}

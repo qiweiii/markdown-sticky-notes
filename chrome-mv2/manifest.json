@@ -1,0 +1,67 @@
+{
+  "manifest_version": 2,
+  "name": "Markdown Sticky Notes",
+  "description": "Markdown Sticky Notes web extension",
+  "version": "0.2.0",
+  "short_name": "markdown-sticky-notes",
+  "icons": {
+    "16": "notes16.png",
+    "32": "notes32.png",
+    "64": "notes64.png",
+    "128": "notes128.png"
+  },
+  "commands": {
+    "wxt:reload-extension": {
+      "description": "Reload the extension during development",
+      "suggested_key": {
+        "default": "Alt+R"
+      }
+    }
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "offscreen",
+    "http://localhost/*"
+  ],
+  "web_accessible_resources": [
+    "fonts/Anonymous_Pro/AnonymousPro-Regular.ttf",
+    "fonts/B612_Mono/B612Mono-Regular.ttf",
+    "fonts/Fira_Code/static/FiraCode-Regular.ttf",
+    "fonts/Inconsolata/Inconsolata-Regular.ttf",
+    "fonts/Nanum_Gothic_Coding/NanumGothicCoding-Regular.ttf",
+    "fonts/PT_Mono/PTMono-Regular.ttf",
+    "fonts/Roboto_Mono/RobotoMono-Regular.ttf",
+    "fonts/Share_Tech_Mono/ShareTechMono-Regular.ttf",
+    "fonts/Source_Code_Pro/SourceCodePro-Regular.ttf",
+    "fonts/Space_Mono/SpaceMono-Regular.ttf",
+    "fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://developers.google.com/*"
+      ],
+      "css": [
+        "content-scripts/content.css"
+      ],
+      "js": [
+        "content-scripts/content.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' http://localhost:3000; object-src 'self';"
+}
