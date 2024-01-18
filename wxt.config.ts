@@ -15,7 +15,7 @@ export default defineConfig({
       "64": "notes64.png",
       "128": "notes128.png",
     },
-    permissions: ["storage", "tabs", "offscreen"],
+    permissions: ["storage", "tabs"],
     web_accessible_resources: [
       // "/static/css/content.css", // TODO: check
       // "index.html", // TODO: check
