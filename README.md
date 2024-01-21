@@ -39,6 +39,8 @@ pnpm run zip:firefox
 - [ ] Publish to firefox
 - [ ] Publish to edge
 - [ ] Publish to safari
+- [ ] Fix github issues page freeze
+- [ ] Fix stackoverflow code css conflicts
 
 ## Manifest version
 
