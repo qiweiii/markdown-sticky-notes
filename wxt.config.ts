@@ -5,14 +5,20 @@ import executeCommand from "./scripts/vite-plugin-command";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  vite: (env) => ({
-    plugins: [
-      react(),
-      executeCommand(
-        `sed -i '' -e 's/[→×·]/-/g' -e 's/[ƒ○◌𝑥𝐶𝑡∪□🔑︎▢]/x/g' .output/${env.browser}-mv${env.manifestVersion}/content-scripts/content.js`
-      ),
-    ],
-  }),
+  vite: (env) => {
+    const contentJsPath = `.output/${env.browser}-mv${env.manifestVersion}/content-scripts`;
+    return {
+      plugins: [
+        react(),
+        executeCommand([
+          // `sed -i '' -e 's/[→×·]/-/g' -e 's/[ƒ○◌𝑥𝐶𝑡∪□🔑︎▢]/x/g' .output/${env.browser}-mv${env.manifestVersion}/content-scripts/content.js`
+          // `sed -i '' 's/[^\x00-\x7F]/x/g' .output/${env.browser}-mv${env.manifestVersion}/content-scripts/content.js`
+          `sed -i '' -e 's/[\u200b⚠️�→×·↩]//g' -e 's/[ƒ○◌𝑥𝐶𝑡∪□▢]/x/g' ${contentJsPath}/content.js`,
+          // `iconv -f utf-8 -t ascii//TRANSLIT ${contentJsPath}/content.js > ${contentJsPath}/content2.js`,
+        ]),
+      ],
+    };
+  },
   manifest: {
     short_name: "markdown-sticky-notes",
     name: "Markdown Sticky Notes",
