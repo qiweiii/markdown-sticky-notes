@@ -30,6 +30,7 @@ const Editor = (props: Props) => {
         autoFocus={props.autofocus}
         style={{ fontSize: props.fontSize, fontFamily: props.fontFamily }}
         // TODO: check CodeMirror component has any more stuff need to move here or not
+        basicSetup={false}
       />
     </div>
   );
