@@ -10,10 +10,10 @@ export default defineConfig({
     short_name: "markdown-sticky-notes",
     name: "Markdown Sticky Notes",
     icons: {
-      "16": "notes16.png",
-      "32": "notes32.png",
-      "64": "notes64.png",
-      "128": "notes128.png",
+      "16": "icon/notes16.png",
+      "32": "icon/notes32.png",
+      "64": "icon/notes64.png",
+      "128": "icon/notes128.png",
     },
     permissions: ["storage", "tabs"],
     web_accessible_resources: [
