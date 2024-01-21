@@ -16,6 +16,7 @@ export default defineConfig({
       "128": "icon/notes128.png",
     },
     permissions: ["storage", "tabs"],
+    browser_action: {},
     web_accessible_resources: [
       // "/static/css/content.css", // TODO: check
       // "index.html", // TODO: check
