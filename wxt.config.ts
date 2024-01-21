@@ -1,10 +1,17 @@
 import { defineConfig } from "wxt";
 import react from "@vitejs/plugin-react";
 
+import executeCommand from "./scripts/vite-plugin-command";
+
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  vite: () => ({
-    plugins: [react()],
+  vite: (env) => ({
+    plugins: [
+      react(),
+      executeCommand(
+        `sed -i '' -e 's/[→×·]/-/g' -e 's/[ƒ○◌𝑥𝐶𝑡∪□🔑︎▢]/x/g' .output/${env.browser}-mv${env.manifestVersion}/content-scripts/content.js`
+      ),
+    ],
   }),
   manifest: {
     short_name: "markdown-sticky-notes",
