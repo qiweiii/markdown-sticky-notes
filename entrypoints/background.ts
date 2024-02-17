@@ -1,4 +1,4 @@
-import "url:https://www.googletagmanager.com/gtag/js?id=G-3X9EELR6PB";
+// import "url:https://www.googletagmanager.com/gtag/js?id=G-3X9EELR6PB";
 
 declare global {
   interface Window {

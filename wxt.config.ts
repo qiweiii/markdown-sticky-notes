@@ -2,27 +2,14 @@ import { defineConfig } from "wxt";
 import react from "@vitejs/plugin-react";
 
 import executeCommand from "./scripts/vite-plugin-command";
+import toUtf8 from "./scripts/vite-plugin-to-utf8";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   vite: (env) => {
     const contentJsPath = `.output/${env.browser}-mv${env.manifestVersion}/content-scripts`;
     return {
-      plugins: [
-        react(),
-        executeCommand([
-          // `sed -i '' -e 's/[→×·]/-/g' -e 's/[ƒ○◌𝑥𝐶𝑡∪□🔑︎▢]/x/g' .output/${env.browser}-mv${env.manifestVersion}/content-scripts/content.js`
-          // `sed -i '' 's/[^\x00-\x7F]/x/' ${contentJsPath}/content.js`,
-          // `sed -i '' -e 's/[\u200b⚠️�→×·↩]//g' -e 's/[ƒ○◌𝑥𝐶𝑡∪□▢]/x/g' ${contentJsPath}/content.js`,
-          // `perl -i.bak -pe 's/[^[:ascii:]]/x/g' ${contentJsPath}/content.js`,
-          // `perl -i.bak1 -CS -pe 's/\/\*.*?\*\/|\/\/.*//gs' ${contentJsPath}/content.js`,
-          // `sed -i '' -e  '/^\s*\/\*.*\*\/$/d' ${contentJsPath}/content.js`,
-          // `perl -i.bak2 -CS -pe 's/([^[:ascii:]])/sprintf("\\u%04X", ord($1))/ge if utf8::is_utf8($1)' ${contentJsPath}/content.js`,
-          // `iconv -f us-ascii -t ascii//TRANSLIT ${contentJsPath}/content.js > ${contentJsPath}/content2.js && mv ${contentJsPath}/content2.js ${contentJsPath}/content.js`,
-          `perl -i.bak2 -CS -pe 's/([^[:ascii:]])/sprintf("\\u%04X", ord($1))/ge' ${contentJsPath}/content.js`,
-          // TODO: probably need a lexer plugin that can replace those non utf-encoded charactoers after ast
-        ]),
-      ],
+      plugins: [toUtf8(), react()],
     };
   },
   manifest: {
