@@ -42,19 +42,20 @@ export default defineBackground({
           console.log("set initial id");
         });
         browser.storage.local.set({ defaultTheme: "monokai" }).then(() => {
-          console.log("set default theme");
+          console.log("set default theme to monokai");
         });
         browser.storage.local
           .set({ defaultEditorFontFamily: '"Consolas","monaco",monospace' })
           .then(() => {
-            console.log("set default font family");
+            console.log("set default font family to consolas");
           });
         browser.storage.local.set({ defaultEditorFontSize: 14 }).then(() => {
-          console.log("set default font size");
+          console.log("set default font size to 14");
         });
         browser.storage.local.set({ defaultOpacity: 0.9 }).then(() => {
-          console.log("set default opacity");
+          console.log("set default opacity to 0.9");
         });
+        browser.runtime.openOptionsPage();
       }
       // if (details.OnInstalledReason === "update") {
       //    // on extension update

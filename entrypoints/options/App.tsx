@@ -1,8 +1,12 @@
 import "./App.css";
-import Nav from "./Nav.js";
+import Nav from "./Nav";
 
 const App = () => {
-  return <Nav />;
+  return (
+    <>
+      <Nav />
+    </>
+  );
 };
 
 export default App;

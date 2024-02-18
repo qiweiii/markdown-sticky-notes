@@ -8,8 +8,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Input from "@mui/material/Input";
 import { styled, withStyles } from "@mui/material/styles";
 
-import themes from "../themes";
-import fonts from "../fonts";
+import themes from "../../themes";
+import fonts from "../../fonts";
 
 const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 5;
