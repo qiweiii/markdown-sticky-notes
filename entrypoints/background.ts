@@ -8,36 +8,33 @@ declare global {
 }
 
 export default defineBackground({
-  persistent: false,
-
   main() {
     console.log("Hello background!", { id: browser.runtime.id });
 
-    // Google Analytics
-    window.dataLayer = window.dataLayer || [];
-    // NOTE: This line is different from Google's documentation
-    window.gtag = function () {
-      window.dataLayer.push(arguments);
-    };
-    window.gtag("js", new Date());
-    window.gtag("config", "G-3X9EELR6PB");
-    window.gtag("event", "background event", {
-      url: window.location.href,
-    });
+    // TODO: when offscreen api is available, add google analytics back
+    // window.dataLayer = window.dataLayer || [];
+    // // NOTE: This line is different from Google's documentation
+    // window.gtag = function () {
+    //   window.dataLayer.push(arguments);
+    // };
+    // window.gtag("js", new Date());
+    // window.gtag("config", "G-3X9EELR6PB");
+    // window.gtag("event", "background event", {
+    //   url: window.location.href,
+    // });
 
-    // extension listeners
-    browser.runtime.onMessage.addListener(function (
-      request,
-      sender,
-      sendResponse
-    ) {
-      if (request.action === "generated_new_note") {
-        window.gtag("event", "pageview", {
-          url: request.url,
-          id: browser.runtime.id,
-        });
-      }
-    });
+    // browser.runtime.onMessage.addListener(function (
+    //   request,
+    //   sender,
+    //   sendResponse
+    // ) {
+    //   if (request.action === "generated_new_note") {
+    //     window.gtag("event", "pageview", {
+    //       url: request.url,
+    //       id: browser.runtime.id,
+    //     });
+    //   }
+    // });
 
     browser.runtime.onInstalled.addListener(function (details) {
       if (details.reason === "install") {
@@ -64,7 +61,7 @@ export default defineBackground({
       // }
     });
 
-    browser.browserAction.onClicked.addListener((tab) => {
+    browser.action.onClicked.addListener((tab) => {
       // Send a message to the active tab
       browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
         let activeTab = tabs[0];

@@ -113,14 +113,17 @@ export const removeNoteFromStorage = (id: number) => {
 /** Save the whole item for the current url */
 export const saveItem = (item: { [url: string]: Note[] }) => {
   // save the item
-  browser.storage.local.set(item).then(() => {
-    if (browser.runtime.lastError) {
+  browser.storage.local
+    .set(item)
+    .then(() => {
+      // console.log("saved: ", item);
+    })
+    .catch((err) => {
+      console.error(err);
       alert(
-        "Chrome's local storage for markdown sticky notes is full, please delete some of notes in options page"
+        "An error occurred while saving the note. Please try again later." + err
       );
-    }
-    // console.log("saved: ", item);
-  });
+    });
 };
 
 /** Remove all notes from url */
