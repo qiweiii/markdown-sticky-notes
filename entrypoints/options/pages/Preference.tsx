@@ -67,17 +67,17 @@ const Preference = () => {
 
   const updateDefaultTheme = (value: string) => {
     browser.storage.local.set({ defaultTheme: value }).then(() => {
-      console.log("set default theme");
+      console.log("set default theme " + value);
     });
   };
   const updateDefaultFont = (value: string) => {
     browser.storage.local.set({ defaultEditorFontFamily: value }).then(() => {
-      console.log("set default font family");
+      console.log("set default font family " + value);
     });
   };
   const updateDefaultSize = (value: string) => {
     browser.storage.local.set({ defaultEditorFontSize: value }).then(() => {
-      console.log("set default font size");
+      console.log("set default font size " + value);
     });
   };
 

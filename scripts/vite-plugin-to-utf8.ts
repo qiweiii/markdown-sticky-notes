@@ -17,7 +17,6 @@ export default function toUtf8(): PluginOption {
     generateBundle(options: any, bundle: any) {
       // Iterate through each asset in the bundle
       for (const fileName in bundle) {
-        console.log(fileName);
         if (bundle[fileName].type === "chunk") {
           // Assuming you want to convert the chunk's code
           const originalCode = bundle[fileName].code;
