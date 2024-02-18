@@ -8,7 +8,7 @@ export default defineConfig({
   vite: (env) => {
     // const contentJsPath = `.output/${env.browser}-mv${env.manifestVersion}/content-scripts`;
     return {
-      plugins: [toUtf8(), react()],
+      plugins: [react(), toUtf8()],
     } as WxtViteConfig;
   },
   manifest: {
@@ -20,12 +20,14 @@ export default defineConfig({
       "64": "icon/notes64.png",
       "128": "icon/notes128.png",
     },
+    // this must be hrer in order to have action clicked listeners
+    action: {},
     permissions: ["storage", "tabs"],
     // optional_permissions: ["unlimitedStorage"],
     host_permissions: ["<all_urls>"],
     web_accessible_resources: [
       {
-        resources: ["fonts/*"],
+        resources: ["fonts/**/*"],
         matches: ["*://*/*"],
       },
     ],

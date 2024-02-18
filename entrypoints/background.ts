@@ -1,11 +1,11 @@
 // import "url:https://www.googletagmanager.com/gtag/js?id=G-3X9EELR6PB";
 
-declare global {
-  interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
-  }
-}
+// declare global {
+//   interface Window {
+//     dataLayer: any[];
+//     gtag: (...args: any[]) => void;
+//   }
+// }
 
 export default defineBackground({
   main() {
