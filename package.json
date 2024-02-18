@@ -5,12 +5,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wxt --mv2",
-    "dev:firefox": "wxt --mv2 -b firefox",
-    "build": "wxt build --mv2",
-    "build:firefox": "wxt build --mv2 -b firefox",
-    "zip": "wxt zip --mv2",
-    "zip:firefox": "wxt zip --mv2 -b firefox",
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare"
   },
@@ -39,6 +39,7 @@
     "@types/react-syntax-highlighter": "^15.5.11",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
+    "vite": "^5.1.3",
     "wxt": "^0.16.8"
   }
 }

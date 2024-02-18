@@ -1,3 +1,5 @@
+import { PluginOption } from "vite";
+
 function strToUtf8(str: string) {
   return str
     .split("")
@@ -9,7 +11,7 @@ function strToUtf8(str: string) {
     .join("");
 }
 
-export default function toUtf8() {
+export default function toUtf8(): PluginOption {
   return {
     name: "to-utf8",
     generateBundle(options: any, bundle: any) {

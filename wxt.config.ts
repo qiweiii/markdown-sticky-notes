@@ -1,8 +1,9 @@
-import { defineConfig } from "wxt";
+import { WxtViteConfig, defineConfig } from "wxt";
 import react from "@vitejs/plugin-react";
 
 import executeCommand from "./scripts/vite-plugin-command";
 import toUtf8 from "./scripts/vite-plugin-to-utf8";
+import { PluginOption } from "vite";
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -10,7 +11,7 @@ export default defineConfig({
     const contentJsPath = `.output/${env.browser}-mv${env.manifestVersion}/content-scripts`;
     return {
       plugins: [toUtf8(), react()],
-    };
+    } as WxtViteConfig;
   },
   manifest: {
     short_name: "markdown-sticky-notes",
