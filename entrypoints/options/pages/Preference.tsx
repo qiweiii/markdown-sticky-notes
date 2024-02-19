@@ -6,7 +6,7 @@ import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Input from "@mui/material/Input";
-import { styled, withStyles } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 import themes from "../../themes";
 import fonts from "../../fonts";
@@ -23,15 +23,19 @@ const MenuProps = {
 };
 
 const StyledRoot = styled("div")`
-  .main {
-    margin-top: 15%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  margin-top: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   .form {
-    width: 300;
-    height: 100;
+    width: 300px;
+    height: 100px;
+    label {
+      font-size: 0.8rem;
+      animation: none;
+      transform: none;
+    }
   }
 `;
 
@@ -124,7 +128,7 @@ const Preference = () => {
   };
 
   return (
-    <StyledRoot className="main">
+    <StyledRoot>
       <FormControl className="form">
         <InputLabel id="theme-label">Default Editor Theme</InputLabel>
         <Select

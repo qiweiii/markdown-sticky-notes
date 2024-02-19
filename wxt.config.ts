@@ -8,7 +8,7 @@ export default defineConfig({
   vite: (env) => {
     // const contentJsPath = `.output/${env.browser}-mv${env.manifestVersion}/content-scripts`;
     return {
-      plugins: [react(), toUtf8()],
+      plugins: [toUtf8(), react()],
     } as WxtViteConfig;
   },
   manifest: {

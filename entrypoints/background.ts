@@ -45,7 +45,7 @@ export default defineBackground({
           console.log("set default theme to monokai");
         });
         browser.storage.local
-          .set({ defaultEditorFontFamily: '"Consolas","monaco",monospace' })
+          .set({ defaultEditorFontFamily: '"Consolas", "monaco", monospace' })
           .then(() => {
             console.log("set default font family to consolas");
           });
@@ -56,6 +56,24 @@ export default defineBackground({
           console.log("set default opacity to 0.9");
         });
         browser.runtime.openOptionsPage();
+        // FIXME: comment out this note for testing
+        browser.storage.local
+          .set({
+            "https://www.google.com/": [
+              {
+                content: "",
+                font: '"Consolas", "monaco", monospace',
+                height: 250,
+                id: "3",
+                opacity: 1,
+                theme: "monokai",
+                width: 200,
+                x: 399,
+                y: 178,
+              },
+            ],
+          })
+          .then(() => {});
       }
       // if (details.OnInstalledReason === "update") {
       //    // on extension update

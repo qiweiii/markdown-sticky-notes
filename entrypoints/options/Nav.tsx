@@ -113,7 +113,10 @@ function ResponsiveAppBar() {
                       handleCloseNavMenu();
                     }}
                   >
-                    <Typography textAlign="center">{page}</Typography>
+                    <Typography textAlign="center">{`${page[0].toLocaleUpperCase()}${page.slice(
+                      1
+                    )}
+                    `}</Typography>
                   </MenuItem>
                 ))}
               </Menu>

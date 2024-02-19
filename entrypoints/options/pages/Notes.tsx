@@ -11,14 +11,23 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { MouseEventHandler, SyntheticEvent, useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import { SyntheticEvent, useEffect, useState } from "react";
 
 const StyledRoot = styled("div")`
-  .root {
+  height: 100%;
+  .delete-button {
+    &.MuiButton-root {
+      background-color: #f97171;
+    }
+    position: absolute;
+    right: 20px;
+    top: 80px;
+  }
+  .list-root {
     width: 100%;
-    margin-top: 2%;
+    margin-top: 60px;
     align-items: center;
   }
   .item {
@@ -38,19 +47,15 @@ const StyledRoot = styled("div")`
 type Data = {
   checked: boolean[];
   urls: string[];
-  open: boolean;
-  showMessage: boolean;
-  message: string;
 };
 
 const Notes = () => {
   const [data, setData] = useState<Data>({
     checked: [],
     urls: [],
-    open: false,
-    showMessage: false,
-    message: "",
   });
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [snackbarMsg, setSnackbarMsg] = useState("");
 
   useEffect(() => {
     getNewDataFromStorage();
@@ -79,13 +84,15 @@ const Notes = () => {
     });
   };
 
-  const handleToggle = (value: number) => (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-    let newChecked = [...data.checked];
-    newChecked[value] = data.checked[value] === false;
-    setData({ ...data, checked: newChecked });
-  };
+  const handleToggle =
+    (value: number) =>
+    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      let newChecked = [...data.checked];
+      newChecked[value] = data.checked[value] === false;
+      setData({ ...data, checked: newChecked });
+    };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     // delete selected items
     let items = [];
     for (let i = 0; i < data.checked.length; i++) {
@@ -93,49 +100,50 @@ const Notes = () => {
         items.push(data.urls[i]);
       }
     }
-    // console.log(items);
-    if (items.length === 0) {
-      handleOpenMessage("No items selected");
-    } else {
+    if (items.length) {
       // chrome storage
-      browser.storage.local.remove(items).then(() => {
-        handleOpenMessage("Success!");
-        // update state
-        getNewDataFromStorage();
-      });
+      await browser.storage.local.remove(items);
+      getNewDataFromStorage(); // refresh data
     }
-
-    handleClose(); // close dialog
+    handleClose();
+    handleOpenMessage("Deleted");
   };
 
   const handleClickOpen = () => {
     // dialog
-    setData({ ...data, open: true });
+    setDialogOpen(true);
   };
 
   const handleClose = () => {
     // dialog
-    setData({ ...data, open: false });
+    setDialogOpen(false);
   };
 
-  const handleCloseMessage: (event: Event | SyntheticEvent<any, Event>, reason: SnackbarCloseReason) => void = (event) => {
+  const handleCloseMessage: (
+    event: Event | SyntheticEvent<any, Event>,
+    reason: SnackbarCloseReason
+  ) => void = (event) => {
     // snackbar
-    setData({ ...data, showMessage: false });
+    setSnackbarMsg("");
   };
 
   const handleOpenMessage = (message: string) => {
     // snackbar
-    setData({ ...data, message: message });
-    setData({ ...data, showMessage: true });
+    setSnackbarMsg(message);
   };
 
   return (
     <StyledRoot>
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-        Delete
+      <Button
+        variant="contained"
+        onClick={handleClickOpen}
+        className="delete-button"
+        disabled={data.checked.every((value) => value === false)}
+      >
+        <DeleteIcon fontSize="small" sx={{ mr: 0.5 }} /> Delete
       </Button>
       <Dialog
-        open={data.open}
+        open={dialogOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -162,25 +170,15 @@ const Notes = () => {
           vertical: "bottom",
           horizontal: "left",
         }}
-        open={data.showMessage}
-        autoHideDuration={6000}
+        open={snackbarMsg !== ""}
+        autoHideDuration={3000}
         onClose={handleCloseMessage}
         ContentProps={{
           "aria-describedby": "message-id",
         }}
-        message={<span id="message-id">{data.message}</span>}
-        // action={[
-        //   <IconButton
-        //     key="close"
-        //     color="inherit"
-        //     className="close"
-        //     onClick={handleCloseMessage}
-        //   >
-        //     <CloseIcon />
-        //   </IconButton>,
-        // ]}
+        message={<span id="message-id">{snackbarMsg}</span>}
       />
-      <List className="root">
+      <List className="list-root">
         {data.urls.sort().map((value, i) => {
           const labelId = `checkbox-list-label-${i}`;
           return (
@@ -208,6 +206,11 @@ const Notes = () => {
           );
         })}
       </List>
+      {data.urls.length === 0 && (
+        <DialogContentText className="close" id="alert-dialog-description">
+          No notes found.
+        </DialogContentText>
+      )}
     </StyledRoot>
   );
 };

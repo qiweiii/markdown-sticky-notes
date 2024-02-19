@@ -80,6 +80,12 @@ export const initData = (noteData: Note) => {
 export const updateData = (updatedData: Note, id: number) => {
   const url = window.location.href.split("#")[0];
   browser.storage.local.get(url).then((result) => {
+    if (!result[url]) {
+      alert(
+        "Error: You are trying to edit a deleted Markdown Sticky Note, please refresh the page."
+      );
+      return;
+    }
     // console.log("update's get result: ", result);
     let newArray = result[url].filter((note: Note) => note.id !== id);
     newArray.push(updatedData);

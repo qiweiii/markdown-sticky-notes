@@ -39,3 +39,22 @@ pnpm run build
 - Click "load unpacked" button
 - Choose the `.output/chrome-mv3/` folder
 - Then you will be able to see extension icon in Chrome extension bar.
+
+
+## Buy me a coffee ☕️
+
+<p>
+  If you like this extension, consider buying me a coffee. Your support
+  will help me to continue maintaining this extension for <strong>free</strong>.
+</p>
+<a
+  href="https://www.buymeacoffee.com/qiwei"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <img
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+    alt="Buy Me A Coffee"
+    width="217"
+  />
+</a>
