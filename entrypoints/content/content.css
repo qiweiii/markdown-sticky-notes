@@ -13,6 +13,7 @@
 /* The following part will be created outside of #markdown-sticky-note */
 .markdown-setting-popover label {
   font-size: 14px;
+  transform: none;
 }
 .markdown-setting-popover div {
   font-size: 14px;
@@ -152,8 +153,10 @@ ul .markdown-setting-select {
 /* end of button */
 
 #markdown-sticky-note .note-root {
+  position: absolute;
   top: 0px;
   left: 0px;
+  height: 0;
 }
 
 #markdown-sticky-note .collapse {

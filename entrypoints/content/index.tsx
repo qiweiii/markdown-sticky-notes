@@ -1,6 +1,6 @@
 /*global chrome*/
 /* src/note_widget/content.js */
-import React from "react";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 // import { StylesProvider, jssPreset } from "@material-ui/styles";
 // import { create } from "jss";
@@ -15,8 +15,6 @@ import {
 import type { Note as NoteType } from "./storage.js";
 import Note from "./Note.js";
 import "./content.css";
-import { useState } from "react";
-import { useEffect } from "react";
 
 // import root from 'react-shadow/material-ui'
 // Shadow DOM / iframe can solve style encapsulation, but is not easy to use with material-ui, markdown editor and draggable.
@@ -93,25 +91,31 @@ const MarkdownStickyNoteApp = () => {
     });
   }, []);
 
-  /** get saved notes for current url **/
+  /**
+   * Get saved notes for current url
+   *
+   * Note: only use for on mount, not intented to be used after this
+   */
   const getNotesFromStorage = () => {
     browser.storage.local.get([url, "defaultOpacity"]).then((res) => {
-      if (!res[url]) return; // if empty
-      let opacity = res.defaultOpacity;
-      for (let note of res[url]) {
-        addNote(
-          note.id,
-          note.x,
-          note.y,
-          note.width,
-          note.height,
-          note.content,
-          note.theme,
-          note.font,
-          note.fontSize,
-          false,
-          opacity
-        );
+      if (res[url]) {
+        let opacity = res.defaultOpacity;
+        for (let note of res[url]) {
+          console.log(note);
+          addNote(
+            note.id,
+            note.x,
+            note.y,
+            note.width,
+            note.height,
+            note.content,
+            note.theme,
+            note.font,
+            note.fontSize,
+            false,
+            opacity
+          );
+        }
       }
     });
   };
@@ -130,9 +134,8 @@ const MarkdownStickyNoteApp = () => {
     autofocus: boolean,
     opacity: number
   ) => {
-    setNotes([
+    setNotes((notes) => [
       ...notes,
-      //add notes props, then render later
       {
         id: id,
         x: x,
@@ -156,7 +159,7 @@ const MarkdownStickyNoteApp = () => {
 
   /** remove note from DOM & storage */
   const deleteNote = (id: number) => {
-    setNotes(notes.filter((note) => note.id !== id));
+    setNotes((notes) => notes.filter((note) => note.id !== id));
     removeNoteFromStorage(id);
     // this.setState({notes: []})
     // this.getNotes();
@@ -199,7 +202,10 @@ const MarkdownStickyNoteApp = () => {
       <div id="markdown-sticky-note">
         {notes.map((note) => {
           return (
-            <div id={`markdown-sticky-note-${note.id}`}>
+            <div
+              id={`markdown-sticky-note-${note.id}`}
+              key={`markdown-sticky-note-${note.id}`}
+            >
               <Note
                 id={note.id}
                 optionsPage={optionsUrl}
@@ -226,7 +232,7 @@ const MarkdownStickyNoteApp = () => {
 
 export default defineContentScript({
   matches: ["https://*/*", "http://*/*"],
-  excludeMatches: ["*://developers.google.com/*"],
+  excludeMatches: ["*://developers.google.com/*"], // TODO: remove this
 
   main(ctx) {
     /** Initialise root div */
@@ -242,7 +248,7 @@ export default defineContentScript({
     //   insertionPoint: approot,
     // });
 
-    window.localStorage.setItem("md-curMaxIndex", "1300"); // if set very high will cause popover modal to fall behind (which i cannot change)
+    window.localStorage.setItem("md-curMaxIndex", "1300"); // if set very high will cause settings popover to go behind (which i cannot change)
     // browser.storage.local.clear(); // for testing & dev
 
     // let MSNwithRouter = withRouter(MarkdownStickyNote);

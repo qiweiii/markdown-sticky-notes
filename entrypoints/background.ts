@@ -68,6 +68,7 @@ export default defineBackground({
                 opacity: 1,
                 theme: "monokai",
                 width: 200,
+                fontSize: 14,
                 x: 399,
                 y: 178,
               },

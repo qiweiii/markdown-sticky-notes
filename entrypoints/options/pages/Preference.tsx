@@ -92,26 +92,26 @@ const Preference = () => {
   };
 
   const handleChangeTheme = (e: SelectChangeEvent<string>) => {
-    setState({
+    setState((state) => ({
       ...state,
       theme: e.target.value,
-    });
+    }));
     updateDefaultTheme(e.target.value);
   };
 
   const handleChangeFont = (e: SelectChangeEvent<string>) => {
-    setState({
+    setState((state) => ({
       ...state,
       font: e.target.value,
-    });
+    }));
     updateDefaultFont(e.target.value);
   };
 
   const handleChangeFontSize = (e: SelectChangeEvent<string>) => {
-    setState({
+    setState((state) => ({
       ...state,
       fontsize: e.target.value,
-    });
+    }));
     updateDefaultSize(e.target.value);
   };
 
@@ -120,10 +120,10 @@ const Preference = () => {
     value: number | number[]
   ) => {
     const opacity = Array.isArray(value) ? value[0] : value;
-    setState({
+    setState((state) => ({
       ...state,
       opacity,
-    });
+    }));
     updateDefaultOpacity(value);
   };
 

@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Input from "@mui/material/Input";
 import Skeleton from "@mui/material/Skeleton";
 import { ViewUpdate } from "@uiw/react-codemirror";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Draggable, { DraggableEventHandler } from "react-draggable";
 import { Resizable, ResizeCallback } from "re-resizable";
 import ReactMarkdown from "react-markdown";
@@ -73,7 +73,7 @@ const Note = (props: Props) => {
     theme: props.defaultTheme,
     editorFontSize: props.editorFontSize,
     editorFontFamily: props.editorFontFamily,
-    mode: 0, // 0 for editting, 1 for display
+    mode: 0, // 0 for editing, 1 for display
     markdownSrc: props.content,
     opacity: props.opacity,
     pinColor: "action",
@@ -90,28 +90,11 @@ const Note = (props: Props) => {
   };
 
   const handleMarkdownChange = (value: string, viewUpdate: ViewUpdate) => {
-    setSetting({ ...setting, markdownSrc: value });
-    updateStorage();
+    setSetting((setting) => ({ ...setting, markdownSrc: value }));
   };
 
   const handleDelete = () => {
     props.deleteNoteFn(setting.id);
-  };
-
-  const updateStorage = () => {
-    let updatedData = {
-      id: setting.id,
-      x: setting.position.x,
-      y: setting.position.y,
-      width: setting.noteDim.x,
-      height: setting.noteDim.y,
-      content: setting.markdownSrc,
-      theme: setting.theme,
-      font: setting.editorFontFamily,
-      fontSize: setting.editorFontSize,
-      opacity: setting.opacity,
-    };
-    props.updateNoteFn(updatedData, setting.id);
   };
 
   const handleSettingClose = () => {
@@ -152,54 +135,47 @@ const Note = (props: Props) => {
   };
 
   const handleStop: DraggableEventHandler = (event, data) => {
+    console.log(data.x, data.y);
     // draggable
-    setSetting({
+    setSetting((setting) => ({
       ...setting,
       dragging: false,
       position: {
         x: data.x,
         y: data.y,
       },
-    });
-    updateStorage();
+    }));
   };
 
   const onResizeStop: ResizeCallback = (event, direction, ref, delta) => {
-    setSetting({
+    setSetting((setting) => ({
       ...setting,
       noteDim: {
         x: setting.noteDim.x + delta.width,
         y: setting.noteDim.y + delta.height,
       },
-    });
-    updateStorage();
+    }));
   };
 
   const handleChangeTheme = (e: SelectChangeEvent<string>) => {
-    setSetting({
+    setSetting((setting) => ({
       ...setting,
       theme: e.target.value,
-    });
-    // TODO: check if this works
-    updateStorage();
+    }));
   };
 
   const handleChangeFont = (e: SelectChangeEvent<string>) => {
-    setSetting({
+    setSetting((setting) => ({
       ...setting,
       editorFontFamily: e.target.value,
-    });
-    // TODO: check if this works
-    updateStorage();
+    }));
   };
 
   const handleChangeFontSize = (e: SelectChangeEvent<string>) => {
-    setSetting({
+    setSetting((setting) => ({
       ...setting,
       editorFontSize: Number(e.target.value) || 16,
-    });
-    // TODO: check if this works
-    updateStorage();
+    }));
   };
 
   // Handle mouse down for updating zIndex of the focused note.
@@ -222,20 +198,58 @@ const Note = (props: Props) => {
   //   }
   // }
 
+  const updateStorage = () => {
+    let updatedData = {
+      id: setting.id,
+      x: setting.position.x,
+      y: setting.position.y,
+      width: setting.noteDim.x,
+      height: setting.noteDim.y,
+      content: setting.markdownSrc,
+      theme: setting.theme,
+      font: setting.editorFontFamily,
+      fontSize: setting.editorFontSize,
+      opacity: setting.opacity,
+    };
+    props.updateNoteFn(updatedData, setting.id);
+  };
+
+  // see: https://kentcdodds.com/blog/useeffect-vs-uselayouteffect
+  // This runs synchronously immediately
+  // after React has performed all DOM mutations.
+  // This can be useful if you need to make DOM measurements
+  // (like getting the scroll position or other styles for an element)
+  // and then make DOM mutations or trigger
+  // a synchronous re-render by updating state.
+  //
+  // Anyway, if I use useEffect here,
+  // the position will be the old one, not the new position
+  useLayoutEffect(() => {
+    updateStorage();
+  }, [
+    setting.position,
+    setting.dragging,
+    setting.noteDim,
+    setting.theme,
+    setting.editorFontSize,
+    setting.editorFontFamily,
+    setting.markdownSrc,
+  ]);
+
   return (
     <div className="note-root">
       <Draggable
-        // bounds="body"
         handle=".handle"
         onStart={handleStart}
         onStop={handleStop}
+        onMouseDown={handleMouseDown}
         defaultClassName={"markdown-react-draggable" + props.id}
         defaultPosition={{
           x: setting.position.x,
           y: setting.position.y,
         }}
         // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
-        onMouseDown={handleMouseDown}
+        // bounds="body"
         // bounds="parent"
       >
         <Resizable
@@ -303,7 +317,7 @@ const Note = (props: Props) => {
                         value={name}
                         className="markdown-setting-select"
                       >
-                        {name}
+                        {name[0].toUpperCase() + name.slice(1)}
                       </MenuItem>
                     ))}
                   </Select>
@@ -324,7 +338,7 @@ const Note = (props: Props) => {
                     {Array.from(new Array(40), (x, i) => i + 9).map((size) => (
                       <MenuItem
                         key={size}
-                        value={size}
+                        value={`${size}`}
                         className="markdown-setting-select"
                       >
                         {size}
@@ -396,7 +410,7 @@ const Note = (props: Props) => {
                     href={props.optionsPage}
                     target="_blank"
                   >
-                    Go to setting page <OpenInNewIcon fontSize="small" />
+                    Go to settings page <OpenInNewIcon fontSize="small" />
                   </MenuItem>
                 </div>
               </Popover>
@@ -426,37 +440,39 @@ const Note = (props: Props) => {
                   autofocus={props.autofocus}
                 />
               ) : (
-                <ReactMarkdown
-                  className="result"
-                  // rehypePlugins={[rehypeRaw]}
-                  remarkPlugins={[remarkGfm]}
-                  skipHtml={false}
-                  // https://github.com/remarkjs/react-markdown#use-custom-components-syntax-highlight
-                  components={{
-                    code: ({ className, children, ...props }) => {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return match ? (
-                        // lucario and nightOwl are the best for code block
-                        // https://react-syntax-highlighter.github.io/react-syntax-highlighter/demo/prism.html
-                        <SyntaxHighlighter
-                          // @ts-ignore
-                          style={nightOwl}
-                          language={match[1]}
-                          PreTag="div"
-                          {...props}
-                        >
-                          {String(children).replace(/\n$/, "")}
-                        </SyntaxHighlighter>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                >
-                  {setting.markdownSrc}
-                </ReactMarkdown>
+                <div onClick={handleClickInside}>
+                  <ReactMarkdown
+                    className="result"
+                    // rehypePlugins={[rehypeRaw]}
+                    remarkPlugins={[remarkGfm]}
+                    skipHtml={false}
+                    // https://github.com/remarkjs/react-markdown#use-custom-components-syntax-highlight
+                    components={{
+                      code: ({ className, children, ...props }) => {
+                        const match = /language-(\w+)/.exec(className || "");
+                        return match ? (
+                          // lucario and nightOwl are the best for code block
+                          // https://react-syntax-highlighter.github.io/react-syntax-highlighter/demo/prism.html
+                          <SyntaxHighlighter
+                            // @ts-ignore
+                            style={nightOwl}
+                            language={match[1]}
+                            PreTag="div"
+                            {...props}
+                          >
+                            {String(children).replace(/\n$/, "")}
+                          </SyntaxHighlighter>
+                        ) : (
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        );
+                      },
+                    }}
+                  >
+                    {setting.markdownSrc}
+                  </ReactMarkdown>
+                </div>
               )}
             </div>
           </div>

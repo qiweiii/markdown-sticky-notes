@@ -122,7 +122,7 @@ export const saveItem = (item: { [url: string]: Note[] }) => {
   browser.storage.local
     .set(item)
     .then(() => {
-      // console.log("saved: ", item);
+      console.log("saved: ", item);
     })
     .catch((err) => {
       console.error(err);
