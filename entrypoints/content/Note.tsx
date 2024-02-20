@@ -85,7 +85,7 @@ const Note = (props: Props) => {
 
   const [ref] = useOutsideClickRef(handleClickOutside);
 
-  const handleClickInside = (e: any) => {
+  const handleClickInside: React.MouseEventHandler<HTMLDivElement> = (e) => {
     setSetting({ ...setting, mode: 0 });
   };
 
@@ -440,7 +440,7 @@ const Note = (props: Props) => {
                   autofocus={props.autofocus}
                 />
               ) : (
-                <div onClick={handleClickInside}>
+                <div onClick={handleClickInside} className="result-container">
                   <ReactMarkdown
                     className="result"
                     // rehypePlugins={[rehypeRaw]}

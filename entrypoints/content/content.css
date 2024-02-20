@@ -177,6 +177,10 @@ ul .markdown-setting-select {
   overflow: auto;
 }
 
+#markdown-sticky-note .note-pane .result-container {
+  height: 98%;
+}
+
 #markdown-sticky-note .note-pane .result {
   color: black;
   padding: 2% 3%;
