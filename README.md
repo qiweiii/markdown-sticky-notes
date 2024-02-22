@@ -1,32 +1,60 @@
-# Markdown-Sticky-Notes
+# Markdown Sticky Notes
+
+> A markdown sticky note that can be used in web pages
 
 ## Features
 
 - Create new notes by clicking on the extension icon
-- Auto save content and position
-- Draggable
-- Resizable
-- Multiple editor theme, font
+- Auto save content and position in the web page
+- Nice markdown editor & result
+- Draggable, resizable
+- Multiple editor theme and font styles
 
-## Test/Install locally
+## Develop
 
-```js
-yarn install
-yarn build // output to build directory
+```sh
+# dev
+pnpm run dev
+
+# build
+pnpm run build
+pnpm run build:firefox
+
+# zip
+pnpm run zip
+pnpm run zip:firefox
 ```
 
-Go to [chrome://extensions/](chrome://extensions/), turn on developer mode, click "load unpacked" button, choose the `build/` folder, then you will be able to see extension icon in Chrome extension bar.
+- refer to `wxt` [docs](https://wxt.dev/guide/introduction.html) for more details
 
-## Notes
 
-- I am using Manifest version 2, because version 3 is new and doc is not complete and not much tutorials exist yet, but i will switch to MV3 later on.
-- User could set shortcuts in [chrome://extensions/shortcuts](chrome://extensions/shortcuts)
+## Install Locally
 
-## Feature requests
+```sh
+pnpm run build
+```
 
-- Export/import all notes
-- Export/import notes in one page
-- different style for hashtags (tag pills)
-- scroll sync between editor and output
-- pin a note
-- supports SPA
+- Go to [chrome://extensions/](chrome://extensions/)
+- Turn on developer mode
+- Click "load unpacked" button
+- Choose the `.output/chrome-mv3/` folder
+- Then you will be able to see extension icon in Chrome extension bar.
+
+
+## Buy me a coffee ☕️
+
+<p>
+  If you like this extension, consider buying me a coffee. Your support
+  will help me to continue maintaining this extension for <strong>free</strong>.
+</p>
+<a
+  href="https://www.buymeacoffee.com/qiwei"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <img
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+    alt="Buy Me A Coffee"
+    width="217"
+  />
+</a>
