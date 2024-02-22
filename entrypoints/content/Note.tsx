@@ -450,13 +450,13 @@ const Note = (props: Props) => {
                       code: ({ className, children, ...props }) => {
                         const match = /language-(\w+)/.exec(className || "");
                         return match ? (
-                          // lucario and nightOwl are the best for code block
                           // https://react-syntax-highlighter.github.io/react-syntax-highlighter/demo/prism.html
                           <SyntaxHighlighter
                             // @ts-ignore
                             style={nightOwl}
                             language={match[1]}
                             PreTag="div"
+                            useInlineStyles
                             {...props}
                           >
                             {String(children).replace(/\n$/, "")}
