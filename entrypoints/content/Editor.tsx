@@ -17,7 +17,7 @@ const Editor = (props: Props) => {
   const editorRef = useRef();
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       {/* https://github.com/uiwjs/react-codemirror */}
       <CodeMirror
         value={props.value}
@@ -29,9 +29,8 @@ const Editor = (props: Props) => {
         theme={themes[props.theme]} // TODO: check if all previous theme are working, then add new themes to ../thems
         autoFocus={props.autofocus}
         style={{ fontSize: props.fontSize, fontFamily: props.fontFamily }}
-        // TODO: check CodeMirror component has any more stuff need to move here or not
-        // basicSetup={false}
-        // editable={false}
+        height="100%"
+      // basicSetup={false}
       />
     </div>
   );

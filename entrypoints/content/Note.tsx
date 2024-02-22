@@ -19,7 +19,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
 import { useOutsideClickRef } from "rooks";
 
-// code block theme
+// result's code block theme
 import nightOwl from "react-syntax-highlighter/dist/cjs/styles/prism/night-owl";
 
 import Editor from "./Editor";
@@ -131,11 +131,10 @@ const Note = (props: Props) => {
     setSetting({
       ...setting,
       dragging: true,
-    }); // a dump way to make dragging smoother
+    });
   };
 
   const handleStop: DraggableEventHandler = (event, data) => {
-    console.log(data.x, data.y);
     // draggable
     setSetting((setting) => ({
       ...setting,
@@ -248,9 +247,9 @@ const Note = (props: Props) => {
           x: setting.position.x,
           y: setting.position.y,
         }}
-        // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
-        // bounds="body"
-        // bounds="parent"
+      // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
+      // bounds="body"
+      // bounds="parent"
       >
         <Resizable
           defaultSize={{

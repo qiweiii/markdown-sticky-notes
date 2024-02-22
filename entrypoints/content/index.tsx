@@ -72,7 +72,7 @@ const MarkdownStickyNoteApp = () => {
               y,
               200,
               250,
-              "",
+              "\n".repeat(11),
               theme,
               font,
               fontSize,
@@ -101,7 +101,6 @@ const MarkdownStickyNoteApp = () => {
       if (res[url]) {
         let opacity = res.defaultOpacity;
         for (let note of res[url]) {
-          console.log(note);
           addNote(
             note.id,
             note.x,
@@ -120,7 +119,7 @@ const MarkdownStickyNoteApp = () => {
     });
   };
 
-  /** add a note to notes list */
+  /** add a note to DOM notes list */
   const addNote = (
     id: number,
     x: number,
@@ -161,24 +160,6 @@ const MarkdownStickyNoteApp = () => {
   const deleteNote = (id: number) => {
     setNotes((notes) => notes.filter((note) => note.id !== id));
     removeNoteFromStorage(id);
-    // this.setState({notes: []})
-    // this.getNotes();
-
-    // this.setState({
-    //   notes: this.state.notes.filter(note => note.id !== id)
-    // }, removeNoteFromStorage(id));
-
-    // the way above does not work...so try this
-    // ReactDOM.unmountComponentAtNode(
-    //   document
-    //     .getElementById("markdown-sticky-note")
-    //     .querySelector(`div[id="${id}"]`)
-    // );
-    // document
-    //   .getElementById("markdown-sticky-note")
-    //   .querySelector(`div[id="${id}"]`)
-    //   .remove();
-    // removeNoteFromStorage(id);
   };
 
   /** Generate initial position */
@@ -232,7 +213,6 @@ const MarkdownStickyNoteApp = () => {
 
 export default defineContentScript({
   matches: ["https://*/*", "http://*/*"],
-  excludeMatches: ["*://developers.google.com/*"], // TODO: remove this
 
   main(ctx) {
     /** Initialise root div */
@@ -243,21 +223,8 @@ export default defineContentScript({
     approot.className = "markdown-sticky-note-approot";
     root.appendChild(approot);
 
-    // const jss = create({
-    //   ...jssPreset(),
-    //   insertionPoint: approot,
-    // });
-
     window.localStorage.setItem("md-curMaxIndex", "1300"); // if set very high will cause settings popover to go behind (which i cannot change)
-    // browser.storage.local.clear(); // for testing & dev
 
-    // let MSNwithRouter = withRouter(MarkdownStickyNote);
-    // ReactDOM.render(
-    //   <BrowserRouter>
-    //     <MSNwithRouter/>
-    //   </BrowserRouter>,
-    //   approot
-    // );
     ReactDOM.createRoot(approot).render(<MarkdownStickyNoteApp />);
   },
 });

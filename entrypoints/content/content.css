@@ -45,34 +45,6 @@ ul .markdown-setting-select {
 
 /* End of outside part */
 
-#markdown-sticky-note .CodeMirror {
-  position: absolute;
-  padding: 1% 1%;
-  top: 24px;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  height: auto;
-  width: auto;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-#markdown-sticky-note .CodeMirror pre {
-  border: none;
-  box-shadow: none;
-  line-height: initial;
-}
-
-#markdown-sticky-note .CodeMirror pre + pre {
-  /* MDN site has conflict with this */
-  margin: 0px !important;
-}
-
-#markdown-sticky-note .note-pane .CodeMirror-scroll {
-  box-sizing: content-box !important;
-}
-
 #markdown-sticky-note .handle {
   height: 24px;
   line-height: 1;
@@ -162,18 +134,17 @@ ul .markdown-setting-select {
 #markdown-sticky-note .collapse {
   height: 100%;
   width: 100%;
-  /* overflow: auto; */
 }
 
 #markdown-sticky-note .note-pane {
-  height: 100%;
+  height: calc(100% - 24px);
   width: 100%;
   overflow: hidden;
 }
 
-#markdown-sticky-note .editor-pane {
-  height: 100%;
+#markdown-sticky-note .note-pane .cm-theme {
   width: 100%;
+  height: 100%;
   overflow: auto;
 }
 
@@ -186,7 +157,7 @@ ul .markdown-setting-select {
   padding: 2% 3%;
   top: 0;
   left: 0;
-  height: calc(100% - 30px);
+  height: 100%;
   overflow: auto;
   line-height: 1.5em;
   background-color: rgb(250, 250, 250);
@@ -289,26 +260,42 @@ ul .markdown-setting-select {
   list-style-type: disc;
 }
 #markdown-sticky-note .note-pane .result blockquote {
-  background: inherit;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 17px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
+  background: #f9f9f9;
+  color: #666;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+#markdown-sticky-note .note-pane .result blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+#markdown-sticky-note .note-pane .result blockquote p {
+  display: inline;
 }
 #markdown-sticky-note .note-pane .result pre {
-  /* font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;  */
+  padding-block: none;
+  padding-inline: none;
+  margin: 0;
+  padding: 0;
+}
+#markdown-sticky-note .note-pane .result pre > div {
   font-style: normal;
   font-variant: normal;
   font-weight: 400;
   box-shadow: none;
   border: none;
-  margin: 5px 0 10px;
+  border-radius: 6px;
+  margin: 0 !important;
   white-space: pre;
 
   padding: 10px;
   overflow: auto;
-  font-size: 90%;
   line-height: 1.45;
   background-color: #f5f5f5;
   border-radius: 3px;
@@ -322,16 +309,11 @@ ul .markdown-setting-select {
 #markdown-sticky-note .note-pane .result code {
   display: inline;
   font-family: "markdown-stick-notes-family-source-code-pro";
-  /* font-style: normal;
-    font-variant: normal;
-    font-weight: 400;
-    box-shadow: none;
-    border: none; */
   color: black;
-  padding: 0.3em 0.4em;
+  padding: 0.2em 0.35em;
   margin: 0;
   font-size: 90%;
-  background-color: rgba(27, 31, 35, 0.05);
+  background-color: rgba(27, 31, 35, 0.15);
   border-radius: 3px;
 }
 

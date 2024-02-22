@@ -81,15 +81,15 @@ export const updateData = (updatedData: Note, id: number) => {
   const url = window.location.href.split("#")[0];
   browser.storage.local.get(url).then((result) => {
     if (!result[url]) {
-      alert(
-        "Error: You are trying to edit a deleted Markdown Sticky Note, please refresh the page."
+      console.error(
+        "Error: You are trying to update a Markdown Sticky Note that does not exist, please refresh the page."
       );
       return;
     }
-    // console.log("update's get result: ", result);
+
     let newArray = result[url].filter((note: Note) => note.id !== id);
     newArray.push(updatedData);
-    // console.log("updated array", newArray);
+
     const newData = {
       [url]: newArray,
     };
@@ -106,7 +106,7 @@ export const removeNoteFromStorage = (id: number) => {
     const newData = {
       [url]: newArray,
     };
-    // console.log("data after rm: ", newData)
+
     if (newArray.length === 0) {
       removeUrlFromStorage(url);
     } else {
@@ -122,7 +122,7 @@ export const saveItem = (item: { [url: string]: Note[] }) => {
   browser.storage.local
     .set(item)
     .then(() => {
-      console.log("saved: ", item);
+      // console.log("saved: ", item);
     })
     .catch((err) => {
       console.error(err);
