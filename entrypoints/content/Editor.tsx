@@ -14,13 +14,13 @@ type Props = {
 };
 
 const Editor = (props: Props) => {
-  console.log(props.theme, themeOptions.includes(props.theme));
 
   return (
     <div style={{ height: '100%' }}>
       {/* https://github.com/uiwjs/react-codemirror */}
       <CodeMirror
         className="CodeMirror"
+        height="100%"
         value={props.value}
         extensions={[
           markdown({ base: markdownLanguage, codeLanguages: languages }),
@@ -30,8 +30,6 @@ const Editor = (props: Props) => {
         theme={themes[themeOptions.includes(props.theme) ? props.theme : 'monokai']}
         autoFocus={props.autofocus}
         style={{ fontSize: props.fontSize, fontFamily: props.fontFamily }}
-        height="100%"
-      // basicSetup={false}
       />
     </div>
   );

@@ -58,24 +58,23 @@ export default defineBackground({
         });
         browser.runtime.openOptionsPage();
         // FIXME: comment out this note after testing
-        browser.storage.local
-          .set({
-            "https://www.google.com/": [
-              {
-                content: "",
-                font: '"Consolas", "monaco", monospace',
-                height: 250,
-                id: "3",
-                opacity: 1,
-                theme: "3024-day",
-                width: 200,
-                fontSize: 14,
-                x: 399,
-                y: 178,
-              },
-            ],
-          })
-          .then(() => {});
+        // browser.storage.local
+        //   .set({
+        //     "https://www.google.com/": [
+        //       {
+        //         content: "",
+        //         font: '"Consolas", "monaco", monospace',
+        //         height: 250,
+        //         id: "3",
+        //         opacity: 1,
+        //         theme: "monokai",
+        //         width: 200,
+        //         fontSize: 14,
+        //         x: 399,
+        //         y: 178,
+        //       },
+        //     ],
+        //   })
       }
       // if (details.OnInstalledReason === "update") {
       //    // on extension update
