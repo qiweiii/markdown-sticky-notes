@@ -441,12 +441,16 @@ const Note = (props: Props) => {
               ) : (
                 <div onClick={handleClickInside} className="result-container">
                   <ReactMarkdown
-                    className="result"
                     // rehypePlugins={[rehypeRaw]}
                     remarkPlugins={[remarkGfm]}
+                    className="result"
                     skipHtml={false}
+                    urlTransform={(url) => url}
                     // https://github.com/remarkjs/react-markdown#use-custom-components-syntax-highlight
                     components={{
+                      a: ({ node, ...props }) => (
+                        <a {...props} target="_blank" rel="noreferrer" />
+                      ),
                       code: ({ className, children, ...props }) => {
                         const match = /language-(\w+)/.exec(className || "");
                         return match ? (
@@ -477,7 +481,7 @@ const Note = (props: Props) => {
           </div>
         </Resizable>
       </Draggable>
-    </div>
+    </div >
   );
 };
 
