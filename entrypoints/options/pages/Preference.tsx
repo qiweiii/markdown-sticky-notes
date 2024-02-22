@@ -130,7 +130,7 @@ const Preference = () => {
   return (
     <StyledRoot>
       <FormControl className="form">
-        <InputLabel id="theme-label">Default Editor Theme</InputLabel>
+        <InputLabel id="theme-label">Global Default Editor Theme</InputLabel>
         <Select
           labelId="theme-label"
           id="mutiple-theme"
@@ -147,7 +147,7 @@ const Preference = () => {
         </Select>
       </FormControl>
       <FormControl className="form">
-        <InputLabel id="fontsize-label">Default Editor Font Size</InputLabel>
+        <InputLabel id="fontsize-label">Global Default Editor Font Size</InputLabel>
         <Select
           labelId="fontsize-label"
           id="mutiple-fontsize"
@@ -165,7 +165,7 @@ const Preference = () => {
       </FormControl>
       {/* Font fam */}
       <FormControl className="form">
-        <InputLabel id="fontfamily-label">Default Editor Font</InputLabel>
+        <InputLabel id="fontfamily-label">Global Default Editor Font</InputLabel>
         <Select
           labelId="fontfamily-label"
           id="mutiple-fontfamily"
@@ -184,7 +184,7 @@ const Preference = () => {
       {/* Opacity */}
       <FormControl className="form">
         <Typography id="opacity-label" gutterBottom>
-          Note opacity
+          Global Default Note Opacity
         </Typography>
         <Slider
           id="opacity"

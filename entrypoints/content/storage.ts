@@ -1,5 +1,3 @@
-/*global chrome*/
-
 interface Data {
   url: Note[];
 }

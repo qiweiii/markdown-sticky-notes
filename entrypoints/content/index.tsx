@@ -1,9 +1,5 @@
-/*global chrome*/
-/* src/note_widget/content.js */
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-// import { StylesProvider, jssPreset } from "@material-ui/styles";
-// import { create } from "jss";
 import { StyledEngineProvider } from "@mui/material/styles";
 
 import {
@@ -24,15 +20,6 @@ const MarkdownStickyNoteApp = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const optionsUrl = browser.runtime.getURL("/options.html");
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.location.pathname !== prevProps.location.pathname) {
-  //     this.setState({
-  //       url: window.location.href.split("#")[0],
-  //       notes: []
-  //     }, () => this.getNotes());
-  //   }
-  // }
-
   useEffect(() => {
     /** Listen for url change for SPA */
     // this.props.history.listen((location, action) => {
@@ -44,11 +31,7 @@ const MarkdownStickyNoteApp = () => {
     getNotesFromStorage();
 
     /** Add listener for generating new note when click on extension icon */
-    browser.runtime.onMessage.addListener(function (
-      request,
-      sender,
-      sendResponse
-    ) {
+    browser.runtime.onMessage.addListener(function (request) {
       if (request.message === "clicked_extension_action") {
         // brand new note here
         let { x, y } = initXY();

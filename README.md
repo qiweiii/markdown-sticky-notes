@@ -6,9 +6,9 @@
 
 - Create new notes by clicking on the extension icon
 - Auto save content and position in the web page
+- Nice markdown editor & result
 - Draggable, resizable
 - Multiple editor theme and font styles
-- Nice markdown result
 
 ## Develop
 

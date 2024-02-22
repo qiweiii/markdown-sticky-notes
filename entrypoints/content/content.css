@@ -10,7 +10,7 @@
   font-size: 14px;
 }
 
-/* The following part will be created outside of #markdown-sticky-note */
+/* The popups will be created outside of #markdown-sticky-note */
 .markdown-setting-popover label {
   font-size: 14px;
   transform: none;
@@ -42,8 +42,7 @@
 ul .markdown-setting-select {
   font-size: 14px;
 }
-
-/* End of outside part */
+/* End of popover part */
 
 #markdown-sticky-note .handle {
   height: 24px;
@@ -60,7 +59,7 @@ ul .markdown-setting-select {
   border-radius: 6px;
 }
 
-/* start of button */
+/* toolbar buttons: close, setting, help */
 #markdown-sticky-note .markdown-sticky-note-button svg {
   font-size: 18px;
   margin: 2px 0px !important;
@@ -112,7 +111,6 @@ ul .markdown-setting-select {
   padding: 50%;
   width: 24px;
   height: 24px;
-  /* background-color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255)); */
   opacity: 0;
   transform: translate(-50%, -50%) scale(1);
   transition: opacity 1s, transform 0.5s;
@@ -274,6 +272,7 @@ ul .markdown-setting-select {
   line-height: 0.1em;
   margin-right: 0.25em;
   vertical-align: -0.4em;
+  background: none;
 }
 #markdown-sticky-note .note-pane .result blockquote p {
   display: inline;

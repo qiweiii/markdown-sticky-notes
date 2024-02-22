@@ -26,7 +26,7 @@ const Editor = (props: Props) => {
         ]}
         onChange={props.onChange}
         // @ts-ignore
-        theme={themes[props.theme]} // TODO: check if all previous theme are working, then add new themes to ../thems
+        theme={themes[props.theme]}
         autoFocus={props.autofocus}
         style={{ fontSize: props.fontSize, fontFamily: props.fontFamily }}
         height="100%"
