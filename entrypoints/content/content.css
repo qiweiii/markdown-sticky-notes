@@ -140,7 +140,7 @@ ul .markdown-setting-select {
   overflow: hidden;
 }
 
-#markdown-sticky-note .note-pane .CodeMirror {
+#markdown-sticky-note .note-pane .markdown-sticky-note-CodeMirror {
   width: 100%;
   height: 100%;
   overflow: auto;

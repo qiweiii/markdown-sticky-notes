@@ -19,7 +19,7 @@ const Editor = (props: Props) => {
     <div style={{ height: '100%' }}>
       {/* https://github.com/uiwjs/react-codemirror */}
       <CodeMirror
-        className="CodeMirror"
+        className="markdown-sticky-note-CodeMirror"
         height="100%"
         value={props.value}
         extensions={[
