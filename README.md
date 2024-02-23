@@ -9,7 +9,7 @@
 - Nice markdown editor & result
 - Draggable, resizable
 - Multiple editor theme and font styles
-- Hotkey: `alt + m`
+- Shortcut: `alt + m`
 
 ## Develop
 
