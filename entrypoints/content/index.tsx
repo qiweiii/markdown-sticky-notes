@@ -16,21 +16,31 @@ import "./content.css";
 // Shadow DOM / iframe can solve style encapsulation, but is not easy to use with material-ui, markdown editor and draggable.
 
 const MarkdownStickyNoteApp = () => {
+  // This is not 100% correct, but 99% of # usage are not new pages, hopefully this is good enough
   const [url, setUrl] = useState(window.location.href.split("#")[0]);
   const [notes, setNotes] = useState<NoteType[]>([]);
   const optionsUrl = browser.runtime.getURL("/options.html");
 
   useEffect(() => {
-    /** Listen for url change for SPA */
-    // this.props.history.listen((location, action) => {
-    //   this.setState({
-    //     url: window.location.href.split("#")[0],
-    //     notes: []
-    //   }, this.getNotes)
-    // });
+    setNotes([]);
     getNotesFromStorage();
+  }, [url]);
 
-    /** Add listener for generating new note when click on extension icon */
+  useEffect(() => {
+    // Listen for url change, added for SPA support
+    let previousUrl = '';
+    const observer = new MutationObserver((mutations) => {
+      if (location.href !== previousUrl) {
+        previousUrl = location.href;
+        // console.log(`URL changed to ${location.href}`);
+        setUrl(location.href.split("#")[0]);
+      }
+    });
+    observer.observe(document, { subtree: true, childList: true });
+  }, []);
+
+  useEffect(() => {
+    // Add listener for generating new note when click on extension icon
     browser.runtime.onMessage.addListener(function (request) {
       if (request.message === "clicked_extension_action") {
         // brand new note here
@@ -206,8 +216,10 @@ export default defineContentScript({
     approot.className = "markdown-sticky-note-approot";
     root.appendChild(approot);
 
-    window.localStorage.setItem("md-curMaxIndex", "1300"); // if set very high will cause settings popover to go behind (which i cannot change)
+    // if set very high will cause settings popover to go behind (which i cannot change)
+    window.localStorage.setItem("md-curMaxIndex", "1300");
 
+    // Render app root
     ReactDOM.createRoot(approot).render(<MarkdownStickyNoteApp />);
   },
 });
