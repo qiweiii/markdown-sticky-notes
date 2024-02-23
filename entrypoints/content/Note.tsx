@@ -73,7 +73,7 @@ const Note = (props: Props) => {
     theme: props.defaultTheme,
     editorFontSize: props.editorFontSize,
     editorFontFamily: props.editorFontFamily,
-    mode: 0, // 0 for editing, 1 for display
+    mode: props.content?.trim() ? 1 : 0, // 0 for editing, 1 for display
     markdownSrc: props.content,
     opacity: props.opacity,
     pinColor: "action",
