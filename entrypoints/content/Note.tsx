@@ -73,7 +73,7 @@ const Note = (props: Props) => {
     theme: props.defaultTheme,
     editorFontSize: props.editorFontSize,
     editorFontFamily: props.editorFontFamily,
-    mode: 0, // 0 for editing, 1 for display
+    mode: props.content?.trim() ? 1 : 0, // 0 for editing, 1 for display
     markdownSrc: props.content,
     opacity: props.opacity,
     pinColor: "action",
@@ -160,6 +160,7 @@ const Note = (props: Props) => {
     setSetting((setting) => ({
       ...setting,
       theme: e.target.value,
+      mode: 0,
     }));
   };
 
@@ -167,6 +168,7 @@ const Note = (props: Props) => {
     setSetting((setting) => ({
       ...setting,
       editorFontFamily: e.target.value,
+      mode: 0,
     }));
   };
 
@@ -174,6 +176,7 @@ const Note = (props: Props) => {
     setSetting((setting) => ({
       ...setting,
       editorFontSize: Number(e.target.value) || 16,
+      mode: 0,
     }));
   };
 
@@ -441,22 +444,26 @@ const Note = (props: Props) => {
               ) : (
                 <div onClick={handleClickInside} className="result-container">
                   <ReactMarkdown
-                    className="result"
                     // rehypePlugins={[rehypeRaw]}
                     remarkPlugins={[remarkGfm]}
+                    className="result"
                     skipHtml={false}
+                    urlTransform={(url) => url}
                     // https://github.com/remarkjs/react-markdown#use-custom-components-syntax-highlight
                     components={{
+                      a: ({ node, ...props }) => (
+                        <a {...props} target="_blank" rel="noreferrer" />
+                      ),
                       code: ({ className, children, ...props }) => {
                         const match = /language-(\w+)/.exec(className || "");
                         return match ? (
-                          // lucario and nightOwl are the best for code block
                           // https://react-syntax-highlighter.github.io/react-syntax-highlighter/demo/prism.html
                           <SyntaxHighlighter
                             // @ts-ignore
                             style={nightOwl}
                             language={match[1]}
                             PreTag="div"
+                            useInlineStyles
                             {...props}
                           >
                             {String(children).replace(/\n$/, "")}
@@ -477,7 +484,7 @@ const Note = (props: Props) => {
           </div>
         </Resizable>
       </Draggable>
-    </div>
+    </div >
   );
 };
 

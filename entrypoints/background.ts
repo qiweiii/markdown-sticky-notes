@@ -57,32 +57,31 @@ export default defineBackground({
           console.log("set default opacity to 0.9");
         });
         browser.runtime.openOptionsPage();
-        // FIXME: comment out this note for testing
-        browser.storage.local
-          .set({
-            "https://www.google.com/": [
-              {
-                content: "",
-                font: '"Consolas", "monaco", monospace',
-                height: 250,
-                id: "3",
-                opacity: 1,
-                theme: "monokai",
-                width: 200,
-                fontSize: 14,
-                x: 399,
-                y: 178,
-              },
-            ],
-          })
-          .then(() => {});
+        // FIXME: comment out this note after testing
+        // browser.storage.local
+        //   .set({
+        //     "https://www.google.com/": [
+        //       {
+        //         content: "",
+        //         font: '"Consolas", "monaco", monospace',
+        //         height: 250,
+        //         id: "3",
+        //         opacity: 1,
+        //         theme: "monokai",
+        //         width: 200,
+        //         fontSize: 14,
+        //         x: 399,
+        //         y: 178,
+        //       },
+        //     ],
+        //   })
       }
       // if (details.OnInstalledReason === "update") {
       //    // on extension update
       // }
     });
 
-    browser.action.onClicked.addListener((tab) => {
+    const createNote = () => {
       // Send a message to the active tab
       browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
         let activeTab = tabs[0];
@@ -91,6 +90,19 @@ export default defineBackground({
           message: "clicked_extension_action",
         });
       });
+    };
+
+    // extension icon clicked
+    browser.action.onClicked.addListener((tab) => {
+      createNote();
+    });
+
+    // extension shortcut key pressed
+    browser.commands.onCommand.addListener((command) => {
+      console.log(`Command: ${command}`);
+      if (command === "create-note") {
+        createNote();
+      }
     });
   },
 });

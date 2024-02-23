@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import NoteIcon from "@mui/icons-material/Note";
 import { useState } from "react";
+
 import Notes from "./pages/Notes";
 import Preference from "./pages/Preference";
 import About from "./pages/About";

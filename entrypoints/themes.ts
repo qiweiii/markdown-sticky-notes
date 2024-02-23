@@ -1,4 +1,50 @@
+// import * as themes from "@uiw/codemirror-themes-all";
+// https://uiwjs.github.io/react-codemirror/#/theme/home
 export default [
+  "abcdef",
+  "abyss",
+  "androidstudio",
+  "andromeda",
+  "atomone",
+  "aura",
+  "bbedit",
+  "bespin",
+  "copilot",
+  "darcula",
+  "dracula",
+  "duotoneDark",
+  "duotoneLight",
+  "eclipse",
+  "githubDark",
+  "githubLight",
+  "gruvboxDark",
+  "gruvboxLight",
+  "kimbie",
+  "material",
+  "materialDark",
+  "materialLight",
+  "monokai",
+  "monokaiDimmed",
+  "noctisLilac",
+  "nord",
+  "okaidia",
+  "quietlight",
+  "red",
+  "sublime",
+  "tokyoNight",
+  "tokyoNightStorm",
+  "tokyoNightDay",
+  "tomorrowNightBlue",
+  "vscodeDark",
+  "xcodeDark",
+  "xcodeLight",
+];
+
+// these themes are not all working with the current version of react-codemirror,
+// just keeping them here for future reference.
+//
+// If use has these old themes in storage, the editor will just use the default light theme.
+const oldThemes = [
   "3024-day",
   "3024-night",
   "abcdef",
