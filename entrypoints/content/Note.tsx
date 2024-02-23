@@ -160,6 +160,7 @@ const Note = (props: Props) => {
     setSetting((setting) => ({
       ...setting,
       theme: e.target.value,
+      mode: 0,
     }));
   };
 
@@ -167,6 +168,7 @@ const Note = (props: Props) => {
     setSetting((setting) => ({
       ...setting,
       editorFontFamily: e.target.value,
+      mode: 0,
     }));
   };
 
@@ -174,6 +176,7 @@ const Note = (props: Props) => {
     setSetting((setting) => ({
       ...setting,
       editorFontSize: Number(e.target.value) || 16,
+      mode: 0,
     }));
   };
 
