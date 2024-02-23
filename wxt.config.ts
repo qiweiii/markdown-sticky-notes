@@ -20,6 +20,14 @@ export default defineConfig({
       "64": "icon/notes64.png",
       "128": "icon/notes128.png",
     },
+    commands: {
+      "create-note": {
+        suggested_key: {
+          default: "Alt+M",
+        },
+        description: 'Run "create-note" on the current page.',
+      },
+    },
     // this must be hrer in order to have action clicked listeners
     action: {},
     permissions: ["storage", "tabs"],

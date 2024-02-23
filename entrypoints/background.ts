@@ -81,7 +81,7 @@ export default defineBackground({
       // }
     });
 
-    browser.action.onClicked.addListener((tab) => {
+    const createNote = () => {
       // Send a message to the active tab
       browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
         let activeTab = tabs[0];
@@ -90,6 +90,19 @@ export default defineBackground({
           message: "clicked_extension_action",
         });
       });
+    };
+
+    // extension icon clicked
+    browser.action.onClicked.addListener((tab) => {
+      createNote();
+    });
+
+    // extension shortcut key pressed
+    browser.commands.onCommand.addListener((command) => {
+      console.log(`Command: ${command}`);
+      if (command === "create-note") {
+        createNote();
+      }
     });
   },
 });
