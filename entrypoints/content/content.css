@@ -146,6 +146,10 @@ ul .markdown-setting-select {
   overflow: auto;
 }
 
+#markdown-sticky-note .note-pane .markdown-sticky-note-CodeMirror .cm-scroller {
+  font-family: inherit;
+}
+
 #markdown-sticky-note .note-pane .result-container {
   height: 98%;
 }
