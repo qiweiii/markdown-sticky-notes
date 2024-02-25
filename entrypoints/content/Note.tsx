@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Input from "@mui/material/Input";
 import Skeleton from "@mui/material/Skeleton";
 import { ViewUpdate } from "@uiw/react-codemirror";
-import { useLayoutEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import Draggable, { DraggableEventHandler } from "react-draggable";
 import { Resizable, ResizeCallback } from "re-resizable";
 import ReactMarkdown from "react-markdown";
@@ -128,10 +128,10 @@ const Note = (props: Props) => {
   const handleStart = (e: any) => {
     // draggable
     if (e.target.id === "settingButton" || e.target.id === "helpButton") return;
-    setSetting({
+    setSetting((setting) => ({
       ...setting,
       dragging: true,
-    });
+    }));
   };
 
   const handleStop: DraggableEventHandler = (event, data) => {
@@ -145,6 +145,34 @@ const Note = (props: Props) => {
       },
     }));
   };
+
+  // Handle mouse down for updating zIndex of the focused note.
+  // The following functions get DOM elem coz Draggable component does not accept style property
+  const handleMouseDown = useCallback(() => {
+    let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
+    let el = document.getElementsByClassName(
+      "markdown-react-draggable" + setting.id
+    )[0];
+    // @ts-ignore
+    if (el) el.style.zIndex = curMaxZIndex++;
+    window.localStorage.setItem("md-curMaxIndex", curMaxZIndex || "1300");
+  }, [setting.id]);
+
+  // hack for firefox that cannot update dragging state (a react-draggable bug)
+  const onHandleMouseUp = () => {
+    setSetting({
+      ...setting,
+      dragging: false,
+    });
+  };
+
+  // setPositionCSSProperty = () => {
+  //   let el = document.getElementsByClassName('markdown-react-draggable'+setting.id)[0];
+  //   if (el) {
+  //     el.style.position = el.style.position === "relative" ? "fixed" : "relative";
+  //     setting.pinColor === "action" ? setState({ pinColor: "primary" }) : setState({ pinColor: "action" });;
+  //   }
+  // }
 
   const onResizeStop: ResizeCallback = (event, direction, ref, delta) => {
     setSetting((setting) => ({
@@ -179,26 +207,6 @@ const Note = (props: Props) => {
       mode: 0,
     }));
   };
-
-  // Handle mouse down for updating zIndex of the focused note.
-  // The following functions get DOM elem coz Draggable component does not accept style property
-  const handleMouseDown = () => {
-    let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
-    let el = document.getElementsByClassName(
-      "markdown-react-draggable" + setting.id
-    )[0];
-    // @ts-ignore
-    if (el) el.style.zIndex = curMaxZIndex++;
-    window.localStorage.setItem("md-curMaxIndex", curMaxZIndex || "1300");
-  };
-
-  // setPositionCSSProperty = () => {
-  //   let el = document.getElementsByClassName('markdown-react-draggable'+setting.id)[0];
-  //   if (el) {
-  //     el.style.position = el.style.position === "relative" ? "fixed" : "relative";
-  //     setting.pinColor === "action" ? setState({ pinColor: "primary" }) : setState({ pinColor: "action" });;
-  //   }
-  // }
 
   const updateStorage = () => {
     let updatedData = {
@@ -268,7 +276,7 @@ const Note = (props: Props) => {
             style={{ opacity: `${setting.opacity}` }}
           >
             {/* Note tool bar */}
-            <div className="handle">
+            <div className="handle" onMouseUp={onHandleMouseUp}>
               <button
                 className="markdown-sticky-note-button"
                 onClick={handleDelete}

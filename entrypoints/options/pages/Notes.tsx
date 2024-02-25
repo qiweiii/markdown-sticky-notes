@@ -86,11 +86,11 @@ const Notes = () => {
 
   const handleToggle =
     (value: number) =>
-    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      let newChecked = [...data.checked];
-      newChecked[value] = data.checked[value] === false;
-      setData({ ...data, checked: newChecked });
-    };
+      (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        let newChecked = [...data.checked];
+        newChecked[value] = data.checked[value] === false;
+        setData({ ...data, checked: newChecked });
+      };
 
   const handleDelete = async () => {
     // delete selected items
@@ -101,7 +101,6 @@ const Notes = () => {
       }
     }
     if (items.length) {
-      // chrome storage
       await browser.storage.local.remove(items);
       getNewDataFromStorage(); // refresh data
     }

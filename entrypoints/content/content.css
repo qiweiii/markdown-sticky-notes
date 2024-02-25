@@ -361,32 +361,3 @@ ul .markdown-setting-select {
   background: #fff;
   color: inherit;
 }
-
-@font-face {
-  font-family: "markdown-stick-notes-family-anonymous-pro";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf");
-}
-@font-face {
-  font-family: "markdown-stick-notes-family-b612-mono";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/B612_Mono/B612Mono-Regular.ttf");
-}
-@font-face {
-  font-family: "markdown-stick-notes-family-inconsolata";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Inconsolata/Inconsolata-Regular.ttf");
-}
-@font-face {
-  font-family: "markdown-stick-notes-family-pt-mono";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/PT_Mono/PTMono-Regular.ttf");
-}
-@font-face {
-  font-family: "markdown-stick-notes-family-roboto-mono";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto_Mono/RobotoMono-Regular.ttf");
-}
-@font-face {
-  font-family: "markdown-stick-notes-family-source-code-pro";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf");
-}
-@font-face {
-  font-family: "markdown-stick-notes-family-space-mono";
-  src: url("chrome-extension://__MSG_@@extension_id__/fonts/Space_Mono/SpaceMono-Regular.ttf");
-}

@@ -204,6 +204,55 @@ const MarkdownStickyNoteApp = () => {
   );
 };
 
+const loadFontFace = () => {
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-anonymous-pro";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf");
+  // }
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-b612-mono";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/B612_Mono/B612Mono-Regular.ttf");
+  // }
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-inconsolata";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Inconsolata/Inconsolata-Regular.ttf");
+  // }
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-pt-mono";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/PT_Mono/PTMono-Regular.ttf");
+  // }
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-roboto-mono";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto_Mono/RobotoMono-Regular.ttf");
+  // }
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-source-code-pro";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf");
+  // }
+  // @font-face {
+  //   font-family: "markdown-stick-notes-family-space-mono";
+  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Space_Mono/SpaceMono-Regular.ttf");
+  // }
+  const vendor = browser.runtime.getURL("/options.html").split("/options")[0];
+  const fonts = [
+    new FontFace('markdown-stick-notes-family-anonymous-pro', `url("${vendor}/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf")`),
+    new FontFace('markdown-stick-notes-family-b612-mono', `url("${vendor}/fonts/B612_Mono/B612Mono-Regular.ttf")`),
+    new FontFace('markdown-stick-notes-family-inconsolata', `url("${vendor}/fonts/Inconsolata/Inconsolata-Regular.ttf")`),
+    new FontFace('markdown-stick-notes-family-pt-mono', `url("${vendor}/fonts/PT_Mono/PTMono-Regular.ttf")`),
+    new FontFace('markdown-stick-notes-family-roboto-mono', `url("${vendor}/fonts/Roboto_Mono/RobotoMono-Regular.ttf")`),
+    new FontFace('markdown-stick-notes-family-source-code-pro', `url("${vendor}/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf")`),
+    new FontFace('markdown-stick-notes-family-space-mono', `url("${vendor}/fonts/Space_Mono/SpaceMono-Regular.ttf")`),
+  ];
+  fonts.forEach(font => {
+    font.load().then((loaded_face) => {
+      document.fonts.add(loaded_face)
+    }).catch(function (error) {
+      // error occurred
+      console.error(error);
+    })
+  });
+}
+
 export default defineContentScript({
   matches: ["https://*/*", "http://*/*"],
 
@@ -218,6 +267,9 @@ export default defineContentScript({
 
     // if set very high will cause settings popover to go behind (which i cannot change)
     window.localStorage.setItem("md-curMaxIndex", "1300");
+
+    // add font-face support for multi browser
+    loadFontFace();
 
     // Render app root
     ReactDOM.createRoot(approot).render(<MarkdownStickyNoteApp />);
