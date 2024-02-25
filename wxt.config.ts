@@ -39,5 +39,10 @@ export default defineConfig({
         matches: ["*://*/*"],
       },
     ],
+    browser_specific_settings: {
+      gecko: {
+        id: "uw35r9kd81w3h4f737h5zrz12itlvzknxz0upkj4kdf9wu90scuk209skasb72qxm5z7givqha4rtj8t",
+      },
+    },
   },
 });
