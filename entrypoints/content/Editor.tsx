@@ -1,8 +1,11 @@
 import CodeMirror, { ViewUpdate } from "@uiw/react-codemirror";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
+import { EditorView } from "@codemirror/view";
 import * as themes from "@uiw/codemirror-themes-all";
 import themeOptions from "@/entrypoints/themes";
+
+
 
 type Props = {
   onChange: (value: string, viewUpdate: ViewUpdate) => void;
@@ -24,6 +27,7 @@ const Editor = (props: Props) => {
         value={props.value}
         extensions={[
           markdown({ base: markdownLanguage, codeLanguages: languages }),
+          EditorView.lineWrapping
         ]}
         onChange={props.onChange}
         // @ts-ignore
