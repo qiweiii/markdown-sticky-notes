@@ -1,6 +1,6 @@
 {
   "name": "markdown-stick-notes",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Markdown Sticky Notes web extension",
   "private": true,
   "type": "module",
@@ -13,6 +13,7 @@
     "zip": "wxt zip",
     "zip:edge": "wxt zip -b edge",
     "zip:firefox": "wxt zip -b firefox --mv3",
+    "zip:all": "pnpm run zip && pnpm run zip:edge && pnpm run zip:firefox",
     "compile": "tsc --noEmit",
     "postinstall": "wxt prepare"
   },
