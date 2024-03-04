@@ -59,3 +59,6 @@ pnpm run build
     width="217"
   />
 </a>
+
+
+<a href="https://www.producthunt.com/posts/markdown-sticky-notes?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-markdown&#0045;sticky&#0045;notes" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=442472&theme=light" alt="Markdown&#0032;Sticky&#0032;Notes - Create&#0032;md&#0032;sticky&#0032;notes&#0032;on&#0032;any&#0032;website&#0033; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
