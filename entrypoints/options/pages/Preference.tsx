@@ -6,7 +6,9 @@ import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Input from "@mui/material/Input";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
+import { Sketch } from "@uiw/react-color";
 
 import themes from "../../themes";
 import fonts from "../../fonts";
@@ -23,18 +25,26 @@ const MenuProps = {
 };
 
 const StyledRoot = styled("div")`
-  margin-top: 15%;
+  margin-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  .form {
+  .form-control {
     width: 300px;
-    height: 100px;
+    height: 75px;
     label {
       font-size: 0.8rem;
       animation: none;
       transform: none;
+    }
+    #color-label {
+      font-size: 0.9rem;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    #opacity-label {
+      font-size: 0.9rem;
+      color: rgba(0, 0, 0, 0.6);
     }
   }
 `;
@@ -45,6 +55,7 @@ const Preference = () => {
     font: "",
     fontsize: "",
     opacity: 1,
+    color: "",
   });
 
   useEffect(() => {
@@ -54,17 +65,20 @@ const Preference = () => {
         "defaultEditorFontFamily",
         "defaultOpacity",
         "defaultEditorFontSize",
+        "defaultColor",
       ])
       .then((res) => {
         let theme = res.defaultTheme;
         let font = res.defaultEditorFontFamily;
         let fontSize = res.defaultEditorFontSize;
         let opacity = res.defaultOpacity;
+        let color = res.defaultColor;
         setState({
           theme: theme,
           font: font,
           fontsize: fontSize,
           opacity: opacity,
+          color,
         });
       });
   }, []);
@@ -84,10 +98,14 @@ const Preference = () => {
       console.log("set default font size " + value);
     });
   };
-
   const updateDefaultOpacity = (value: number | number[]) => {
     browser.storage.local.set({ defaultOpacity: value }).then(() => {
       console.log("set default opacity to " + value);
+    });
+  };
+  const updateDefaultColor = (value: string) => {
+    browser.storage.local.set({ defaultColor: value }).then(() => {
+      console.log("set default color to " + value);
     });
   };
 
@@ -127,10 +145,18 @@ const Preference = () => {
     updateDefaultOpacity(value);
   };
 
+  const handleChangeColor = (value: string) => {
+    setState((state) => ({
+      ...state,
+      color: value,
+    }));
+    updateDefaultColor(value);
+  };
+
   return (
     <StyledRoot>
-      <FormControl className="form">
-        <InputLabel id="theme-label">Global Default Editor Theme</InputLabel>
+      <FormControl className="form-control">
+        <InputLabel id="theme-label">Default Editor Theme</InputLabel>
         <Select
           labelId="theme-label"
           id="mutiple-theme"
@@ -146,8 +172,8 @@ const Preference = () => {
           ))}
         </Select>
       </FormControl>
-      <FormControl className="form">
-        <InputLabel id="fontsize-label">Global Default Editor Font Size</InputLabel>
+      <FormControl className="form-control">
+        <InputLabel id="fontsize-label">Default Editor Font Size</InputLabel>
         <Select
           labelId="fontsize-label"
           id="mutiple-fontsize"
@@ -164,8 +190,8 @@ const Preference = () => {
         </Select>
       </FormControl>
       {/* Font fam */}
-      <FormControl className="form">
-        <InputLabel id="fontfamily-label">Global Default Editor Font</InputLabel>
+      <FormControl className="form-control">
+        <InputLabel id="fontfamily-label">Default Editor Font</InputLabel>
         <Select
           labelId="fontfamily-label"
           id="mutiple-fontfamily"
@@ -182,9 +208,9 @@ const Preference = () => {
         </Select>
       </FormControl>
       {/* Opacity */}
-      <FormControl className="form">
+      <FormControl className="form-control">
         <Typography id="opacity-label" gutterBottom>
-          Global Default Note Opacity
+          Default Note Opacity
         </Typography>
         <Slider
           id="opacity"
@@ -195,6 +221,32 @@ const Preference = () => {
           step={0.05}
           valueLabelDisplay="auto"
           onChangeCommitted={handleChangeOpacity}
+        />
+      </FormControl>
+      <FormControl className="form-control" sx={{ height: "400px !important" }}>
+        <Typography id="color-label" gutterBottom>
+          Default Background Color ({state.color})
+        </Typography>
+        <Box
+          sx={{
+            backgroundColor: state.color,
+            width: 220,
+            height: "20px",
+            display: "inline-block",
+            mb: "10px",
+          }}
+        />
+
+        <Sketch
+          color={state.color}
+          disableAlpha
+          style={{
+            boxShadow:
+              "rgb(0 0 0 / 15%) 0px 0px 0px 1px, rgb(0 0 0 / 15%) 0px 8px 16px",
+          }}
+          onChange={(color) => {
+            handleChangeColor(color.hex);
+          }}
         />
       </FormControl>
     </StyledRoot>

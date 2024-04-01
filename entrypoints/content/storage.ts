@@ -14,6 +14,7 @@ export interface Note {
   fontSize: number; // editor font size
   opacity: number; // note opacity
   autofocus?: boolean; // editor autofocus
+  color?: string; // note result bg color, could be undefined for old notes
 }
 
 /** Initial data for a new note */
@@ -25,11 +26,13 @@ export const constructAndInitData = (x: number, y: number, id: number) => {
       "defaultEditorFontFamily",
       "defaultOpacity",
       "defaultEditorFontSize",
+      "defaultColor",
     ])
     .then((res) => {
       let theme = res.defaultTheme;
       let font = res.defaultEditorFontFamily;
       let fontSize = res.defaultEditorFontSize;
+      let color = res.defaultColor;
       data = {
         id: id,
         x: x,
@@ -39,8 +42,9 @@ export const constructAndInitData = (x: number, y: number, id: number) => {
         content: "",
         theme: theme,
         font: font,
-        fontSize: fontSize.defaultEditorFontSize,
+        fontSize: fontSize,
         opacity: 1,
+        color,
       };
       // console.log(data);
       initData(data);

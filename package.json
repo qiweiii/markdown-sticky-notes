@@ -1,6 +1,6 @@
 {
   "name": "markdown-stick-notes",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Markdown Sticky Notes web extension",
   "private": true,
   "type": "module",
@@ -27,6 +27,7 @@
     "@mui/material": "^5.15.3",
     "@uiw/codemirror-themes-all": "^4.21.21",
     "@uiw/react-codemirror": "^4.21.21",
+    "@uiw/react-color": "^2.1.1",
     "re-resizable": "^6.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -54,7 +54,6 @@ ul .markdown-setting-select {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: #fff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
   border-radius: 6px;
 }
@@ -162,7 +161,6 @@ ul .markdown-setting-select {
   height: 100%;
   overflow: auto;
   line-height: 1.5em;
-  background-color: rgb(250, 250, 250);
   box-sizing: content-box;
   position: static;
 
@@ -262,7 +260,6 @@ ul .markdown-setting-select {
   list-style-type: disc;
 }
 #markdown-sticky-note .note-pane .result blockquote {
-  background: #f9f9f9;
   color: #666;
   border-left: 10px solid #ccc;
   margin: 1.5em 10px;

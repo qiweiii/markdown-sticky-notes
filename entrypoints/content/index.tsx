@@ -28,7 +28,7 @@ const MarkdownStickyNoteApp = () => {
 
   useEffect(() => {
     // Listen for url change, added for SPA support
-    let previousUrl = '';
+    let previousUrl = "";
     const observer = new MutationObserver((mutations) => {
       if (location.href !== previousUrl) {
         previousUrl = location.href;
@@ -52,6 +52,7 @@ const MarkdownStickyNoteApp = () => {
             "defaultEditorFontFamily",
             "defaultOpacity",
             "defaultEditorFontSize",
+            "defaultColor",
           ])
           .then((res) => {
             let id = res.id + 1; // ID will be incremented by 1
@@ -59,19 +60,21 @@ const MarkdownStickyNoteApp = () => {
             let font = res.defaultEditorFontFamily;
             let opacity = res.defaultOpacity;
             let fontSize = res.defaultEditorFontSize;
-            addNote(
-              id.toString(),
-              x,
-              y,
-              200,
-              250,
-              "\n".repeat(11),
-              theme,
-              font,
-              fontSize,
-              true,
-              opacity
-            );
+            let color = res.defaultColor;
+            addNote({
+              id: id.toString(),
+              x: x,
+              y: y,
+              width: 220,
+              height: 250,
+              content: "\n".repeat(10),
+              theme: theme,
+              font: font,
+              fontSize: fontSize,
+              autofocus: true,
+              opacity: opacity,
+              color,
+            });
             constructAndInitData(x, y, id.toString()); // save initial empty note data to storage
             saveItem({ id: id });
           });
@@ -90,42 +93,47 @@ const MarkdownStickyNoteApp = () => {
    * Note: only use for on mount, not intented to be used after this
    */
   const getNotesFromStorage = () => {
-    browser.storage.local.get([url, "defaultOpacity"]).then((res) => {
-      if (res[url]) {
-        let opacity = res.defaultOpacity;
-        for (let note of res[url]) {
-          addNote(
-            note.id,
-            note.x,
-            note.y,
-            note.width,
-            note.height,
-            note.content,
-            note.theme,
-            note.font,
-            note.fontSize,
-            false,
-            opacity
-          );
+    browser.storage.local
+      .get([url, "defaultOpacity", "defaultColor"])
+      .then((res) => {
+        if (res[url]) {
+          let opacity = res.defaultOpacity;
+          let defaultColor = res.defaultColor;
+          for (let note of res[url]) {
+            addNote({
+              id: note.id,
+              x: note.x,
+              y: note.y,
+              width: note.width,
+              height: note.height,
+              content: note.content,
+              theme: note.theme,
+              font: note.font,
+              fontSize: note.fontSize,
+              autofocus: false,
+              opacity: opacity,
+              color: note.color || defaultColor,
+            });
+          }
         }
-      }
-    });
+      });
   };
 
   /** add a note to DOM notes list */
-  const addNote = (
-    id: number,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    content: string,
-    theme: any,
-    font: string,
-    fontSize: number,
-    autofocus: boolean,
-    opacity: number
-  ) => {
+  const addNote = ({
+    id,
+    x,
+    y,
+    width,
+    height,
+    content,
+    theme,
+    font,
+    fontSize,
+    autofocus,
+    opacity,
+    color,
+  }: NoteType) => {
     setNotes((notes) => [
       ...notes,
       {
@@ -140,6 +148,7 @@ const MarkdownStickyNoteApp = () => {
         fontSize: fontSize,
         autofocus: autofocus,
         opacity: opacity,
+        color,
       },
     ]);
   };
@@ -195,6 +204,7 @@ const MarkdownStickyNoteApp = () => {
                 editorFontFamily={note.font}
                 autofocus={note.autofocus ?? true}
                 opacity={note.opacity}
+                color={note.color}
               />
             </div>
           );
@@ -205,53 +215,49 @@ const MarkdownStickyNoteApp = () => {
 };
 
 const loadFontFace = () => {
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-anonymous-pro";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf");
-  // }
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-b612-mono";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/B612_Mono/B612Mono-Regular.ttf");
-  // }
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-inconsolata";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Inconsolata/Inconsolata-Regular.ttf");
-  // }
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-pt-mono";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/PT_Mono/PTMono-Regular.ttf");
-  // }
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-roboto-mono";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Roboto_Mono/RobotoMono-Regular.ttf");
-  // }
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-source-code-pro";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf");
-  // }
-  // @font-face {
-  //   font-family: "markdown-stick-notes-family-space-mono";
-  //   src: url("chrome-extension://__MSG_@@extension_id__/fonts/Space_Mono/SpaceMono-Regular.ttf");
-  // }
   const vendor = browser.runtime.getURL("/options.html").split("/options")[0];
   const fonts = [
-    new FontFace('markdown-stick-notes-family-anonymous-pro', `url("${vendor}/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf")`),
-    new FontFace('markdown-stick-notes-family-b612-mono', `url("${vendor}/fonts/B612_Mono/B612Mono-Regular.ttf")`),
-    new FontFace('markdown-stick-notes-family-inconsolata', `url("${vendor}/fonts/Inconsolata/Inconsolata-Regular.ttf")`),
-    new FontFace('markdown-stick-notes-family-pt-mono', `url("${vendor}/fonts/PT_Mono/PTMono-Regular.ttf")`),
-    new FontFace('markdown-stick-notes-family-roboto-mono', `url("${vendor}/fonts/Roboto_Mono/RobotoMono-Regular.ttf")`),
-    new FontFace('markdown-stick-notes-family-source-code-pro', `url("${vendor}/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf")`),
-    new FontFace('markdown-stick-notes-family-space-mono', `url("${vendor}/fonts/Space_Mono/SpaceMono-Regular.ttf")`),
+    new FontFace(
+      "markdown-stick-notes-family-anonymous-pro",
+      `url("${vendor}/fonts/Anonymous_Pro/AnonymousPro-Regular.ttf")`
+    ),
+    new FontFace(
+      "markdown-stick-notes-family-b612-mono",
+      `url("${vendor}/fonts/B612_Mono/B612Mono-Regular.ttf")`
+    ),
+    new FontFace(
+      "markdown-stick-notes-family-inconsolata",
+      `url("${vendor}/fonts/Inconsolata/Inconsolata-Regular.ttf")`
+    ),
+    new FontFace(
+      "markdown-stick-notes-family-pt-mono",
+      `url("${vendor}/fonts/PT_Mono/PTMono-Regular.ttf")`
+    ),
+    new FontFace(
+      "markdown-stick-notes-family-roboto-mono",
+      `url("${vendor}/fonts/Roboto_Mono/RobotoMono-Regular.ttf")`
+    ),
+    new FontFace(
+      "markdown-stick-notes-family-source-code-pro",
+      `url("${vendor}/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf")`
+    ),
+    new FontFace(
+      "markdown-stick-notes-family-space-mono",
+      `url("${vendor}/fonts/Space_Mono/SpaceMono-Regular.ttf")`
+    ),
   ];
-  fonts.forEach(font => {
-    font.load().then((loaded_face) => {
-      document.fonts.add(loaded_face)
-    }).catch(function (error) {
-      // error occurred
-      console.error(error);
-    })
+  fonts.forEach((font) => {
+    font
+      .load()
+      .then((loaded_face) => {
+        document.fonts.add(loaded_face);
+      })
+      .catch(function (error) {
+        // error occurred
+        console.error(error);
+      });
   });
-}
+};
 
 export default defineContentScript({
   matches: ["https://*/*", "http://*/*"],

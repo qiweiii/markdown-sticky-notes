@@ -12,31 +12,6 @@ export default defineBackground({
   main() {
     console.log("Hello background!", { id: browser.runtime.id });
 
-    // TODO: when offscreen api is available, add google analytics back
-    // window.dataLayer = window.dataLayer || [];
-    // // NOTE: This line is different from Google's documentation
-    // window.gtag = function () {
-    //   window.dataLayer.push(arguments);
-    // };
-    // window.gtag("js", new Date());
-    // window.gtag("config", "G-3X9EELR6PB");
-    // window.gtag("event", "background event", {
-    //   url: window.location.href,
-    // });
-
-    // browser.runtime.onMessage.addListener(function (
-    //   request,
-    //   sender,
-    //   sendResponse
-    // ) {
-    //   if (request.action === "generated_new_note") {
-    //     window.gtag("event", "pageview", {
-    //       url: request.url,
-    //       id: browser.runtime.id,
-    //     });
-    //   }
-    // });
-
     browser.runtime.onInstalled.addListener(function (details) {
       if (details.reason === "install") {
         browser.storage.local.set({ id: 0 }).then(() => {
@@ -55,6 +30,9 @@ export default defineBackground({
         });
         browser.storage.local.set({ defaultOpacity: 0.9 }).then(() => {
           console.log("set default opacity to 0.9");
+        });
+        browser.storage.local.set({ defaultColor: "#fff" }).then(() => {
+          console.log("set default color to #fff");
         });
         browser.runtime.openOptionsPage();
         // FIXME: comment out this note after testing

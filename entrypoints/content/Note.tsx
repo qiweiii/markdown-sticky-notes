@@ -4,13 +4,16 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 // import PinDropIcon from '@mui/icons-material/PinDrop';
 import Popover from "@mui/material/Popover";
+import Box from "@mui/material/Box";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Input from "@mui/material/Input";
+import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
 import { ViewUpdate } from "@uiw/react-codemirror";
+import { Compact } from "@uiw/react-color";
 import { useCallback, useLayoutEffect, useState } from "react";
 import Draggable, { DraggableEventHandler } from "react-draggable";
 import { Resizable, ResizeCallback } from "re-resizable";
@@ -26,6 +29,7 @@ import Editor from "./Editor";
 import themes from "../themes";
 import fonts from "../fonts";
 import type { Note } from "./storage";
+import { Typography } from "@mui/material";
 
 const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 5;
@@ -53,6 +57,7 @@ type Props = {
   opacity: number;
   optionsPage: string;
   autofocus: boolean;
+  color: string | undefined;
 };
 
 const Note = (props: Props) => {
@@ -77,6 +82,7 @@ const Note = (props: Props) => {
     markdownSrc: props.content,
     opacity: props.opacity,
     pinColor: "action",
+    color: props.color,
   });
 
   const handleClickOutside = () => {
@@ -220,6 +226,7 @@ const Note = (props: Props) => {
       font: setting.editorFontFamily,
       fontSize: setting.editorFontSize,
       opacity: setting.opacity,
+      color: setting.color,
     };
     props.updateNoteFn(updatedData, setting.id);
   };
@@ -244,6 +251,7 @@ const Note = (props: Props) => {
     setting.editorFontSize,
     setting.editorFontFamily,
     setting.markdownSrc,
+    setting.color,
   ]);
 
   return (
@@ -258,9 +266,9 @@ const Note = (props: Props) => {
           x: setting.position.x,
           y: setting.position.y,
         }}
-      // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
-      // bounds="body"
-      // bounds="parent"
+        // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
+        // bounds="body"
+        // bounds="parent"
       >
         <Resizable
           defaultSize={{
@@ -273,7 +281,10 @@ const Note = (props: Props) => {
         >
           <div
             className="markdown-sticky-note-paper"
-            style={{ opacity: `${setting.opacity}` }}
+            style={{
+              opacity: `${setting.opacity}`,
+              backgroundColor: `${setting.color}`,
+            }}
           >
             {/* Note tool bar */}
             <div className="handle" onMouseUp={onHandleMouseUp}>
@@ -308,78 +319,108 @@ const Note = (props: Props) => {
                   horizontal: "left",
                 }}
               >
-                <FormControl
-                  style={{ zIndex: 1, margin: 5, width: 100 }}
-                  className="markdown-setting-popover"
-                >
-                  <InputLabel id="theme-label">Editor Theme</InputLabel>
-                  <Select
-                    labelId="theme-label"
-                    id="mutiple-theme"
-                    value={setting.theme}
-                    onChange={handleChangeTheme}
-                    input={<Input />}
-                    MenuProps={MenuProps}
-                  >
-                    {themes.map((name) => (
-                      <MenuItem
-                        key={name}
-                        value={name}
-                        className="markdown-setting-select"
+                <Stack>
+                  <Stack flexDirection="row">
+                    <FormControl
+                      style={{ zIndex: 1, margin: 5, width: 100 }}
+                      className="markdown-setting-popover"
+                    >
+                      <InputLabel id="theme-label">Editor Theme</InputLabel>
+                      <Select
+                        labelId="theme-label"
+                        id="mutiple-theme"
+                        value={setting.theme}
+                        onChange={handleChangeTheme}
+                        input={<Input />}
+                        MenuProps={MenuProps}
                       >
-                        {name[0].toUpperCase() + name.slice(1)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl
-                  style={{ zIndex: 1, margin: 5, width: 105 }}
-                  className="markdown-setting-popover"
-                >
-                  <InputLabel id="fontsize-label">Editor Font Size</InputLabel>
-                  <Select
-                    labelId="fontsize-label"
-                    id="mutiple-fontsize"
-                    value={`${setting.editorFontSize}`}
-                    onChange={handleChangeFontSize}
-                    input={<Input />}
-                    MenuProps={MenuProps}
-                  >
-                    {Array.from(new Array(40), (x, i) => i + 9).map((size) => (
-                      <MenuItem
-                        key={size}
-                        value={`${size}`}
-                        className="markdown-setting-select"
+                        {themes.map((name) => (
+                          <MenuItem
+                            key={name}
+                            value={name}
+                            className="markdown-setting-select"
+                          >
+                            {name[0].toUpperCase() + name.slice(1)}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      style={{ zIndex: 1, margin: 5, width: 105 }}
+                      className="markdown-setting-popover"
+                    >
+                      <InputLabel id="fontsize-label">
+                        Editor Font Size
+                      </InputLabel>
+                      <Select
+                        labelId="fontsize-label"
+                        id="mutiple-fontsize"
+                        value={`${setting.editorFontSize}`}
+                        onChange={handleChangeFontSize}
+                        input={<Input />}
+                        MenuProps={MenuProps}
                       >
-                        {size}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl
-                  style={{ zIndex: 1, margin: 5, width: 100 }}
-                  className="markdown-setting-popover"
-                >
-                  <InputLabel id="fontfamily-label">Editor Font</InputLabel>
-                  <Select
-                    labelId="fontfamily-label"
-                    id="mutiple-fontfamily"
-                    value={setting.editorFontFamily}
-                    onChange={handleChangeFont}
-                    input={<Input />}
-                    MenuProps={MenuProps}
-                  >
-                    {Object.entries(fonts).map(([font, family]) => (
-                      <MenuItem
-                        key={font}
-                        value={family}
-                        className="markdown-setting-select"
+                        {Array.from(new Array(40), (x, i) => i + 9).map(
+                          (size) => (
+                            <MenuItem
+                              key={size}
+                              value={`${size}`}
+                              className="markdown-setting-select"
+                            >
+                              {size}
+                            </MenuItem>
+                          )
+                        )}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      style={{ zIndex: 1, margin: 5, width: 100 }}
+                      className="markdown-setting-popover"
+                    >
+                      <InputLabel id="fontfamily-label">Editor Font</InputLabel>
+                      <Select
+                        labelId="fontfamily-label"
+                        id="mutiple-fontfamily"
+                        value={setting.editorFontFamily}
+                        onChange={handleChangeFont}
+                        input={<Input />}
+                        MenuProps={MenuProps}
                       >
-                        {font}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                        {Object.entries(fonts).map(([font, family]) => (
+                          <MenuItem
+                            key={font}
+                            value={family}
+                            className="markdown-setting-select"
+                          >
+                            {font}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Stack>
+                  <Box
+                    style={{ zIndex: 1, margin: 5, width: 100 }}
+                    className="markdown-setting-popover"
+                  >
+                    <Typography color="rgba(0, 0, 0, 0.6)" fontSize={12}>
+                      Note Color
+                    </Typography>
+                    <Compact
+                      color={setting.color}
+                      style={{
+                        boxShadow:
+                          "rgb(0 0 0 / 15%) 0px 0px 0px 1px, rgb(0 0 0 / 15%) 0px 8px 16px",
+                      }}
+                      onChange={(color) => {
+                        setSetting((setting) => ({
+                          ...setting,
+                          color: color.hex,
+                          mode: 1,
+                        }));
+                      }}
+                    />
+                  </Box>
+                </Stack>
               </Popover>
               <button
                 className="markdown-sticky-note-button"
@@ -419,8 +460,11 @@ const Note = (props: Props) => {
                     component="a"
                     href={props.optionsPage}
                     target="_blank"
+                    // onClick={() => {
+                    //   browser.runtime.openOptionsPage();
+                    // }}
                   >
-                    Go to settings page <OpenInNewIcon fontSize="small" />
+                    Go to options page <OpenInNewIcon fontSize="small" />
                   </MenuItem>
                 </div>
               </Popover>
@@ -492,7 +536,7 @@ const Note = (props: Props) => {
           </div>
         </Resizable>
       </Draggable>
-    </div >
+    </div>
   );
 };
 
