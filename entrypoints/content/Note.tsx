@@ -283,7 +283,7 @@ const Note = (props: Props) => {
             className="markdown-sticky-note-paper"
             style={{
               opacity: `${setting.opacity}`,
-              backgroundColor: `${setting.color}`,
+              backgroundColor: `${setting.color || "#fff"}`,
             }}
           >
             {/* Note tool bar */}
