@@ -2,6 +2,8 @@
 
 > A markdown sticky note that can be used in web pages
 
+Download: [Chrome](https://chrome.google.com/webstore/detail/aiakblgmlabokilgljkglggnpflljdgp) | [Edge](https://microsoftedge.microsoft.com/addons/detail/markdown-sticky-notes/oemolnfmipkichhlknoiigjgmgcjfgla) | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/markdown-sticky-notes/)
+
 ## Features
 
 - Create new notes by clicking on the extension icon
