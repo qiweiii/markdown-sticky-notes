@@ -30,7 +30,7 @@ export default defineConfig({
     },
     // this must be hrer in order to have action clicked listeners
     action: {},
-    permissions: ["storage", "tabs"],
+    permissions: ["storage"],
     // optional_permissions: ["unlimitedStorage"],
     host_permissions: ["<all_urls>"],
     web_accessible_resources: [
