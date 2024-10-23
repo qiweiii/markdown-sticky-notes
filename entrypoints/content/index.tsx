@@ -12,6 +12,9 @@ import type { Note as NoteType } from "./storage.js";
 import Note from "./Note.js";
 import "./content.css";
 
+// import "katex/dist/katex.min.css"; // `rehype-katex` does not import the CSS for you
+import "url:https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css";
+
 // import root from 'react-shadow/material-ui'
 // Shadow DOM / iframe can solve style encapsulation, but is not easy to use with material-ui, markdown editor and draggable.
 

@@ -1,6 +1,6 @@
 {
   "name": "markdown-stick-notes",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Markdown Sticky Notes web extension",
   "private": true,
   "type": "module",
@@ -35,7 +35,9 @@
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.21.2",
     "react-syntax-highlighter": "npm:@fengkx/react-syntax-highlighter@15.6.1",
+    "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0",
     "rooks": "^7.14.1"
   },
   "devDependencies": {
@@ -44,7 +46,7 @@
     "@types/react-syntax-highlighter": "^15.5.11",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
-    "vite": "^5.1.7",
-    "wxt": "^0.15.0"
+    "vite": "^5.4.9",
+    "wxt": "^0.19.13"
   }
 }

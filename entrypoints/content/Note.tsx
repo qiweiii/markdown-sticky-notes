@@ -20,6 +20,8 @@ import { Resizable, ResizeCallback } from "re-resizable";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 import { useOutsideClickRef } from "rooks";
 
 // result's code block theme
@@ -497,7 +499,8 @@ const Note = (props: Props) => {
                 <div onClick={handleClickInside} className="result-container">
                   <ReactMarkdown
                     // rehypePlugins={[rehypeRaw]}
-                    remarkPlugins={[remarkGfm]}
+                    remarkPlugins={[remarkGfm, remarkMath]}
+                    rehypePlugins={[rehypeKatex]}
                     className="result"
                     skipHtml={false}
                     urlTransform={(url) => url}
