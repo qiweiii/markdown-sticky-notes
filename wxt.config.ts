@@ -9,6 +9,9 @@ export default defineConfig({
     // const contentJsPath = `.output/${env.browser}-mv${env.manifestVersion}/content-scripts`;
     return {
       plugins: [toUtf8(), react()],
+      legacy: {
+        skipWebSocketTokenCheck: true,
+      },
     } as WxtViteConfig;
   },
   manifest: {
