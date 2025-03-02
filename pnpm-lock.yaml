@@ -3204,8 +3204,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  tar@6.2.0:
-    resolution: {integrity: sha512-/Wo7DcT0u5HUV486xg675HtjNd3BXZ6xDbzsCUZPt5iw8bTQ63bP0Raut3mvro9u+CUyq7YQd8Cx55fsZXxqLQ==}
+  tar@6.2.1:
+    resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
 
   thenify-all@1.6.0:
@@ -5814,7 +5814,7 @@ snapshots:
       nypm: 0.3.12
       ohash: 1.1.4
       pathe: 1.1.2
-      tar: 6.2.0
+      tar: 6.2.1
 
   glob-parent@5.1.2:
     dependencies:
@@ -7408,7 +7408,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  tar@6.2.0:
+  tar@6.2.1:
     dependencies:
       chownr: 2.0.0
       fs-minipass: 2.1.0
