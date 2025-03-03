@@ -450,23 +450,39 @@ const Note = (props: Props) => {
               >
                 <div id="markdown-help-popover">
                   <MenuItem
+                    key={2}
+                    component="a"
+                    target="_blank"
+                    onClick={() => {
+                      browser.runtime.openOptionsPage();
+                    }}
+                  >
+                    Settings <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
+                  </MenuItem>
+                  <MenuItem
                     key={1}
                     component="a"
                     href="https://guides.github.com/features/mastering-markdown/"
                     target="_blank"
                   >
-                    How to use markdown? <OpenInNewIcon fontSize="small" />
+                    How to use Markdown?{" "}
+                    <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                   <MenuItem
                     key={2}
                     component="a"
-                    href={props.optionsPage}
+                    href="https://discord.gg/X5EK8m2ksN"
                     target="_blank"
-                    // onClick={() => {
-                    //   browser.runtime.openOptionsPage();
-                    // }}
                   >
-                    Go to options page <OpenInNewIcon fontSize="small" />
+                    Discord <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
+                  </MenuItem>
+                  <MenuItem
+                    key={2}
+                    component="a"
+                    href="https://x.com/qiweidyang"
+                    target="_blank"
+                  >
+                    X <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                 </div>
               </Popover>

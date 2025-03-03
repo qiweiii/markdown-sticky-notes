@@ -1,5 +1,7 @@
 # Markdown Sticky Notes
 
+[![](https://dcbadge.limes.pink/api/server/https://discord.gg/X5EK8m2ksN?style=flat)](https://discord.gg/INVITE)
+
 > A markdown sticky note that can be used in web pages
 
 Download: [Chrome](https://chrome.google.com/webstore/detail/aiakblgmlabokilgljkglggnpflljdgp) | [Edge](https://microsoftedge.microsoft.com/addons/detail/markdown-sticky-notes/oemolnfmipkichhlknoiigjgmgcjfgla) | [Firefox](https://addons.mozilla.org/en-US/firefox/addon/markdown-sticky-notes/)
