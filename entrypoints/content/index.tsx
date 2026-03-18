@@ -8,7 +8,7 @@ import {
   removeNoteFromStorage,
   saveItem,
 } from "./storage.js";
-import type { Note as NoteType } from "./storage.js";
+import type { Note as NoteType, StorageDefaults } from "./storage.js";
 import Note from "./Note.js";
 import "./content.css";
 
@@ -17,6 +17,19 @@ import "url:https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css";
 
 // import root from 'react-shadow/material-ui'
 // Shadow DOM / iframe can solve style encapsulation, but is not easy to use with material-ui, markdown editor and draggable.
+
+type ContentStorageDefaults = Pick<
+  StorageDefaults,
+  | "id"
+  | "defaultTheme"
+  | "defaultEditorFontFamily"
+  | "defaultOpacity"
+  | "defaultEditorFontSize"
+  | "defaultColor"
+>;
+
+type NotesStorageResult = Partial<Record<string, NoteType[]>> &
+  Partial<ContentStorageDefaults>;
 
 const MarkdownStickyNoteApp = () => {
   // This is not 100% correct, but 99% of # usage are not new pages, hopefully this is good enough
@@ -58,14 +71,17 @@ const MarkdownStickyNoteApp = () => {
             "defaultColor",
           ])
           .then((res) => {
-            let id = res.id + 1; // ID will be incremented by 1
-            let theme = res.defaultTheme;
-            let font = res.defaultEditorFontFamily;
-            let opacity = res.defaultOpacity;
-            let fontSize = res.defaultEditorFontSize;
-            let color = res.defaultColor;
+            const defaults = res as Partial<ContentStorageDefaults>;
+            const nextId = (defaults.id ?? 0) + 1;
+            const theme = defaults.defaultTheme ?? "monokai";
+            const font =
+              defaults.defaultEditorFontFamily ??
+              '"Consolas", "monaco", monospace';
+            const opacity = defaults.defaultOpacity ?? 0.9;
+            const fontSize = defaults.defaultEditorFontSize ?? 14;
+            const color = defaults.defaultColor ?? "#fff";
             addNote({
-              id: id.toString(),
+              id: nextId,
               x: x,
               y: y,
               width: 220,
@@ -78,8 +94,8 @@ const MarkdownStickyNoteApp = () => {
               opacity: opacity,
               color,
             });
-            constructAndInitData(x, y, id.toString()); // save initial empty note data to storage
-            saveItem({ id: id });
+            constructAndInitData(x, y, nextId); // save initial empty note data to storage
+            saveItem({ id: nextId });
           });
       }
       // send message to background.js for google analytics
@@ -99,10 +115,12 @@ const MarkdownStickyNoteApp = () => {
     browser.storage.local
       .get([url, "defaultOpacity", "defaultColor"])
       .then((res) => {
-        if (res[url]) {
-          let opacity = res.defaultOpacity;
-          let defaultColor = res.defaultColor;
-          for (let note of res[url]) {
+        const stored = res as NotesStorageResult;
+        const storedNotes = stored[url] ?? [];
+        if (storedNotes.length > 0) {
+          const opacity = stored.defaultOpacity ?? 0.9;
+          const defaultColor = stored.defaultColor ?? "#fff";
+          for (const note of storedNotes) {
             addNote({
               id: note.id,
               x: note.x,

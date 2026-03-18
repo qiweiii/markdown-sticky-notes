@@ -1,7 +1,3 @@
-interface Data {
-  url: Note[];
-}
-
 export interface Note {
   id: number;
   x: number;
@@ -17,6 +13,17 @@ export interface Note {
   color?: string; // note result bg color, could be undefined for old notes
 }
 
+export interface StorageDefaults {
+  id: number;
+  defaultTheme: string;
+  defaultEditorFontFamily: string;
+  defaultOpacity: number;
+  defaultEditorFontSize: number;
+  defaultColor: string;
+}
+
+type NotesByUrl = Partial<Record<string, Note[]>>;
+
 /** Initial data for a new note */
 export const constructAndInitData = (x: number, y: number, id: number) => {
   let data;
@@ -29,10 +36,12 @@ export const constructAndInitData = (x: number, y: number, id: number) => {
       "defaultColor",
     ])
     .then((res) => {
-      let theme = res.defaultTheme;
-      let font = res.defaultEditorFontFamily;
-      let fontSize = res.defaultEditorFontSize;
-      let color = res.defaultColor;
+      const defaults = res as Partial<StorageDefaults>;
+      const theme = defaults.defaultTheme ?? "monokai";
+      const font =
+        defaults.defaultEditorFontFamily ?? '"Consolas", "monaco", monospace';
+      const fontSize = defaults.defaultEditorFontSize ?? 14;
+      const color = defaults.defaultColor ?? "#fff";
       data = {
         id: id,
         x: x,
@@ -61,15 +70,18 @@ export const initData = (noteData: Note) => {
   let data;
   // console.log("noteData passed to init: ", noteData)
   browser.storage.local.get(url).then((result) => {
+    const storedNotes = result as NotesByUrl;
+    const existingNotes = storedNotes[url];
     // console.log('init get result: ', result);
-    if (typeof result[url] === "undefined") {
+    if (!Array.isArray(existingNotes)) {
       // if url item empty means no item for this url yet
       data = {
         [url]: [noteData],
       };
     } else {
-      result[url].push(noteData);
-      data = result;
+      data = {
+        [url]: [...existingNotes, noteData],
+      };
     }
     saveItem(data);
     // browser.storage.local.get([window.location.href], function(result) { // for testing
@@ -82,14 +94,17 @@ export const initData = (noteData: Note) => {
 export const updateData = (updatedData: Note, id: number) => {
   const url = window.location.href.split("#")[0];
   browser.storage.local.get(url).then((result) => {
-    if (!result[url]) {
+    const storedNotes = result as NotesByUrl;
+    const existingNotes = storedNotes[url];
+
+    if (!existingNotes) {
       console.error(
         "Error: You are trying to update a Markdown Sticky Note that does not exist, please refresh the page."
       );
       return;
     }
 
-    let newArray = result[url].filter((note: Note) => note.id !== id);
+    const newArray = existingNotes.filter((note) => note.id !== id);
     newArray.push(updatedData);
 
     const newData = {
@@ -104,7 +119,9 @@ export const removeNoteFromStorage = (id: number) => {
   // need to get the note and modify and save
   const url = window.location.href.split("#")[0];
   browser.storage.local.get(url).then((result) => {
-    let newArray = result[url].filter((note: Note) => note.id !== id);
+    const storedNotes = result as NotesByUrl;
+    const existingNotes = storedNotes[url] ?? [];
+    const newArray = existingNotes.filter((note) => note.id !== id);
     const newData = {
       [url]: newArray,
     };
@@ -119,7 +136,7 @@ export const removeNoteFromStorage = (id: number) => {
 };
 
 /** Save the whole item for the current url */
-export const saveItem = (item: { [url: string]: Note[] }) => {
+export const saveItem = <T extends Record<string, unknown>>(item: T) => {
   // save the item
   browser.storage.local
     .set(item)

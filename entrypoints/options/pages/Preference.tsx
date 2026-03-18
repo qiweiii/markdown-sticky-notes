@@ -12,6 +12,7 @@ import { Sketch } from "@uiw/react-color";
 
 import themes from "../../themes";
 import fonts from "../../fonts";
+import type { StorageDefaults } from "../../content/storage";
 
 const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 5;
@@ -23,6 +24,23 @@ const MenuProps = {
     },
   },
 };
+
+type PreferenceState = {
+  theme: string;
+  font: string;
+  fontsize: number;
+  opacity: number;
+  color: string;
+};
+
+type PreferenceStorageDefaults = Pick<
+  StorageDefaults,
+  | "defaultTheme"
+  | "defaultEditorFontFamily"
+  | "defaultOpacity"
+  | "defaultEditorFontSize"
+  | "defaultColor"
+>;
 
 const StyledRoot = styled("div")`
   margin-top: 10%;
@@ -50,12 +68,12 @@ const StyledRoot = styled("div")`
 `;
 
 const Preference = () => {
-  const [state, setState] = useState({
-    theme: "",
-    font: "",
-    fontsize: "",
-    opacity: 1,
-    color: "",
+  const [state, setState] = useState<PreferenceState>({
+    theme: "monokai",
+    font: '"Consolas", "monaco", monospace',
+    fontsize: 14,
+    opacity: 0.9,
+    color: "#fff",
   });
 
   useEffect(() => {
@@ -68,17 +86,15 @@ const Preference = () => {
         "defaultColor",
       ])
       .then((res) => {
-        let theme = res.defaultTheme;
-        let font = res.defaultEditorFontFamily;
-        let fontSize = res.defaultEditorFontSize;
-        let opacity = res.defaultOpacity;
-        let color = res.defaultColor;
+        const defaults = res as Partial<PreferenceStorageDefaults>;
         setState({
-          theme: theme,
-          font: font,
-          fontsize: fontSize,
-          opacity: opacity,
-          color,
+          theme: defaults.defaultTheme ?? "monokai",
+          font:
+            defaults.defaultEditorFontFamily ??
+            '"Consolas", "monaco", monospace',
+          fontsize: defaults.defaultEditorFontSize ?? 14,
+          opacity: defaults.defaultOpacity ?? 0.9,
+          color: defaults.defaultColor ?? "#fff",
         });
       });
   }, []);
@@ -93,7 +109,7 @@ const Preference = () => {
       console.log("set default font family " + value);
     });
   };
-  const updateDefaultSize = (value: string) => {
+  const updateDefaultSize = (value: number) => {
     browser.storage.local.set({ defaultEditorFontSize: value }).then(() => {
       console.log("set default font size " + value);
     });
@@ -125,12 +141,13 @@ const Preference = () => {
     updateDefaultFont(e.target.value);
   };
 
-  const handleChangeFontSize = (e: SelectChangeEvent<string>) => {
+  const handleChangeFontSize = (e: SelectChangeEvent<number>) => {
+    const fontsize = Number(e.target.value);
     setState((state) => ({
       ...state,
-      fontsize: e.target.value,
+      fontsize,
     }));
-    updateDefaultSize(e.target.value);
+    updateDefaultSize(fontsize);
   };
 
   const handleChangeOpacity = (
@@ -174,7 +191,7 @@ const Preference = () => {
       </FormControl>
       <FormControl className="form-control">
         <InputLabel id="fontsize-label">Default Editor Font Size</InputLabel>
-        <Select
+        <Select<number>
           labelId="fontsize-label"
           id="mutiple-fontsize"
           value={state.fontsize}
