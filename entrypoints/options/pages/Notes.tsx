@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -14,40 +13,14 @@ import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import { SyntheticEvent, useEffect, useState } from "react";
-
-const StyledRoot = styled("div")`
-  height: 100%;
-  .delete-button {
-    &.MuiButton-root {
-      background-color: #f97171;
-    }
-    position: absolute;
-    right: 20px;
-    top: 80px;
-  }
-  .list-root {
-    width: 100%;
-    margin-top: 60px;
-    align-items: center;
-  }
-  .item {
-    width: 100%;
-  }
-  .text {
-    color: blue;
-    overflow: auto;
-    width: 100%;
-    white-space: nowrap;
-  }
-  .close {
-    padding: 2rem;
-  }
-`;
+import unwrapMuiIcon from "../../unwrapMuiIcon";
 
 type Data = {
   checked: boolean[];
   urls: string[];
 };
+
+const DeleteIconComponent = unwrapMuiIcon(DeleteIcon);
 
 const Notes = () => {
   const [data, setData] = useState<Data>({
@@ -133,14 +106,14 @@ const Notes = () => {
   };
 
   return (
-    <StyledRoot>
+    <div className="options-notes-root">
       <Button
         variant="contained"
         onClick={handleClickOpen}
         className="delete-button"
         disabled={data.checked.every((value) => value === false)}
       >
-        <DeleteIcon fontSize="small" sx={{ mr: 0.5 }} /> Delete
+        <DeleteIconComponent fontSize="small" sx={{ mr: 0.5 }} /> Delete
       </Button>
       <Dialog
         open={dialogOpen}
@@ -211,7 +184,7 @@ const Notes = () => {
           No notes found.
         </DialogContentText>
       )}
-    </StyledRoot>
+    </div>
   );
 };
 

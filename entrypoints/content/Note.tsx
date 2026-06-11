@@ -30,6 +30,7 @@ import nightOwl from "react-syntax-highlighter/dist/cjs/styles/prism/night-owl";
 import Editor from "./Editor";
 import themes from "../themes";
 import fonts from "../fonts";
+import unwrapMuiIcon from "../unwrapMuiIcon";
 import type { Note } from "./storage";
 import { Typography } from "@mui/material";
 
@@ -43,6 +44,11 @@ const MenuProps = {
     },
   },
 };
+
+const CloseIconComponent = unwrapMuiIcon(CloseIcon);
+const SettingsIconComponent = unwrapMuiIcon(SettingsIcon);
+const HelpOutlineIconComponent = unwrapMuiIcon(HelpOutlineIcon);
+const OpenInNewIconComponent = unwrapMuiIcon(OpenInNewIcon);
 
 type Props = {
   width: number;
@@ -133,9 +139,10 @@ const Note = (props: Props) => {
     });
   };
 
-  const handleStart = (e: any) => {
+  const handleStart: DraggableEventHandler = (event) => {
     // draggable
-    if (e.target.id === "settingButton" || e.target.id === "helpButton") return;
+    const target = event.target as HTMLElement | null;
+    if (target?.id === "settingButton" || target?.id === "helpButton") return;
     setSetting((setting) => ({
       ...setting,
       dragging: true,
@@ -258,16 +265,16 @@ const Note = (props: Props) => {
 
   return (
     <div className="note-root">
-      <Draggable
-        handle=".handle"
-        onStart={handleStart}
-        onStop={handleStop}
-        onMouseDown={handleMouseDown}
-        defaultClassName={"markdown-react-draggable" + props.id}
-        defaultPosition={{
-          x: setting.position.x,
-          y: setting.position.y,
-        }}
+        <Draggable
+          handle=".handle"
+          onStart={handleStart}
+          onStop={handleStop}
+          onMouseDown={handleMouseDown}
+          defaultClassName={"markdown-react-draggable" + props.id}
+          defaultPosition={{
+            x: setting.position.x,
+            y: setting.position.y,
+          }}
         // defaultPosition={{x:window.innerWidth*0.3, y:window.innerHeight*0.5}}
         // bounds="body"
         // bounds="parent"
@@ -294,7 +301,7 @@ const Note = (props: Props) => {
                 className="markdown-sticky-note-button"
                 onClick={handleDelete}
               >
-                <CloseIcon fontSize="small" />
+                <CloseIconComponent fontSize="small" />
               </button>
               <button
                 className="markdown-sticky-note-button"
@@ -303,7 +310,7 @@ const Note = (props: Props) => {
                 }
                 onClick={handleSettingClick}
               >
-                <SettingsIcon id="settingButton" fontSize="small" />
+                <SettingsIconComponent id="settingButton" fontSize="small" />
               </button>
               <Popover
                 className="markdown-popover"
@@ -431,7 +438,7 @@ const Note = (props: Props) => {
                 }
                 onClick={handleHelpClick}
               >
-                <HelpOutlineIcon id="helpButton" fontSize="small" />
+                <HelpOutlineIconComponent id="helpButton" fontSize="small" />
               </button>
               <Popover
                 id="help-popover"
@@ -457,7 +464,7 @@ const Note = (props: Props) => {
                       browser.runtime.openOptionsPage();
                     }}
                   >
-                    Settings <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
+                    Settings <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                   <MenuItem
                     key={1}
@@ -466,7 +473,7 @@ const Note = (props: Props) => {
                     target="_blank"
                   >
                     How to use Markdown?{" "}
-                    <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
+                    <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                   <MenuItem
                     key={2}
@@ -474,7 +481,7 @@ const Note = (props: Props) => {
                     href="https://discord.gg/X5EK8m2ksN"
                     target="_blank"
                   >
-                    Discord <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
+                    Discord <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                   <MenuItem
                     key={2}
@@ -482,7 +489,7 @@ const Note = (props: Props) => {
                     href="https://x.com/qiweidyang"
                     target="_blank"
                   >
-                    X <OpenInNewIcon fontSize="small" sx={{ ml: 1 }} />
+                    X <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                 </div>
               </Popover>
@@ -554,7 +561,7 @@ const Note = (props: Props) => {
             </div>
           </div>
         </Resizable>
-      </Draggable>
+        </Draggable>
     </div>
   );
 };

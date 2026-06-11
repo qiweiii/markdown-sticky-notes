@@ -1,0 +1,59 @@
+.options-preference-root {
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.options-preference-root .form-control {
+  width: 300px;
+  height: 75px;
+}
+
+.options-preference-root .form-control label {
+  font-size: 0.8rem;
+  animation: none;
+  transform: none;
+}
+
+.options-preference-root .form-control #color-label,
+.options-preference-root .form-control #opacity-label {
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.options-notes-root {
+  height: 100%;
+}
+
+.options-notes-root .delete-button.MuiButton-root {
+  background-color: #f97171;
+}
+
+.options-notes-root .delete-button {
+  position: absolute;
+  right: 20px;
+  top: 80px;
+}
+
+.options-notes-root .list-root {
+  width: 100%;
+  margin-top: 60px;
+  align-items: center;
+}
+
+.options-notes-root .item {
+  width: 100%;
+}
+
+.options-notes-root .text {
+  color: blue;
+  overflow: auto;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.options-notes-root .close {
+  padding: 2rem;
+}

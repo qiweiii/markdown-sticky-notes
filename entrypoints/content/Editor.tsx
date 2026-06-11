@@ -16,10 +16,13 @@ type Props = {
   autofocus: boolean;
 };
 
+const availableThemes = themes as Record<string, unknown>;
+
 const Editor = (props: Props) => {
+  const themeName = themeOptions.includes(props.theme) ? props.theme : "monokai";
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: "100%" }}>
       {/* https://github.com/uiwjs/react-codemirror */}
       <CodeMirror
         className="markdown-sticky-note-CodeMirror"
@@ -27,11 +30,21 @@ const Editor = (props: Props) => {
         value={props.value}
         extensions={[
           markdown({ base: markdownLanguage, codeLanguages: languages }),
-          EditorView.lineWrapping
+          EditorView.lineWrapping,
+          EditorView.domEventHandlers({
+            keydown(event) {
+              event.stopPropagation();
+              return false;
+            },
+            keyup(event) {
+              event.stopPropagation();
+              return false;
+            },
+          }),
         ]}
         onChange={props.onChange}
         // @ts-ignore
-        theme={themes[themeOptions.includes(props.theme) ? props.theme : 'monokai']}
+        theme={availableThemes[themeName]}
         autoFocus={props.autofocus}
         style={{ fontSize: props.fontSize, fontFamily: props.fontFamily }}
       />

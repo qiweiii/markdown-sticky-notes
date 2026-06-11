@@ -7,7 +7,6 @@ import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Input from "@mui/material/Input";
 import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
 import { Sketch } from "@uiw/react-color";
 
 import themes from "../../themes";
@@ -41,31 +40,6 @@ type PreferenceStorageDefaults = Pick<
   | "defaultEditorFontSize"
   | "defaultColor"
 >;
-
-const StyledRoot = styled("div")`
-  margin-top: 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  .form-control {
-    width: 300px;
-    height: 75px;
-    label {
-      font-size: 0.8rem;
-      animation: none;
-      transform: none;
-    }
-    #color-label {
-      font-size: 0.9rem;
-      color: rgba(0, 0, 0, 0.6);
-    }
-    #opacity-label {
-      font-size: 0.9rem;
-      color: rgba(0, 0, 0, 0.6);
-    }
-  }
-`;
 
 const Preference = () => {
   const [state, setState] = useState<PreferenceState>({
@@ -171,7 +145,7 @@ const Preference = () => {
   };
 
   return (
-    <StyledRoot>
+    <div className="options-preference-root">
       <FormControl className="form-control">
         <InputLabel id="theme-label">Default Editor Theme</InputLabel>
         <Select
@@ -266,7 +240,7 @@ const Preference = () => {
           }}
         />
       </FormControl>
-    </StyledRoot>
+    </div>
   );
 };
 

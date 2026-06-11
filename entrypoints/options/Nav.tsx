@@ -14,8 +14,11 @@ import { useState } from "react";
 import Notes from "./pages/Notes";
 import Preference from "./pages/Preference";
 import About from "./pages/About";
+import unwrapMuiIcon from "../unwrapMuiIcon";
 
 const pages = ["notes", "preference", "about"];
+const MenuIconComponent = unwrapMuiIcon(MenuIcon);
+const NoteIconComponent = unwrapMuiIcon(NoteIcon);
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -35,7 +38,7 @@ function ResponsiveAppBar() {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {/* Big Screen: Logo */}
-            <NoteIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <NoteIconComponent sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -86,7 +89,7 @@ function ResponsiveAppBar() {
                 onClick={handleOpenNavMenu}
                 color="inherit"
               >
-                <MenuIcon />
+                <MenuIconComponent />
               </IconButton>
               <Menu
                 id="menu-appbar"
