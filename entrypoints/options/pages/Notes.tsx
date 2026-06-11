@@ -1,6 +1,8 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
@@ -107,14 +109,72 @@ const Notes = () => {
 
   return (
     <div className="options-notes-root">
-      <Button
-        variant="contained"
-        onClick={handleClickOpen}
-        className="delete-button"
-        disabled={data.checked.every((value) => value === false)}
-      >
-        <DeleteIconComponent fontSize="small" sx={{ mr: 0.5 }} /> Delete
-      </Button>
+      <Paper className="options-page-card" elevation={0}>
+        <Box className="options-page-header">
+          <Box>
+            <h2 className="options-page-title">Saved notes</h2>
+            <p className="options-page-subtitle">
+              Review every website with stored notes and clean up stale pages in
+              one place.
+            </p>
+          </Box>
+          <Button
+            variant="contained"
+            onClick={handleClickOpen}
+            className="delete-button"
+            disabled={data.checked.every((value) => value === false)}
+          >
+            <DeleteIconComponent fontSize="small" sx={{ mr: 0.5 }} /> Delete
+          </Button>
+        </Box>
+
+        <Box className="options-page-meta">
+          <span>{data.urls.length} saved pages</span>
+          <span>
+            {data.checked.filter(Boolean).length} selected for deletion
+          </span>
+        </Box>
+
+        {data.urls.length === 0 ? (
+          <DialogContentText
+            className="options-empty-state"
+            id="alert-dialog-description"
+          >
+            No notes found yet. Create a sticky note on any page and it will show
+            up here.
+          </DialogContentText>
+        ) : (
+          <List className="list-root">
+            {data.urls.sort().map((value, i) => {
+              const labelId = `checkbox-list-label-${i}`;
+              return (
+                <ListItem
+                  className="item"
+                  key={i}
+                  role={undefined}
+                  button
+                  component="a"
+                  href={value}
+                  target="_blank"
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      edge="start"
+                      tabIndex={-1}
+                      onChange={handleToggle(i)}
+                      checked={data.checked[i]}
+                      disableRipple
+                      inputProps={{ "aria-labelledby": labelId }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText className="text" id={labelId} primary={value} />
+                </ListItem>
+              );
+            })}
+          </List>
+        )}
+      </Paper>
+
       <Dialog
         open={dialogOpen}
         onClose={handleClose}
@@ -151,39 +211,6 @@ const Notes = () => {
         }}
         message={<span id="message-id">{snackbarMsg}</span>}
       />
-      <List className="list-root">
-        {data.urls.sort().map((value, i) => {
-          const labelId = `checkbox-list-label-${i}`;
-          return (
-            <ListItem
-              className="item"
-              key={i}
-              role={undefined}
-              button
-              component="a"
-              href={value}
-              target="_blank"
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  tabIndex={-1}
-                  onChange={handleToggle(i)}
-                  checked={data.checked[i]}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText className="text" id={labelId} primary={value} />
-            </ListItem>
-          );
-        })}
-      </List>
-      {data.urls.length === 0 && (
-        <DialogContentText className="close" id="alert-dialog-description">
-          No notes found.
-        </DialogContentText>
-      )}
     </div>
   );
 };

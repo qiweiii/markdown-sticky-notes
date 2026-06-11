@@ -464,7 +464,7 @@ const Note = (props: Props) => {
                       browser.runtime.openOptionsPage();
                     }}
                   >
-                    Settings <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
+                    Options <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                   <MenuItem
                     key={1}
@@ -486,7 +486,7 @@ const Note = (props: Props) => {
                   <MenuItem
                     key={2}
                     component="a"
-                    href="https://x.com/qiweidyang"
+                    href="https://x.com/qiweiii_yang"
                     target="_blank"
                   >
                     X <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />

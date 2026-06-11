@@ -1,14 +1,12 @@
 .options-preference-root {
-  margin-top: 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
 }
 
 .options-preference-root .form-control {
-  width: 300px;
-  height: 75px;
+  width: 100%;
+  min-height: 75px;
 }
 
 .options-preference-root .form-control label {
@@ -24,36 +22,176 @@
 }
 
 .options-notes-root {
-  height: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.options-page-card {
+  border-radius: 12px;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+
+.options-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.options-page-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.15;
+  color: #111827;
+}
+
+.options-page-subtitle {
+  margin: 10px 0 0;
+  max-width: 680px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.options-page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.options-page-meta span {
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+.options-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+}
+
+.form-control-wide {
+  grid-column: 1 / -1;
+}
+
+.form-control-color {
+  margin-top: 24px;
+  min-height: 0;
+}
+
+.options-color-preview {
+  width: 220px;
+  height: 20px;
+  display: inline-block;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+}
+
+.options-empty-state {
+  margin: 28px 0 4px;
+  padding: 22px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  text-align: center;
 }
 
 .options-notes-root .delete-button.MuiButton-root {
-  background-color: #f97171;
+  background: #111827;
+  border-radius: 999px;
+  padding-inline: 18px;
+  box-shadow: none;
+}
+
+.options-notes-root .delete-button.MuiButton-root:hover {
+  background: #374151;
+  box-shadow: none;
 }
 
 .options-notes-root .delete-button {
-  position: absolute;
-  right: 20px;
-  top: 80px;
+  flex-shrink: 0;
 }
 
 .options-notes-root .list-root {
   width: 100%;
-  margin-top: 60px;
+  margin-top: 10px;
   align-items: center;
+  padding: 0;
 }
 
 .options-notes-root .item {
   width: 100%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.options-notes-root .item:hover {
+  border-color: #d1d5db;
+  background: #f9fafb;
 }
 
 .options-notes-root .text {
-  color: blue;
+  color: #111827;
   overflow: auto;
   width: 100%;
   white-space: nowrap;
 }
 
-.options-notes-root .close {
-  padding: 2rem;
+.options-about-root {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.options-about-card {
+  text-align: center;
+}
+
+.options-about-copy {
+  color: #4b5563;
+  line-height: 1.7;
+}
+
+.options-support-link {
+  display: inline-flex;
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .options-page-header {
+    flex-direction: column;
+  }
+
+  .options-settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-control-wide {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .options-page-card {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .options-page-title {
+    font-size: 22px;
+  }
 }

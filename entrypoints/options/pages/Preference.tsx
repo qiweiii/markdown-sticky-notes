@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -146,100 +147,105 @@ const Preference = () => {
 
   return (
     <div className="options-preference-root">
-      <FormControl className="form-control">
-        <InputLabel id="theme-label">Default Editor Theme</InputLabel>
-        <Select
-          labelId="theme-label"
-          id="mutiple-theme"
-          value={state.theme}
-          onChange={handleChangeTheme}
-          input={<Input />}
-          MenuProps={MenuProps}
-        >
-          {themes.map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl className="form-control">
-        <InputLabel id="fontsize-label">Default Editor Font Size</InputLabel>
-        <Select<number>
-          labelId="fontsize-label"
-          id="mutiple-fontsize"
-          value={state.fontsize}
-          onChange={handleChangeFontSize}
-          input={<Input />}
-          MenuProps={MenuProps}
-        >
-          {Array.from(new Array(40), (x, i) => i + 9).map((size) => (
-            <MenuItem key={size} value={size}>
-              {size}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      {/* Font fam */}
-      <FormControl className="form-control">
-        <InputLabel id="fontfamily-label">Default Editor Font</InputLabel>
-        <Select
-          labelId="fontfamily-label"
-          id="mutiple-fontfamily"
-          value={state.font}
-          onChange={handleChangeFont}
-          input={<Input />}
-          MenuProps={MenuProps}
-        >
-          {Object.entries(fonts).map(([font, family]) => (
-            <MenuItem key={font} value={family}>
-              {font}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      {/* Opacity */}
-      <FormControl className="form-control">
-        <Typography id="opacity-label" gutterBottom>
-          Default Note Opacity
-        </Typography>
-        <Slider
-          id="opacity"
-          aria-labelledby="opacity-label"
-          value={state.opacity}
-          max={1}
-          min={0}
-          step={0.05}
-          valueLabelDisplay="auto"
-          onChangeCommitted={handleChangeOpacity}
-        />
-      </FormControl>
-      <FormControl className="form-control" sx={{ height: "400px !important" }}>
-        <Typography id="color-label" gutterBottom>
-          Default Background Color ({state.color})
-        </Typography>
-        <Box
-          sx={{
-            backgroundColor: state.color,
-            width: 220,
-            height: "20px",
-            display: "inline-block",
-            mb: "10px",
-          }}
-        />
+      <Paper className="options-page-card" elevation={0}>
+        <Box className="options-page-header">
+          <Box>
+            <h2 className="options-page-title">Preferences</h2>
+            <p className="options-page-subtitle">
+              Tune the default note style once and keep every new sticky note
+              consistent.
+            </p>
+          </Box>
+        </Box>
 
-        <Sketch
-          color={state.color}
-          disableAlpha
-          style={{
-            boxShadow:
-              "rgb(0 0 0 / 15%) 0px 0px 0px 1px, rgb(0 0 0 / 15%) 0px 8px 16px",
-          }}
-          onChange={(color) => {
-            handleChangeColor(color.hex);
-          }}
-        />
-      </FormControl>
+        <div className="options-settings-grid">
+          <FormControl className="form-control">
+            <InputLabel id="theme-label">Default Editor Theme</InputLabel>
+            <Select
+              labelId="theme-label"
+              id="mutiple-theme"
+              value={state.theme}
+              onChange={handleChangeTheme}
+              input={<Input />}
+              MenuProps={MenuProps}
+            >
+              {themes.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className="form-control">
+            <InputLabel id="fontsize-label">Default Editor Font Size</InputLabel>
+            <Select<number>
+              labelId="fontsize-label"
+              id="mutiple-fontsize"
+              value={state.fontsize}
+              onChange={handleChangeFontSize}
+              input={<Input />}
+              MenuProps={MenuProps}
+            >
+              {Array.from(new Array(40), (x, i) => i + 9).map((size) => (
+                <MenuItem key={size} value={size}>
+                  {size}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className="form-control form-control-wide">
+            <InputLabel id="fontfamily-label">Default Editor Font</InputLabel>
+            <Select
+              labelId="fontfamily-label"
+              id="mutiple-fontfamily"
+              value={state.font}
+              onChange={handleChangeFont}
+              input={<Input />}
+              MenuProps={MenuProps}
+            >
+              {Object.entries(fonts).map(([font, family]) => (
+                <MenuItem key={font} value={family}>
+                  {font}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className="form-control form-control-wide">
+            <Typography id="opacity-label" gutterBottom>
+              Default Note Opacity
+            </Typography>
+            <Slider
+              id="opacity"
+              aria-labelledby="opacity-label"
+              value={state.opacity}
+              max={1}
+              min={0}
+              step={0.05}
+              valueLabelDisplay="auto"
+              onChangeCommitted={handleChangeOpacity}
+            />
+          </FormControl>
+        </div>
+
+        <FormControl className="form-control form-control-color">
+          <Typography id="color-label" gutterBottom>
+            Default Background Color ({state.color})
+          </Typography>
+          <Box className="options-color-preview" sx={{ backgroundColor: state.color }} />
+
+          <Sketch
+            color={state.color}
+            disableAlpha
+            style={{
+              boxShadow:
+                "rgb(0 0 0 / 15%) 0px 0px 0px 1px, rgb(0 0 0 / 15%) 0px 8px 16px",
+            }}
+            onChange={(color) => {
+              handleChangeColor(color.hex);
+            }}
+          />
+        </FormControl>
+      </Paper>
     </div>
   );
 };

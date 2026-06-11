@@ -16,7 +16,11 @@ import Preference from "./pages/Preference";
 import About from "./pages/About";
 import unwrapMuiIcon from "../unwrapMuiIcon";
 
-const pages = ["notes", "preference", "about"];
+const pages = [
+  { id: "notes", label: "Notes" },
+  { id: "preference", label: "Preferences" },
+  { id: "about", label: "About" },
+];
 const MenuIconComponent = unwrapMuiIcon(MenuIcon);
 const NoteIconComponent = unwrapMuiIcon(NoteIcon);
 
@@ -34,52 +38,123 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            {/* Big Screen: Logo */}
-            <NoteIconComponent sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 5,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".1rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Markdown Sticky Note
-            </Typography>
-
-            {/* Big Screen: Menu */}
+      <AppBar
+        position="sticky"
+        elevation={0}
+        sx={{
+          background: "#fff",
+          color: "#111827",
+          borderBottom: "1px solid #e5e7eb",
+        }}
+      >
+        <Container maxWidth="lg">
+          <Toolbar disableGutters sx={{ minHeight: 64, gap: 2 }}>
             <Box
               sx={{
-                flexGrow: 1,
-                display: { xs: "none", md: "flex" },
-                justifyContent: "flex-end",
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                flexShrink: 0,
               }}
             >
-              {pages.map((page) => (
+              <Box
+                sx={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 2,
+                  display: { xs: "none", md: "grid" },
+                  placeItems: "center",
+                  backgroundColor: "#f9fafb",
+                  border: "1px solid #e5e7eb",
+                }}
+              >
+                <NoteIconComponent sx={{ color: "#111827" }} />
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    fontWeight: 700,
+                    letterSpacing: "0.02em",
+                    color: "#111827",
+                  }}
+                >
+                  Markdown Sticky Note
+                </Typography>
+                <Typography
+                  variant="body2"
+                  component="div"
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    color: "#6b7280",
+                  }}
+                >
+                  Floating markdown notes for any page.
+                </Typography>
+              </Box>
+            </Box>
+
+            <Typography
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontWeight: 700,
+                letterSpacing: ".08rem",
+                color: "#111827",
+              }}
+            >
+              MD Sticky Note
+            </Typography>
+
+            <Box sx={{ flexGrow: 1 }} />
+
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                justifyContent: "flex-end",
+                gap: 0.5,
+              }}
+            >
+              {pages.map((pageItem) => (
                 <Button
-                  key={page}
+                  key={pageItem.id}
                   onClick={() => {
-                    setPage(page);
+                    setPage(pageItem.id);
                     handleCloseNavMenu();
                   }}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  variant={pageItem.id === page ? "contained" : "text"}
+                  sx={{
+                    my: 2,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 999,
+                    color: pageItem.id === page ? "#111827" : "#4b5563",
+                    display: "block",
+                    backgroundColor:
+                      pageItem.id === page
+                        ? "#f3f4f6"
+                        : "transparent",
+                    boxShadow: "none",
+                    '&:hover': {
+                      backgroundColor:
+                        pageItem.id === page
+                          ? "#e5e7eb"
+                          : "#f9fafb",
+                      boxShadow: "none",
+                    },
+                  }}
                 >
-                  {page}
+                  {pageItem.label}
                 </Button>
               ))}
             </Box>
 
-            {/* Small Screen: Menu Items */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -109,42 +184,19 @@ function ResponsiveAppBar() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
+                {pages.map((pageItem) => (
                   <MenuItem
-                    key={page}
+                    key={pageItem.id}
                     onClick={() => {
-                      setPage(page);
+                      setPage(pageItem.id);
                       handleCloseNavMenu();
                     }}
                   >
-                    <Typography textAlign="center">{`${page[0].toLocaleUpperCase()}${page.slice(
-                      1
-                    )}
-                    `}</Typography>
+                    <Typography textAlign="center">{pageItem.label}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
-
-            {/* Small Screen: Logo */}
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".2rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              MD Sticky Note
-            </Typography>
           </Toolbar>
         </Container>
       </AppBar>
