@@ -34,6 +34,8 @@ import unwrapMuiIcon from "../unwrapMuiIcon";
 import type { Note } from "./storage";
 import { Typography } from "@mui/material";
 
+let currentMaxZIndex = 1300;
+
 const ITEM_HEIGHT = 20;
 const ITEM_PADDING_TOP = 5;
 const MenuProps = {
@@ -164,13 +166,13 @@ const Note = (props: Props) => {
   // Handle mouse down for updating zIndex of the focused note.
   // The following functions get DOM elem coz Draggable component does not accept style property
   const handleMouseDown = useCallback(() => {
-    let curMaxZIndex = window.localStorage.getItem("md-curMaxIndex");
-    let el = document.getElementsByClassName(
+    const el = document.getElementsByClassName(
       "markdown-react-draggable" + setting.id
     )[0];
-    // @ts-ignore
-    if (el) el.style.zIndex = curMaxZIndex++;
-    window.localStorage.setItem("md-curMaxIndex", curMaxZIndex || "1300");
+    if (el instanceof HTMLElement) {
+      currentMaxZIndex += 1;
+      el.style.zIndex = String(currentMaxZIndex);
+    }
   }, [setting.id]);
 
   // hack for firefox that cannot update dragging state (a react-draggable bug)

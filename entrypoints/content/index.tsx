@@ -30,9 +30,41 @@ type ContentStorageDefaults = Pick<
 type NotesStorageResult = Partial<Record<string, NoteType[]>> &
   Partial<ContentStorageDefaults>;
 
+const getUrlWithoutHash = (href: string) => href.split("#")[0];
+
+const isCloudflareChallengePage = () => {
+  // Redirect / managed-challenge case: top-level URL itself is under /cdn-cgi/.
+  if (window.location.pathname.startsWith("/cdn-cgi/")) {
+    return true;
+  }
+  // JS challenge interstitial ("Just a moment..."). The top-level URL stays the
+  // original page (e.g. https://my.vultr.com/), so the pathname check above
+  // misses it. Detect via the standard title and challenge-platform markers
+  // instead. These are present by document_idle, when this content script runs.
+  if (document.title === "Just a moment...") {
+    return true;
+  }
+  if (
+    document.querySelector(
+      'script[src*="/cdn-cgi/challenge-platform/"], ' +
+        'iframe[src*="cdn-cgi/challenge-platform"], ' +
+        'iframe[src*="challenges.cloudflare.com"], ' +
+        "#challenge-form, #challenge-running, #cf-challenge-running"
+    )
+  ) {
+    return true;
+  }
+  return false;
+};
+
+let pendingCreateNoteRequests = 0;
+let isAppMounted = false;
+let urlObserver: MutationObserver | null = null;
+let createNoteHandler: (() => void) | null = null;
+
 const MarkdownStickyNoteApp = () => {
   // This is not 100% correct, but 99% of # usage are not new pages, hopefully this is good enough
-  const [url, setUrl] = useState(window.location.href.split("#")[0]);
+  const [url, setUrl] = useState(getUrlWithoutHash(window.location.href));
   const [notes, setNotes] = useState<NoteType[]>([]);
   const optionsUrl = browser.runtime.getURL("/options.html");
 
@@ -44,66 +76,78 @@ const MarkdownStickyNoteApp = () => {
   useEffect(() => {
     // Listen for url change, added for SPA support
     let previousUrl = "";
-    const observer = new MutationObserver((mutations) => {
+    const observer = new MutationObserver(() => {
       if (location.href !== previousUrl) {
         previousUrl = location.href;
         // console.log(`URL changed to ${location.href}`);
-        setUrl(location.href.split("#")[0]);
+        setUrl(getUrlWithoutHash(location.href));
       }
     });
     observer.observe(document, { subtree: true, childList: true });
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
-    // Add listener for generating new note when click on extension icon
-    browser.runtime.onMessage.addListener(function (request) {
-      if (request.message === "clicked_extension_action") {
-        // brand new note here
-        let { x, y } = initXY();
-        browser.storage.local
-          .get([
-            "id",
-            "defaultTheme",
-            "defaultEditorFontFamily",
-            "defaultOpacity",
-            "defaultEditorFontSize",
-            "defaultColor",
-          ])
-          .then((res) => {
-            const defaults = res as Partial<ContentStorageDefaults>;
-            const nextId = (defaults.id ?? 0) + 1;
-            const theme = defaults.defaultTheme ?? "monokai";
-            const font =
-              defaults.defaultEditorFontFamily ??
-              '"Consolas", "monaco", monospace';
-            const opacity = defaults.defaultOpacity ?? 0.9;
-            const fontSize = defaults.defaultEditorFontSize ?? 14;
-            const color = defaults.defaultColor ?? "#fff";
-            addNote({
-              id: nextId,
-              x: x,
-              y: y,
-              width: 220,
-              height: 250,
-              content: "\n".repeat(10),
-              theme: theme,
-              font: font,
-              fontSize: fontSize,
-              autofocus: true,
-              opacity: opacity,
-              color,
-            });
-            constructAndInitData(x, y, nextId); // save initial empty note data to storage
-            saveItem({ id: nextId });
+    const createNote = () => {
+      const { x, y } = initXY();
+      browser.storage.local
+        .get([
+          "id",
+          "defaultTheme",
+          "defaultEditorFontFamily",
+          "defaultOpacity",
+          "defaultEditorFontSize",
+          "defaultColor",
+        ])
+        .then((res) => {
+          const defaults = res as Partial<ContentStorageDefaults>;
+          const nextId = (defaults.id ?? 0) + 1;
+          const theme = defaults.defaultTheme ?? "monokai";
+          const font =
+            defaults.defaultEditorFontFamily ?? '"Consolas", "monaco", monospace';
+          const opacity = defaults.defaultOpacity ?? 0.9;
+          const fontSize = defaults.defaultEditorFontSize ?? 14;
+          const color = defaults.defaultColor ?? "#fff";
+          addNote({
+            id: nextId,
+            x: x,
+            y: y,
+            width: 220,
+            height: 250,
+            content: "\n".repeat(10),
+            theme: theme,
+            font: font,
+            fontSize: fontSize,
+            autofocus: true,
+            opacity: opacity,
+            color,
           });
+          constructAndInitData(x, y, nextId);
+          saveItem({ id: nextId });
+          browser.runtime.sendMessage({
+            action: "generated_new_note",
+            url: url,
+          });
+        });
+    };
+
+    createNoteHandler = createNote;
+
+    const queuedRequests = pendingCreateNoteRequests;
+    pendingCreateNoteRequests = 0;
+    for (let index = 0; index < queuedRequests; index += 1) {
+      createNote();
+    }
+
+    return () => {
+      if (createNoteHandler === createNote) {
+        createNoteHandler = null;
       }
-      // send message to background.js for google analytics
-      browser.runtime.sendMessage({
-        action: "generated_new_note",
-        url: url,
-      });
-    });
-  }, []);
+    };
+  }, [url]);
 
   /**
    * Get saved notes for current url
@@ -279,25 +323,77 @@ const loadFontFace = () => {
   });
 };
 
+const ensureAppMounted = () => {
+  if (isAppMounted || isCloudflareChallengePage()) {
+    return;
+  }
+
+  if (!document.body) {
+    window.addEventListener("DOMContentLoaded", ensureAppMounted, { once: true });
+    return;
+  }
+
+  isAppMounted = true;
+  urlObserver?.disconnect();
+  urlObserver = null;
+
+  const root = document.createElement("div");
+  root.className = "markdown-sticky-note-root";
+  document.body.appendChild(root);
+
+  const approot = document.createElement("div");
+  approot.className = "markdown-sticky-note-approot";
+  root.appendChild(approot);
+
+  loadFontFace();
+  ReactDOM.createRoot(approot).render(<MarkdownStickyNoteApp />);
+};
+
+const mountAppIfCurrentPageHasNotes = () => {
+  const url = getUrlWithoutHash(window.location.href);
+  browser.storage.local.get(url).then((result) => {
+    const storedNotes = (result as Partial<Record<string, NoteType[]>>)[url] ?? [];
+    if (storedNotes.length > 0) {
+      ensureAppMounted();
+    }
+  });
+};
+
 export default defineContentScript({
   matches: ["https://*/*", "http://*/*"],
 
-  main(ctx) {
-    /** Initialise root div */
-    const root = document.createElement("div");
-    root.className = "markdown-sticky-note-root";
-    document.body.appendChild(root);
-    const approot = document.createElement("div");
-    approot.className = "markdown-sticky-note-approot";
-    root.appendChild(approot);
+  main() {
+    if (isCloudflareChallengePage()) {
+      return;
+    }
 
-    // if set very high will cause settings popover to go behind (which i cannot change)
-    window.localStorage.setItem("md-curMaxIndex", "1300");
+    browser.runtime.onMessage.addListener((request) => {
+      if (request.message !== "clicked_extension_action") {
+        return;
+      }
 
-    // add font-face support for multi browser
-    loadFontFace();
+      if (createNoteHandler) {
+        createNoteHandler();
+        return;
+      }
 
-    // Render app root
-    ReactDOM.createRoot(approot).render(<MarkdownStickyNoteApp />);
+      pendingCreateNoteRequests += 1;
+      ensureAppMounted();
+    });
+
+    mountAppIfCurrentPageHasNotes();
+
+    let previousUrl = window.location.href;
+    urlObserver = new MutationObserver(() => {
+      if (isAppMounted || isCloudflareChallengePage()) {
+        return;
+      }
+
+      if (window.location.href !== previousUrl) {
+        previousUrl = window.location.href;
+        mountAppIfCurrentPageHasNotes();
+      }
+    });
+    urlObserver.observe(document, { subtree: true, childList: true });
   },
 });

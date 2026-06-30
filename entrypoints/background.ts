@@ -64,9 +64,20 @@ export default defineBackground({
       browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
         let activeTab = tabs[0];
         if (!activeTab.id) return;
-        browser.tabs.sendMessage(activeTab.id, {
-          message: "clicked_extension_action",
-        });
+        browser.tabs
+          .sendMessage(activeTab.id, {
+            message: "clicked_extension_action",
+          })
+          .catch((error) => {
+            const message =
+              error instanceof Error ? error.message : String(error);
+            if (message.includes("Receiving end does not exist")) {
+              console.debug("Skipping note creation on this page", error);
+              return;
+            }
+
+            console.error("Failed to send create-note message", error);
+          });
       });
     };
 

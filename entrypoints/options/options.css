@@ -119,6 +119,12 @@
   box-shadow: none;
 }
 
+.options-notes-root .delete-button.MuiButton-root.Mui-disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  box-shadow: none;
+}
+
 .options-notes-root .delete-button {
   flex-shrink: 0;
 }
