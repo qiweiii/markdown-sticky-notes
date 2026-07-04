@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import type { Root } from "react-dom/client";
 import { StyledEngineProvider } from "@mui/material/styles";
 
 import {
@@ -17,6 +18,12 @@ import "katex/dist/katex.min.css";
 // import root from 'react-shadow/material-ui'
 // Shadow DOM / iframe can solve style encapsulation, but is not easy to use with material-ui, markdown editor and draggable.
 
+declare global {
+  interface Window {
+    __markdownStickyNotesContentLoaded?: boolean;
+  }
+}
+
 type ContentStorageDefaults = Pick<
   StorageDefaults,
   | "id"
@@ -32,7 +39,7 @@ type NotesStorageResult = Partial<Record<string, NoteType[]>> &
 
 const getUrlWithoutHash = (href: string) => href.split("#")[0];
 
-const isCloudflareChallengePage = () => {
+const hasCloudflareChallengeMarkers = () => {
   // Redirect / managed-challenge case: top-level URL itself is under /cdn-cgi/.
   if (window.location.pathname.startsWith("/cdn-cgi/")) {
     return true;
@@ -49,7 +56,8 @@ const isCloudflareChallengePage = () => {
       'script[src*="/cdn-cgi/challenge-platform/"], ' +
         'iframe[src*="cdn-cgi/challenge-platform"], ' +
         'iframe[src*="challenges.cloudflare.com"], ' +
-        "#challenge-form, #challenge-running, #cf-challenge-running"
+        "#challenge-form, #challenge-running, #cf-challenge-running, " +
+        "#cf-chl-widget, .cf-challenge, .cf-turnstile"
     )
   ) {
     return true;
@@ -60,7 +68,40 @@ const isCloudflareChallengePage = () => {
 let pendingCreateNoteRequests = 0;
 let isAppMounted = false;
 let urlObserver: MutationObserver | null = null;
+let cloudflareObserver: MutationObserver | null = null;
 let createNoteHandler: (() => void) | null = null;
+let cloudflareChallengeSeen = false;
+let mountedRoot: Root | null = null;
+let mountedRootElement: HTMLDivElement | null = null;
+
+const blockCloudflareChallengePage = () => {
+  cloudflareChallengeSeen = true;
+  pendingCreateNoteRequests = 0;
+  createNoteHandler = null;
+
+  urlObserver?.disconnect();
+  urlObserver = null;
+  cloudflareObserver?.disconnect();
+  cloudflareObserver = null;
+
+  mountedRoot?.unmount();
+  mountedRoot = null;
+  mountedRootElement?.remove();
+  mountedRootElement = null;
+  isAppMounted = false;
+};
+
+const isCloudflareChallengePage = () => {
+  if (cloudflareChallengeSeen) {
+    return true;
+  }
+  if (!hasCloudflareChallengeMarkers()) {
+    return false;
+  }
+
+  blockCloudflareChallengePage();
+  return true;
+};
 
 const MarkdownStickyNoteApp = () => {
   // This is not 100% correct, but 99% of # usage are not new pages, hopefully this is good enough
@@ -345,8 +386,10 @@ const ensureAppMounted = () => {
   approot.className = "markdown-sticky-note-approot";
   root.appendChild(approot);
 
+  mountedRootElement = root;
   loadFontFace();
-  ReactDOM.createRoot(approot).render(<MarkdownStickyNoteApp />);
+  mountedRoot = ReactDOM.createRoot(approot);
+  mountedRoot.render(<MarkdownStickyNoteApp />);
 };
 
 const mountAppIfCurrentPageHasNotes = () => {
@@ -359,16 +402,46 @@ const mountAppIfCurrentPageHasNotes = () => {
   });
 };
 
+const watchForCloudflareChallenge = () => {
+  cloudflareObserver?.disconnect();
+  cloudflareObserver = new MutationObserver(() => {
+    if (hasCloudflareChallengeMarkers()) {
+      blockCloudflareChallengePage();
+    }
+  });
+  cloudflareObserver.observe(document.documentElement, {
+    subtree: true,
+    childList: true,
+  });
+};
+
 export default defineContentScript({
   matches: ["https://*/*", "http://*/*"],
+  registration: "runtime",
+  cssInjectionMode: "manual",
+  noScriptStartedPostMessage: true,
+  excludeMatches: [
+    "*://*/cdn-cgi/*",
+    "*://challenges.cloudflare.com/*",
+  ],
 
   main() {
-    if (isCloudflareChallengePage()) {
+    if (window.__markdownStickyNotesContentLoaded) {
       return;
     }
 
+    if (isCloudflareChallengePage()) {
+      return;
+    }
+    window.__markdownStickyNotesContentLoaded = true;
+
+    watchForCloudflareChallenge();
+
     browser.runtime.onMessage.addListener((request) => {
       if (request.message !== "clicked_extension_action") {
+        return;
+      }
+      if (isCloudflareChallengePage()) {
         return;
       }
 
