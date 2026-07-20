@@ -49,7 +49,8 @@ const Notes = () => {
           item !== "defaultTheme" &&
           item !== "defaultEditorFontFamily" &&
           item !== "defaultEditorFontSize" &&
-          item !== "defaultColor"
+          item !== "defaultColor" &&
+          item !== "defaultEditorShowLineNumbers"
         ) {
           urls.push(item);
         }

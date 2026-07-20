@@ -68,6 +68,7 @@ type Props = {
   optionsPage: string;
   autofocus: boolean;
   color: string | undefined;
+  showLineNumbers: boolean;
 };
 
 const Note = (props: Props) => {
@@ -519,6 +520,7 @@ const Note = (props: Props) => {
                   fontFamily={setting.editorFontFamily}
                   onChange={handleMarkdownChange}
                   autofocus={props.autofocus}
+                  showLineNumbers={props.showLineNumbers}
                 />
               ) : (
                 <div onClick={handleClickInside} className="result-container">

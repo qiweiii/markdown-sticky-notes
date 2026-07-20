@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Input from "@mui/material/Input";
 import Box from "@mui/material/Box";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { Sketch } from "@uiw/react-color";
 
 import themes from "../../themes";
@@ -31,6 +33,7 @@ type PreferenceState = {
   fontsize: number;
   opacity: number;
   color: string;
+  showLineNumbers: boolean;
 };
 
 type PreferenceStorageDefaults = Pick<
@@ -40,6 +43,7 @@ type PreferenceStorageDefaults = Pick<
   | "defaultOpacity"
   | "defaultEditorFontSize"
   | "defaultColor"
+  | "defaultEditorShowLineNumbers"
 >;
 
 const Preference = () => {
@@ -49,6 +53,7 @@ const Preference = () => {
     fontsize: 12,
     opacity: 0.9,
     color: "#f8e61b",
+    showLineNumbers: true,
   });
 
   useEffect(() => {
@@ -59,6 +64,7 @@ const Preference = () => {
         "defaultOpacity",
         "defaultEditorFontSize",
         "defaultColor",
+        "defaultEditorShowLineNumbers",
       ])
       .then((res) => {
         const defaults = res as Partial<PreferenceStorageDefaults>;
@@ -70,6 +76,7 @@ const Preference = () => {
           fontsize: defaults.defaultEditorFontSize ?? 12,
           opacity: defaults.defaultOpacity ?? 0.9,
           color: defaults.defaultColor ?? "#f8e61b",
+          showLineNumbers: defaults.defaultEditorShowLineNumbers ?? true,
         });
       });
   }, []);
@@ -98,6 +105,13 @@ const Preference = () => {
     browser.storage.local.set({ defaultColor: value }).then(() => {
       console.log("set default color to " + value);
     });
+  };
+  const updateDefaultShowLineNumbers = (value: boolean) => {
+    browser.storage.local
+      .set({ defaultEditorShowLineNumbers: value })
+      .then(() => {
+        console.log("set default showLineNumbers to " + value);
+      });
   };
 
   const handleChangeTheme = (e: SelectChangeEvent<string>) => {
@@ -143,6 +157,17 @@ const Preference = () => {
       color: value,
     }));
     updateDefaultColor(value);
+  };
+
+  const handleChangeShowLineNumbers = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checked = event.target.checked;
+    setState((state) => ({
+      ...state,
+      showLineNumbers: checked,
+    }));
+    updateDefaultShowLineNumbers(checked);
   };
 
   return (
@@ -223,6 +248,18 @@ const Preference = () => {
               step={0.05}
               valueLabelDisplay="auto"
               onChangeCommitted={handleChangeOpacity}
+            />
+          </FormControl>
+          <FormControl className="form-control form-control-wide">
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={state.showLineNumbers}
+                  onChange={handleChangeShowLineNumbers}
+                  name="showLineNumbers"
+                />
+              }
+              label="Show line numbers in editor"
             />
           </FormControl>
         </div>

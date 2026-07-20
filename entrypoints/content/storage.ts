@@ -11,6 +11,7 @@ export interface Note {
   opacity: number; // note opacity
   autofocus?: boolean; // editor autofocus
   color?: string; // note result bg color, could be undefined for old notes
+  showLineNumbers?: boolean; // runtime only, not persisted
 }
 
 export interface StorageDefaults {
@@ -20,6 +21,7 @@ export interface StorageDefaults {
   defaultOpacity: number;
   defaultEditorFontSize: number;
   defaultColor: string;
+  defaultEditorShowLineNumbers: boolean;
 }
 
 type NotesByUrl = Partial<Record<string, Note[]>>;

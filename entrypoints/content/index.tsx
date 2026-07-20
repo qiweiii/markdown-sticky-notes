@@ -32,6 +32,7 @@ type ContentStorageDefaults = Pick<
   | "defaultOpacity"
   | "defaultEditorFontSize"
   | "defaultColor"
+  | "defaultEditorShowLineNumbers"
 >;
 
 type NotesStorageResult = Partial<Record<string, NoteType[]>> &
@@ -142,6 +143,7 @@ const MarkdownStickyNoteApp = () => {
           "defaultOpacity",
           "defaultEditorFontSize",
           "defaultColor",
+          "defaultEditorShowLineNumbers",
         ])
         .then((res) => {
           const defaults = res as Partial<ContentStorageDefaults>;
@@ -152,6 +154,7 @@ const MarkdownStickyNoteApp = () => {
           const opacity = defaults.defaultOpacity ?? 0.9;
           const fontSize = defaults.defaultEditorFontSize ?? 12;
           const color = defaults.defaultColor ?? "#f8e61b";
+          const showLineNumbers = defaults.defaultEditorShowLineNumbers ?? true;
           addNote({
             id: nextId,
             x: x,
@@ -165,6 +168,7 @@ const MarkdownStickyNoteApp = () => {
             autofocus: true,
             opacity: opacity,
             color,
+            showLineNumbers,
           });
           constructAndInitData(x, y, nextId);
           saveItem({ id: nextId });
@@ -197,13 +201,14 @@ const MarkdownStickyNoteApp = () => {
    */
   const getNotesFromStorage = () => {
     browser.storage.local
-      .get([url, "defaultOpacity", "defaultColor"])
+      .get([url, "defaultOpacity", "defaultColor", "defaultEditorShowLineNumbers"])
       .then((res) => {
         const stored = res as NotesStorageResult;
         const storedNotes = stored[url] ?? [];
         if (storedNotes.length > 0) {
           const opacity = stored.defaultOpacity ?? 0.9;
           const defaultColor = stored.defaultColor ?? "#f8e61b";
+          const showLineNumbers = stored.defaultEditorShowLineNumbers ?? true;
           for (const note of storedNotes) {
             addNote({
               id: note.id,
@@ -218,6 +223,7 @@ const MarkdownStickyNoteApp = () => {
               autofocus: false,
               opacity: opacity,
               color: note.color || defaultColor,
+              showLineNumbers,
             });
           }
         }
@@ -238,6 +244,7 @@ const MarkdownStickyNoteApp = () => {
     autofocus,
     opacity,
     color,
+    showLineNumbers,
   }: NoteType) => {
     setNotes((notes) => [
       ...notes,
@@ -254,6 +261,7 @@ const MarkdownStickyNoteApp = () => {
         autofocus: autofocus,
         opacity: opacity,
         color,
+        showLineNumbers,
       },
     ]);
   };
@@ -310,6 +318,7 @@ const MarkdownStickyNoteApp = () => {
                 autofocus={note.autofocus ?? true}
                 opacity={note.opacity}
                 color={note.color}
+                showLineNumbers={note.showLineNumbers ?? true}
               />
             </div>
           );

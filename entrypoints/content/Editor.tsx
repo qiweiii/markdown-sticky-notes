@@ -14,6 +14,7 @@ type Props = {
   fontSize: number;
   fontFamily: string;
   autofocus: boolean;
+  showLineNumbers: boolean;
 };
 
 const availableThemes = themes as Record<string, unknown>;
@@ -28,6 +29,7 @@ const Editor = (props: Props) => {
         className="markdown-sticky-note-CodeMirror"
         height="100%"
         value={props.value}
+        basicSetup={{ lineNumbers: props.showLineNumbers }}
         extensions={[
           markdown({ base: markdownLanguage, codeLanguages: languages }),
           EditorView.lineWrapping,
