@@ -150,8 +150,8 @@ const MarkdownStickyNoteApp = () => {
           const font =
             defaults.defaultEditorFontFamily ?? '"Consolas", "monaco", monospace';
           const opacity = defaults.defaultOpacity ?? 0.9;
-          const fontSize = defaults.defaultEditorFontSize ?? 14;
-          const color = defaults.defaultColor ?? "#fff";
+          const fontSize = defaults.defaultEditorFontSize ?? 12;
+          const color = defaults.defaultColor ?? "#f8e61b";
           addNote({
             id: nextId,
             x: x,
@@ -203,7 +203,7 @@ const MarkdownStickyNoteApp = () => {
         const storedNotes = stored[url] ?? [];
         if (storedNotes.length > 0) {
           const opacity = stored.defaultOpacity ?? 0.9;
-          const defaultColor = stored.defaultColor ?? "#fff";
+          const defaultColor = stored.defaultColor ?? "#f8e61b";
           for (const note of storedNotes) {
             addNote({
               id: note.id,
