@@ -40,8 +40,8 @@ export const constructAndInitData = (x: number, y: number, id: number) => {
       const theme = defaults.defaultTheme ?? "monokai";
       const font =
         defaults.defaultEditorFontFamily ?? '"Consolas", "monaco", monospace';
-      const fontSize = defaults.defaultEditorFontSize ?? 14;
-      const color = defaults.defaultColor ?? "#fff";
+      const fontSize = defaults.defaultEditorFontSize ?? 12;
+      const color = defaults.defaultColor ?? "#f8e61b";
       data = {
         id: id,
         x: x,

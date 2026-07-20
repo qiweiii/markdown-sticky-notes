@@ -46,9 +46,9 @@ const Preference = () => {
   const [state, setState] = useState<PreferenceState>({
     theme: "monokai",
     font: '"Consolas", "monaco", monospace',
-    fontsize: 14,
+    fontsize: 12,
     opacity: 0.9,
-    color: "#fff",
+    color: "#f8e61b",
   });
 
   useEffect(() => {
@@ -67,9 +67,9 @@ const Preference = () => {
           font:
             defaults.defaultEditorFontFamily ??
             '"Consolas", "monaco", monospace',
-          fontsize: defaults.defaultEditorFontSize ?? 14,
+          fontsize: defaults.defaultEditorFontSize ?? 12,
           opacity: defaults.defaultOpacity ?? 0.9,
-          color: defaults.defaultColor ?? "#fff",
+          color: defaults.defaultColor ?? "#f8e61b",
         });
       });
   }, []);

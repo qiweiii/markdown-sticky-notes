@@ -463,10 +463,10 @@ const Note = (props: Props) => {
                     component="a"
                     target="_blank"
                     onClick={() => {
-                      browser.runtime.openOptionsPage();
+                      browser.runtime.sendMessage({ action: "open-options" });
                     }}
                   >
-                    Options <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
+                    Settings <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
                   </MenuItem>
                   <MenuItem
                     key={1}

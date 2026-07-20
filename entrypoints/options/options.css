@@ -1,12 +1,12 @@
 .options-preference-root {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 32px 20px 48px;
+  padding: 20px 20px 24px;
 }
 
 .options-preference-root .form-control {
   width: 100%;
-  min-height: 75px;
+  min-height: 56px;
 }
 
 .options-preference-root .form-control label {
@@ -19,6 +19,30 @@
 .options-preference-root .form-control #opacity-label {
   font-size: 0.9rem;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.options-preference-root .options-page-card {
+  padding: 20px;
+}
+
+.options-preference-root .options-page-header {
+  margin-bottom: 10px;
+}
+
+.options-preference-root .options-page-subtitle {
+  margin: 6px 0 0;
+}
+
+.options-preference-root .options-settings-grid {
+  gap: 10px 16px;
+}
+
+.options-preference-root .form-control-color {
+  margin-top: 12px;
+}
+
+.options-preference-root .options-color-preview {
+  margin-bottom: 6px;
 }
 
 .options-notes-root {
@@ -165,6 +189,17 @@
 
 .options-about-card {
   text-align: center;
+}
+
+.options-about-card .options-page-header {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.options-about-card .options-page-subtitle {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .options-about-copy {

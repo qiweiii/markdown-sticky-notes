@@ -197,23 +197,6 @@ export default defineBackground({
         browser.storage.local.set({ id: 0 }).then(() => {
           console.log("set initial id");
         });
-        browser.storage.local.set({ defaultTheme: "monokai" }).then(() => {
-          console.log("set default theme to monokai");
-        });
-        browser.storage.local
-          .set({ defaultEditorFontFamily: '"Consolas", "monaco", monospace' })
-          .then(() => {
-            console.log("set default font family to consolas");
-          });
-        browser.storage.local.set({ defaultEditorFontSize: 14 }).then(() => {
-          console.log("set default font size to 14");
-        });
-        browser.storage.local.set({ defaultOpacity: 0.9 }).then(() => {
-          console.log("set default opacity to 0.9");
-        });
-        browser.storage.local.set({ defaultColor: "#fff" }).then(() => {
-          console.log("set default color to #fff");
-        });
         browser.runtime.openOptionsPage();
         // FIXME: comment out this note after testing
         // browser.storage.local
@@ -292,6 +275,12 @@ export default defineBackground({
 
     browser.tabs.onRemoved.addListener((tabId) => {
       clearScheduledMount(tabId);
+    });
+
+    browser.runtime.onMessage.addListener((message) => {
+      if (message?.action === "open-options") {
+        browser.runtime.openOptionsPage();
+      }
     });
   },
 });

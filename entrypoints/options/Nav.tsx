@@ -8,7 +8,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import NoteIcon from "@mui/icons-material/Note";
 import { useState } from "react";
 
 import Notes from "./pages/Notes";
@@ -22,7 +21,7 @@ const pages = [
   { id: "about", label: "About" },
 ];
 const MenuIconComponent = unwrapMuiIcon(MenuIcon);
-const NoteIconComponent = unwrapMuiIcon(NoteIcon);
+const logoUrl = browser.runtime.getURL("/icon/notes128.png");
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -39,9 +38,10 @@ function ResponsiveAppBar() {
   return (
     <>
       <AppBar
-        position="sticky"
+        position="static"
         elevation={0}
         sx={{
+          flexShrink: 0,
           background: "#fff",
           color: "#111827",
           borderBottom: "1px solid #e5e7eb",
@@ -58,18 +58,16 @@ function ResponsiveAppBar() {
               }}
             >
               <Box
+                component="img"
+                src={logoUrl}
+                alt="Markdown Sticky Note"
                 sx={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 2,
-                  display: { xs: "none", md: "grid" },
-                  placeItems: "center",
-                  backgroundColor: "#f9fafb",
-                  border: "1px solid #e5e7eb",
+                  width: 32,
+                  height: 32,
+                  borderRadius: 1.5,
+                  display: { xs: "none", md: "block" },
                 }}
-              >
-                <NoteIconComponent sx={{ color: "#111827" }} />
-              </Box>
+              />
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography
                   variant="h6"
@@ -83,16 +81,6 @@ function ResponsiveAppBar() {
                   }}
                 >
                   Markdown Sticky Note
-                </Typography>
-                <Typography
-                  variant="body2"
-                  component="div"
-                  sx={{
-                    display: { xs: "none", md: "flex" },
-                    color: "#6b7280",
-                  }}
-                >
-                  Floating markdown notes for any page.
                 </Typography>
               </Box>
             </Box>
@@ -200,9 +188,11 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
-      {page === "notes" && <Notes />}
-      {page === "preference" && <Preference />}
-      {page === "about" && <About />}
+      <Box sx={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+        {page === "notes" && <Notes />}
+        {page === "preference" && <Preference />}
+        {page === "about" && <About />}
+      </Box>
     </>
   );
 }
