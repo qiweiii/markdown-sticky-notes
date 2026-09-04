@@ -489,7 +489,7 @@ const Note = (props: Props) => {
                   <MenuItem
                     key={2}
                     component="a"
-                    href="https://x.com/qiweiy"
+                    href="https://x.com/qiweiiiy"
                     target="_blank"
                   >
                     X <OpenInNewIconComponent fontSize="small" sx={{ ml: 1 }} />
